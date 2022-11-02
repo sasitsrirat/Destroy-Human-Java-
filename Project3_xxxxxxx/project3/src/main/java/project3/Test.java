@@ -1,6 +1,15 @@
 package project3;
 
-public class Test 
+public class Test extends Thread
 {
-    ABCDEFG   
+    public static void JustPrint()
+    {
+        System.out.print("Just Test");
+    }
+
+    public void run()
+    {
+        Thread T1 = new Thread();
+        T1.start();
+    }
 }
