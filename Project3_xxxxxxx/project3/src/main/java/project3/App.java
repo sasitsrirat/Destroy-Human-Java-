@@ -17,5 +17,7 @@ public final class App {
 
     public static void main(String[] args) {
         System.out.printf("Hello World!\nI am Kawin Sudloh");
+        System.out.printf("Hello World!\nI am Kawin Sudloh");
+        System.out.printf("Hello World!\nASDSADADADSADADADASDAS");
     }
 }
