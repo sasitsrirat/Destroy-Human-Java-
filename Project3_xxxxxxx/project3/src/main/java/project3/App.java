@@ -20,11 +20,11 @@ public final class App {
         System.out.printf("Hello World!\nI am Kawin Sudloh");
         System.out.printf("Hello World!\nI am Kawin Sudloh");
         System.out.printf("Hello World!\nI am Kawin Sudloh");
-        System.out.printf("Hello World!\nASDSADADADSADADADASDAS");
-        System.out.printf("Hello World!\nI am Kawin Sudloh");
-        System.out.printf("Hello World!\nI am Kawin Sudloh");
-        System.out.printf("Hello World!\nASDSADADADSADADADASDAS");
+        x
+        x
+        x
+        x
+        x
         
-        System.out.printf("Hello World!\nASDSADADADSADADADASDAS");
     }
 }
