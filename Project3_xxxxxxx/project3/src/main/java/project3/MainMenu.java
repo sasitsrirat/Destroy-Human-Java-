@@ -26,7 +26,6 @@ public class MainMenu extends JFrame
 		contentPane.setBackground(new Color(46, 139, 87));
 		//contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
-        ABCDE
         
 
         JButton btnNewButton = new JButton("Play");
