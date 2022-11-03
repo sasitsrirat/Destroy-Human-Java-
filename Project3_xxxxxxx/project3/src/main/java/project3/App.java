@@ -7,7 +7,6 @@ import javax.swing.*;
 import java.lang.*;
 
 /**
- * Hello world!
  */
 
 

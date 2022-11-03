@@ -6,9 +6,7 @@ public class Character {
     protected int hp = 0; // Health Point
     protected int atk = 0; // Attack Point
     protected int def = 0; // Defense Point
-    // protected int sp = 0; //Stamina Point
     protected int spd = 0; // Speed Point
-    // protected int[] cd = new int[3]; //Cooldown Skill
 
     public Character() {
     }
@@ -20,6 +18,14 @@ public class Character {
         atk = a;
         def = d;
         spd = s;
+    }
+
+    protected int ramdomatk(){
+        int max = atk + 3;
+        int min = atk - 3;
+        if(min < 0) min = 0;
+        int newatk = (int)(Math.random()*(max-min+1)+min); 
+        return newatk;
     }
 
     protected int takedamg(int dam) {
