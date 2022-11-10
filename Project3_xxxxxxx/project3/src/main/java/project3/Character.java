@@ -1,12 +1,13 @@
 package project3;
 
-public class Character {
+public class Character extends Thread{
     String name = "";
     protected int max_hp = 0; // Max Health Point
     protected int hp = 0; // Health Point
     protected int atk = 0; // Attack Point
     protected int def = 0; // Defense Point
     protected int spd = 0; // Speed Point
+    protected int position; // will be set in another 
 
     public Character() {
     }
@@ -68,4 +69,13 @@ public class Character {
     public int getatk() {
         return atk;
     }
+
+    public int getspd() {
+        return spd;
+    }
+
+    public void setposition(){
+        
+    }
+
 }

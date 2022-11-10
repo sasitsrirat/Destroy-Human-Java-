@@ -13,4 +13,9 @@ class Human extends Character{
         }
         else return 1;
     }
+    
+    public void attack(Robot robot){
+        robot.takedamg(atk);
+    }
+    
 }
