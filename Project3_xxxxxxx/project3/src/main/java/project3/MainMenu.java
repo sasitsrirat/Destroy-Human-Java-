@@ -19,17 +19,21 @@ public class MainMenu extends JFrame
         setVisible(true);
 		
         //set background 
-        //contentPane = new JLabel();
+        contentPane = new JLabel();
         setContentPane(contentPane = new JLabel());
         contentPane.setBackground(new Color(107, 142, 35));
         contentPane.setForeground(new Color(107, 142, 35));
-		contentPane.setBackground(new Color(46, 139, 87));
+		contentPane.setBackground(new Color(255, 169, 57));
+        contentPane.setOpaque(true); // significant
+        contentPane.setLayout(new FlowLayout(FlowLayout.CENTER,100,100));
 		//contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         
 
         JButton btnNewButton = new JButton("Play");
 		btnNewButton.setForeground(new Color(255, 255, 255));
+        contentPane.add(btnNewButton);
+        contentPane.validate();
     }
     public static void main(String[] args) {
  
