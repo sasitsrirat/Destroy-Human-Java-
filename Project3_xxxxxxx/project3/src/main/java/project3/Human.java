@@ -15,7 +15,13 @@ class Human extends Character{
     }
     
     public void attack(Robot robot){
-        robot.takedamg(atk);
+        int dmg = ramdomatk();
+        robot.takedamg(dmg);
     }
     
+        
+    @Override
+    public void run(){
+
+    }
 }

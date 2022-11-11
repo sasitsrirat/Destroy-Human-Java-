@@ -17,6 +17,15 @@ public final class App {
     public static void main(String[] args) {
         System.out.printf("Hello World!\nI am Kawin Sudloh\n");
 
+        ArrayList<Robot> robot = new ArrayList<Robot>(); 
+        robot.add(new Robot("KawinSudloh", 500, 50, 50, 50, 50, 50, 50));
+        ArrayList<ArrayList <Human>> humanwave = new ArrayList<ArrayList <Human>>(); 
+        ArrayList<Human> human = new ArrayList<Human>(); 
+        human.add(new Human("Kong_1", 10, 1, 1, 1, 1));
+        human.add(new Human("Kong_2", 20, 1, 1,10, 1));
+        humanwave.add(human);
+        new Stage("1", robot, humanwave);
+
         // Don't delete
         /*ArrayList<ArrayList <Integer>> a = new ArrayList<ArrayList<Integer>>(5);
         ArrayList<Integer> b = new ArrayList<Integer>();

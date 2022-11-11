@@ -1,6 +1,6 @@
 package project3;
 
-public class Character extends Thread{
+public class Character extends Thread {
     String name = "";
     protected int max_hp = 0; // Max Health Point
     protected int hp = 0; // Health Point
@@ -30,7 +30,13 @@ public class Character extends Thread{
     }
 
     protected int takedamg(int dam) {
+        if(dam >= def){
         dam = dam - def;
+        }
+        else {
+            dam = 0;
+        }
+
         hp = hp - dam;
         if (hp < 0) {
             hp = 0;
@@ -54,6 +60,10 @@ public class Character extends Thread{
             return 0;
     }
 
+    public void introduce(){
+        System.out.printf("%s %d/%d \n", name, hp, max_hp);
+    }
+
     public String getname() {
         return name;
     }
@@ -75,6 +85,10 @@ public class Character extends Thread{
     }
 
     public void setposition(){
+        
+    }
+
+    public void run(){
         
     }
 
