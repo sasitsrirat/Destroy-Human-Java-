@@ -42,56 +42,16 @@ public class Stage extends JFrame {
             h.introduce();
         }
         while (i < 10) {
-            /*
-             * for (Character c : all) {
-             * this.action(c);
-             * }
-             */
             for (Robot r : robot) {
                 action_robot(r);
-                for (int j = 0; j < humanwave.get(wave).size(); j++) { // check death here
-                    if (humanwave.get(wave).get(j).checkdeath() == 1) {
-                        System.out.printf("%s is death\n", humanwave.get(wave).get(j).getname());
-                        humanwave.get(wave).remove(j);
-                        j = j - 1;
-                    }
-                }
+                checkdeath();
             }
             for (Human h : humanwave.get(wave)) {
                 action_enemy(h);
-                for (int j = 0; j < robot.size(); j++) {
-                    if (humanwave.get(wave).get(j).checkdeath() == 1) {
-                        System.out.printf("%s is death\n", humanwave.get(wave).get(j).getname());
-                        humanwave.get(wave).remove(j);
-                        j = j - 1;
-                    }
-                }
-            }
-            /*
-             * /for (Robot r : robot) {
-             * if (r.checkdeath() == 1) {
-             * System.out.printf("%s is death\n", r.getname());
-             * robot.remove(r);
-             * }
-             * }
-             */
-            /*
-             * for(int j = 0; j < robot.size(); j++){
-             * if (humanwave.get(wave).get(j).checkdeath() == 1) {
-             * System.out.printf("%s is death\n", humanwave.get(wave).get(j).getname());
-             * humanwave.get(wave).remove(j);
-             * j = j-1;
-             * }
-             * }
-             * for(int j = 0; j < humanwave.get(wave).size(); j++){
-             * if (humanwave.get(wave).get(j).checkdeath() == 1) {
-             * System.out.printf("%s is death\n", humanwave.get(wave).get(j).getname());
-             * humanwave.get(wave).remove(j);
-             * j = j-1;
-             * }
-             * }
-             */
-            System.out.printf("End round %d\n********************\n", i+1);
+                checkdeath();
+            } 
+            checkdeath();
+            System.out.printf("End round %d\n********************\n\n", i + 1);
             // output from wave
 
             // run
@@ -103,18 +63,22 @@ public class Stage extends JFrame {
         wave += 1;
     }
 
-    /*
-     * public void action(Character cha) {
-     * if (cha instanceof Robot) {
-     * System.out.printf("Robot action\n");
-     * action_robot((Robot) cha);
-     * 
-     * } else {
-     * System.out.printf("Human action\n");
-     * action_enemy((Human) cha);
-     * }
-     * }
-     */
+    public void checkdeath() {
+        for (int j = 0; j < humanwave.get(wave).size(); j++) { // check death here
+            if (humanwave.get(wave).get(j).checkdeath() == 1) {
+                System.out.printf("%s is death\n", humanwave.get(wave).get(j).getname());
+                humanwave.get(wave).remove(j);
+                j = j - 1;
+            }
+        }
+        for (int j = 0; j < robot.size(); j++) {
+            if (humanwave.get(wave).get(j).checkdeath() == 1) {
+                System.out.printf("%s is death\n", humanwave.get(wave).get(j).getname());
+                humanwave.get(wave).remove(j);
+                j = j - 1;
+            }
+        }
+    }
 
     public void action_robot(Robot ro) { // Arraylist robot,character
         System.out.printf("Robot action\n");
@@ -163,7 +127,6 @@ public class Stage extends JFrame {
     }
 
     public void action_enemy(Human hu) { // Arraylist human,character
-
         System.out.printf("Human action\n");
         int a = rand.nextInt(robot.size());
         hu.attack(robot.get(a));
@@ -176,19 +139,8 @@ public class Stage extends JFrame {
             h.introduce();
             i++;
         }
-        /*
-         * for(Character a : all){
-         * if(a instanceof Human){
-         * System.out.printf("%d. ", i);
-         * a.introduce();
-         * i++;
-         * }
-         * }
-         */
         Scanner scan = new Scanner(System.in);
-        // show enemy
         int choice = scan.nextInt() - 1;
         return choice;
     }
-
 }

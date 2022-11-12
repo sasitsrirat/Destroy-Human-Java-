@@ -6,10 +6,6 @@ import java.util.*;
 import javax.swing.*;
 import java.lang.*;
 
-/**
- */
-
-
 public final class App {
     private App() {
     }

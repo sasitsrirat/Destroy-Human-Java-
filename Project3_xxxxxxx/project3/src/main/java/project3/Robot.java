@@ -61,6 +61,7 @@ class Robot1 extends Robot{
 
     private String imagefile = "src/pictures/robot1.png";
 
+    //Constructor กำหนดคุณลักษณะของ Robot1 
     public Robot1(String n, int hp, int atk, int def, int spd, int p, int cs, int cu){
         super(n, hp, atk,  def, spd,  p,  cs,  cu);
     } 
