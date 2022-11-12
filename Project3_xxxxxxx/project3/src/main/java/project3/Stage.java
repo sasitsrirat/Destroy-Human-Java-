@@ -12,7 +12,7 @@ public class Stage extends JFrame {
     protected ArrayList<Robot> robot;
     protected ArrayList<ArrayList<Human>> humanwave;
     protected ArrayList<Character> all;
-    protected int maxspeed = 3000; //
+    //
     protected Random rand = new Random();
     protected int wave = 0;
 

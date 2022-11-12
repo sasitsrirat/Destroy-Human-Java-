@@ -8,6 +8,9 @@ public class Character extends Thread {
     protected int def = 0; // Defense Point
     protected int spd = 0; // Speed Point
     protected int position; // will be set in another 
+    protected int maxspeed = 3000;
+
+    // protected Speed speedthread;
 
     public Character() {
     }
@@ -19,6 +22,7 @@ public class Character extends Thread {
         atk = a;
         def = d;
         spd = s;
+        // speedthread = new Speed(spd);
     }
 
     protected int ramdomatk(){
