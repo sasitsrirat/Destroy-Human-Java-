@@ -37,6 +37,7 @@ class StyledButtonUI extends BasicButtonUI
 
 public class MainMenu extends JFrame {
     private int frameWidth = 1366, frameHeight = 768; // Don't Change it.
+    protected Stageframe sframe;
     private JLabel contentPane;
     protected Optionframe oframe;
     protected Tutorialframe tframe;
@@ -55,12 +56,17 @@ public class MainMenu extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
 
+        // set background gif 
+        ImageIcon imageIcon = new ImageIcon(imagepath + "2825710.gif");
+        //ImageIcon imageIcon = new ImageIcon(fileddd);
+        JLabel label = new JLabel(imageIcon);
+
         // set background
         contentPane = new JLabel();
         setContentPane(contentPane = new JLabel());
-        MyImageIcon background = new MyImageIcon(imagepath + "8-Bit-Backgrounds.jpg");
-        //MyImageIcon logo = new MyImageIcon(path + "Testlogo.png");
-        contentPane.setIcon(background.resize(frameWidth, frameHeight));
+        //MyImageIcon background = new MyImageIcon(imagepath + "8-Bit-Backgrounds.jpg");
+        //contentPane.setIcon(background.resize(frameWidth, frameHeight));
+        contentPane.setIcon(imageIcon);
         contentPane.setLayout(null);
         setContentPane(contentPane);
 
@@ -77,7 +83,17 @@ public class MainMenu extends JFrame {
             playButton.setUI(new StyledButtonUI());
             playButton.setForeground(new Color(255, 255, 255));
             playButton.setBounds(608, 100, 150, 50);
+            playButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent event) {
+                    if (sframe == null)
+                        sframe = new Stageframe();
+                    else
+                        sframe.setVisible(true);
+                }
+            });
         }
+        
         JButton optionButton = new JButton("Option");
         {
             optionButton.setFont(new Font("Cascadia Code", Font.PLAIN, 14));
@@ -86,14 +102,14 @@ public class MainMenu extends JFrame {
             // customize the button with your own look
             optionButton.setUI(new StyledButtonUI());
             optionButton.setForeground(new Color(255, 255, 255));
-
+            
             optionButton.setForeground(new Color(255, 255, 255));
             optionButton.setBounds(608, 175, 150, 50);
             optionButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
                     if (oframe == null)
-                        oframe = new Optionframe(mainmenuSound);
+                        oframe = new Optionframe(mainmenuSound, imagepath);
                     else
                         oframe.setVisible(true);
                 }
@@ -182,10 +198,9 @@ public class MainMenu extends JFrame {
         contentPane.add(quitButton);
         contentPane.setFocusable(true);
         contentPane.validate();
-
-
-
     }
+
+
 
     public static void main(String[] args) {
         try {
@@ -194,6 +209,12 @@ public class MainMenu extends JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+}
+
+class UIbutton extends JButton{
+    public UIbutton(){
+
     }
 }
 

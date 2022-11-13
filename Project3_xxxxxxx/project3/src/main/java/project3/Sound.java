@@ -17,10 +17,22 @@ public class Sound {
             clip.open(audioStream);
             fc = (FloatControl)clip.getControl(FloatControl.Type.MASTER_GAIN);
         } catch (Exception e) {
-            e.printStackTrace();
+           // e.printStackTrace();
         }
     }
     public void playOnce()   { clip.setMicrosecondPosition(0); clip.start(); }
     public void playLoop()   { clip.loop(Clip.LOOP_CONTINUOUSLY); }
     public void stop()       { clip.stop(); }
+    public void muteVolume(){
+        if(mute == false){
+            previousVolume = currentVolume;
+            currentVolume = -80.0f;
+            fc.setValue(currentVolume);
+            mute = true;
+        }else if(mute == true){
+            currentVolume = previousVolume;
+            fc.setValue(currentVolume);
+            mute = false;
+        }
+    }
 }
