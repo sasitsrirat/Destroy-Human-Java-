@@ -3,12 +3,12 @@ package project3;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.BorderUIResource;
 import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.event.*;
 
 //Class for design Button like CSS
-class StyledButtonUI extends BasicButtonUI 
-{
+class StyledButtonUI extends BasicButtonUI {
     @Override
     public void installUI(JComponent c) {
         super.installUI(c);
@@ -36,7 +36,7 @@ class StyledButtonUI extends BasicButtonUI
 }
 
 public class MainMenu extends JFrame {
-    private int frameWidth = 1366, frameHeight = 768; // Don't Change it.
+    private static int frameWidth = 1366, frameHeight = 768; // Don't Change it.
     protected Stageframe sframe;
     private JLabel contentPane;
     protected Optionframe oframe;
@@ -44,11 +44,13 @@ public class MainMenu extends JFrame {
     protected Creditframe cframe;
     protected Sound mainmenuSound;
 
+    public MainMenu() {
+        String imagepath = "Project3_xxxxxxx/project3/src/pictures/";
+        String soundpath = "Project3_xxxxxxx/project3/src/sounds/";
 
-    public MainMenu() 
-    {
-        String imagepath = "src/pictures/";
-        String soundpath = "src/sounds/";
+        // set background music
+        mainmenuSound = new Sound(soundpath + "BossTime.wav");
+        mainmenuSound.playLoop();
 
         setType(Type.POPUP);
         setTitle("Menu");
@@ -56,33 +58,24 @@ public class MainMenu extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
 
-        // set background gif 
-        ImageIcon imageIcon = new ImageIcon(imagepath + "2825710.gif");
-        //ImageIcon imageIcon = new ImageIcon(fileddd);
-        JLabel label = new JLabel(imageIcon);
-
-        // set background
+        // set background gif
+        ImageIcon imageIcon = new ImageIcon(imagepath + "roboyscofi.gif");
+        imageIcon.setImage(imageIcon.getImage().getScaledInstance(frameWidth, frameHeight, Image.SCALE_DEFAULT)); // size of background
         contentPane = new JLabel();
         setContentPane(contentPane = new JLabel());
-        //MyImageIcon background = new MyImageIcon(imagepath + "8-Bit-Backgrounds.jpg");
-        //contentPane.setIcon(background.resize(frameWidth, frameHeight));
         contentPane.setIcon(imageIcon);
         contentPane.setLayout(null);
         setContentPane(contentPane);
 
-        //set background music
-        mainmenuSound = new Sound(soundpath + "namlie.wav");
-        mainmenuSound.playLoop();
-
-        JButton playButton = new JButton("Play");
+        JButton playButton = new JButton("PLAY");
         {
-            playButton.setFont(new Font("Cascadia Code", Font.PLAIN, 14));
-            playButton.setBackground(new Color(0x2dce98));
+            playButton.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
+            playButton.setBackground(new Color(222, 0, 62));
             playButton.setForeground(Color.white);
             // customize the button with your own look
             playButton.setUI(new StyledButtonUI());
             playButton.setForeground(new Color(255, 255, 255));
-            playButton.setBounds(608, 100, 150, 50);
+            // playButton.setBounds(100, 100, 200, 50);
             playButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
@@ -93,39 +86,34 @@ public class MainMenu extends JFrame {
                 }
             });
         }
-        
-        JButton optionButton = new JButton("Option");
+        JButton optionButton = new JButton("OPTION");
         {
-            optionButton.setFont(new Font("Cascadia Code", Font.PLAIN, 14));
-            optionButton.setBackground(new Color(0x2dce98));
+            optionButton.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
+            optionButton.setBackground(new Color(222, 0, 62));
             optionButton.setForeground(Color.white);
             // customize the button with your own look
             optionButton.setUI(new StyledButtonUI());
             optionButton.setForeground(new Color(255, 255, 255));
-            
-            optionButton.setForeground(new Color(255, 255, 255));
-            optionButton.setBounds(608, 175, 150, 50);
+            // optionButton.setBounds(608, 175, 150, 50);
             optionButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
                     if (oframe == null)
-                        oframe = new Optionframe(mainmenuSound, imagepath);
+                        oframe = new Optionframe(mainmenuSound);
                     else
                         oframe.setVisible(true);
                 }
             });
         }
-        JButton tutorialButton = new JButton("Tutorial");
+        JButton tutorialButton = new JButton("TUTORIAL");
         {
-            tutorialButton.setFont(new Font("Cascadia Code", Font.PLAIN, 14));
-            tutorialButton.setBackground(new Color(0x2dce98));
+            tutorialButton.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
+            tutorialButton.setBackground(new Color(222, 0, 62));
             tutorialButton.setForeground(Color.white);
             // customize the button with your own look
             tutorialButton.setUI(new StyledButtonUI());
             tutorialButton.setForeground(new Color(255, 255, 255));
-
-            tutorialButton.setForeground(new Color(255, 255, 255));
-            tutorialButton.setBounds(608, 250, 150, 50);
+            // tutorialButton.setBounds(608, 250, 150, 50);
             tutorialButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
@@ -136,17 +124,15 @@ public class MainMenu extends JFrame {
                 }
             });
         }
-        JButton creditButton = new JButton("Credit");
+        JButton creditButton = new JButton("CREDIT");
         {
-            creditButton.setFont(new Font("Cascadia Code", Font.PLAIN, 14));
-            creditButton.setBackground(new Color(0x2dce98));
+            creditButton.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
+            creditButton.setBackground(new Color(222, 0, 62));
             creditButton.setForeground(Color.white);
             // customize the button with your own look
             creditButton.setUI(new StyledButtonUI());
             creditButton.setForeground(new Color(255, 255, 255));
-
-            creditButton.setForeground(new Color(255, 255, 255));
-            creditButton.setBounds(608, 325, 150, 50);
+            // creditButton.setBounds(608, 325, 150, 50);
             creditButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
@@ -157,24 +143,23 @@ public class MainMenu extends JFrame {
                 }
             });
         }
-        JButton quitButton = new JButton("Quit");
+        JButton quitButton = new JButton("QUIT");
         {
-            quitButton.setFont(new Font("Cascadia Code", Font.PLAIN, 14));
-            quitButton.setBackground(new Color(0x2dce98));
+            quitButton.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
+            quitButton.setBackground(new Color(222, 0, 62));
             quitButton.setForeground(Color.white);
+            quitButton.setSize(100, 200);
             // customize the button with your own look
             quitButton.setUI(new StyledButtonUI());
             quitButton.setForeground(new Color(255, 255, 255));
-
-            quitButton.setForeground(new Color(255, 255, 255));
-            quitButton.setBounds(608, 400, 150, 50);
+            // quitButton.setBounds(608, 400, 150, 50);
             quitButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
                     JButton button = (JButton) event.getSource();
                     JDialog d = new JDialog();
                     d.setTitle("test");
-                    d.setBounds(583,459,300,100);
+                    d.setBounds(583, 459, 300, 200);
                     JPanel p = new JPanel();
                     JLabel l1 = new JLabel("Are you sure to exit game");
                     JButton b1 = new JButton("Yes");
@@ -190,31 +175,67 @@ public class MainMenu extends JFrame {
                 }
             });
         }
+        JPanel J2 = new JPanel();
+        {
+            J2.setBounds(0, 200, 400, 766); // Size of JPanel
+            J2.setBackground(new Color(0, 0, 0, 0)); // RGBA 255,255,255,255 for check limit of size
+            J2.setLayout(new GridLayout(10, 1, 20, 10));
+            contentPane.add(J2);
+            J2.add(playButton);
+            J2.add(optionButton);
+            J2.add(tutorialButton);
+            J2.add(creditButton);
+            J2.add(quitButton);
+            J2.revalidate();
+            J2.repaint();
+        }
 
-        contentPane.add(playButton);
-        contentPane.add(optionButton);
-        contentPane.add(tutorialButton);
-        contentPane.add(creditButton);
-        contentPane.add(quitButton);
-        contentPane.setFocusable(true);
-        contentPane.validate();
+        JPanel J = new JPanel();
+        {
+            J.setSize(400, 766); // Size of JPanel
+            J.setBackground(new Color(0, 0, 0, 200)); // RGBA 255,255,255,255
+            contentPane.add(J);
+            // Logo in main menu
+            JLabel logo = new JLabel();
+            logo.setIcon(new ImageIcon(new ImageIcon(imagepath + "Testlogo.png").getImage().getScaledInstance(250, 150,
+                    Image.SCALE_SMOOTH)));
+            J.add(logo);
+        }
+
+        /*
+         * contentPane.add(playButton);
+         * contentPane.add(optionButton);
+         * contentPane.add(tutorialButton);
+         * contentPane.add(creditButton);
+         * contentPane.add(quitButton);/*
+         */
+        // contentPane.setFocusable(true);
+        // contentPane.validate();
+
     }
 
+    static void displayJFrame() {
+        // set the jframe title in the constructor
+        JFrame jframe = new JFrame("JFrame Title Example");
 
+        // all the other jframe setup stuff
+        jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        jframe.setPreferredSize(new Dimension(1400, 300));
+        jframe.setBackground(Color.black);
+        jframe.pack();
+        jframe.setLocationRelativeTo(null);
+        jframe.setVisible(true);
+
+    }
 
     public static void main(String[] args) {
+        displayJFrame();
         try {
             MainMenu frame = new MainMenu();
             frame.setVisible(true);
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-}
-
-class UIbutton extends JButton{
-    public UIbutton(){
-
     }
 }
 
