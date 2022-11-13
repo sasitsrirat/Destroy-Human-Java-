@@ -38,14 +38,16 @@ class StyledButtonUI extends BasicButtonUI
 public class MainMenu extends JFrame {
     private int frameWidth = 1366, frameHeight = 768; // Don't Change it.
     private JLabel contentPane;
+    protected Optionframe oframe;
+    protected Tutorialframe tframe;
+    protected Creditframe cframe;
+    protected Sound mainmenuSound;
 
-    Optionframe oframe;
-    Tutorialframe tframe;
-    Creditframe cframe;
 
     public MainMenu() 
     {
-        String path = "Project3_xxxxxxx/project3/src/pictures/";
+        String imagepath = "src/pictures/";
+        String soundpath = "src/sounds/";
 
         setType(Type.POPUP);
         setTitle("Menu");
@@ -56,11 +58,15 @@ public class MainMenu extends JFrame {
         // set background
         contentPane = new JLabel();
         setContentPane(contentPane = new JLabel());
-        MyImageIcon background = new MyImageIcon(path + "8-Bit-Backgrounds.jpg");
+        MyImageIcon background = new MyImageIcon(imagepath + "8-Bit-Backgrounds.jpg");
         //MyImageIcon logo = new MyImageIcon(path + "Testlogo.png");
         contentPane.setIcon(background.resize(frameWidth, frameHeight));
         contentPane.setLayout(null);
         setContentPane(contentPane);
+
+        //set background music
+        mainmenuSound = new Sound(soundpath + "namlie.wav");
+        mainmenuSound.playLoop();
 
         JButton playButton = new JButton("Play");
         {
@@ -70,7 +76,7 @@ public class MainMenu extends JFrame {
             // customize the button with your own look
             playButton.setUI(new StyledButtonUI());
             playButton.setForeground(new Color(255, 255, 255));
-            playButton.setBounds(325, 100, 150, 50);
+            playButton.setBounds(608, 100, 150, 50);
         }
         JButton optionButton = new JButton("Option");
         {
@@ -82,12 +88,12 @@ public class MainMenu extends JFrame {
             optionButton.setForeground(new Color(255, 255, 255));
 
             optionButton.setForeground(new Color(255, 255, 255));
-            optionButton.setBounds(325, 175, 150, 50);
+            optionButton.setBounds(608, 175, 150, 50);
             optionButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
                     if (oframe == null)
-                        oframe = new Optionframe();
+                        oframe = new Optionframe(mainmenuSound);
                     else
                         oframe.setVisible(true);
                 }
@@ -103,7 +109,7 @@ public class MainMenu extends JFrame {
             tutorialButton.setForeground(new Color(255, 255, 255));
 
             tutorialButton.setForeground(new Color(255, 255, 255));
-            tutorialButton.setBounds(325, 250, 150, 50);
+            tutorialButton.setBounds(608, 250, 150, 50);
             tutorialButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
@@ -124,7 +130,7 @@ public class MainMenu extends JFrame {
             creditButton.setForeground(new Color(255, 255, 255));
 
             creditButton.setForeground(new Color(255, 255, 255));
-            creditButton.setBounds(325, 325, 150, 50);
+            creditButton.setBounds(608, 325, 150, 50);
             creditButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
@@ -145,15 +151,14 @@ public class MainMenu extends JFrame {
             quitButton.setForeground(new Color(255, 255, 255));
 
             quitButton.setForeground(new Color(255, 255, 255));
-            quitButton.setBounds(325, 400, 150, 50);
+            quitButton.setBounds(608, 400, 150, 50);
             quitButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
                     JButton button = (JButton) event.getSource();
-                    // JOptionPane.showMessageDialog(null, "Do you want Exit");
                     JDialog d = new JDialog();
                     d.setTitle("test");
-                    d.setSize(300, 100);
+                    d.setBounds(583,459,300,100);
                     JPanel p = new JPanel();
                     JLabel l1 = new JLabel("Are you sure to exit game");
                     JButton b1 = new JButton("Yes");
@@ -178,6 +183,8 @@ public class MainMenu extends JFrame {
         contentPane.setFocusable(true);
         contentPane.validate();
 
+
+
     }
 
     public static void main(String[] args) {
@@ -187,7 +194,6 @@ public class MainMenu extends JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 }
 
