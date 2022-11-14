@@ -8,37 +8,35 @@ import java.lang.*;
 
 public class Stage extends JFrame {
 
-    protected String name = "";
+    protected int num = 0;
     protected ArrayList<Robot> robot;
-    protected ArrayList<ArrayList<Human>> humanwave;
-    protected ArrayList<Character> all;
-    //
+    protected ArrayList<Human> human;
     protected Random rand = new Random();
     protected int wave = 0;
-
     protected Stageframe me; // frame
 
-    public Stage(String n, ArrayList<Robot> ro, ArrayList<ArrayList<Human>> hw) {
-        name = n;
-        robot = ro;
-        humanwave = hw;
-        wave = humanwave.size() - 1;
-        this.battle();
+    public Stage(int n, int w) {
+        num = n;
+        wave = w;
+        Robotwave ally = new Robotwave(n);
+        robot = ally.getro();
+        for (int index = 0; index < wave; index++) {
+            Humanwave enemy = new Humanwave(num, index + 1);
+            human = enemy.gethu();
+            this.battle();
+        }
     }
-
+    
     public void Hello() { // stage story
 
     }
 
     public void battle() { // stage battle
         int i = 0;
-        // all = new ArrayList<Character>();
         for (Robot r : robot) {
-            // all.add(r);
             r.introduce();
         }
-        for (Human h : humanwave.get(wave)) {
-            // all.add(h);
+        for (Human h : human) {
             h.introduce();
         }
         while (i < 10) {
@@ -46,7 +44,7 @@ public class Stage extends JFrame {
                 action_robot(r);
                 checkdeath();
             }
-            for (Human h : humanwave.get(wave)) {
+            for (Human h : human) {
                 action_enemy(h);
                 checkdeath();
             } 
@@ -56,25 +54,24 @@ public class Stage extends JFrame {
 
             // run
             i++;
-            if (robot.size() == 0 || humanwave.get(wave).size() == 0) {
+            if (robot.size() == 0 || human.size() == 0) {
                 i = 10;
             }
         }
-        wave += 1;
     }
 
     public void checkdeath() {
-        for (int j = 0; j < humanwave.get(wave).size(); j++) { // check death here
-            if (humanwave.get(wave).get(j).checkdeath() == 1) {
-                System.out.printf("%s is death\n", humanwave.get(wave).get(j).getname());
-                humanwave.get(wave).remove(j);
+        for (int j = 0; j < human.size(); j++) { // check death here
+            if (human.get(j).checkdeath() == 1) {
+                System.out.printf("%s is death\n", human.get(j).getname());
+                human.remove(j);
                 j = j - 1;
             }
         }
         for (int j = 0; j < robot.size(); j++) {
-            if (humanwave.get(wave).get(j).checkdeath() == 1) {
-                System.out.printf("%s is death\n", humanwave.get(wave).get(j).getname());
-                humanwave.get(wave).remove(j);
+            if (robot.get(j).checkdeath() == 1) {
+                System.out.printf("%s is death\n", robot.get(j).getname());
+                robot.remove(j);
                 j = j - 1;
             }
         }
@@ -102,6 +99,7 @@ public class Stage extends JFrame {
             default:
                 break;
         }
+        //System.out.print(robot.size());
     }
 
     public void action_robot_skill(Robot ro) {
@@ -110,9 +108,9 @@ public class Stage extends JFrame {
         int choice_2 = scan.nextInt();
         switch (choice_2) {
             case 1: // choose normal attack
-                int hu = chooseenemy();
-                ro.attack(humanwave.get(wave).get(hu));
-                System.out.printf("%s attack %s\n", ro.getname(), humanwave.get(wave).get(hu).getname());
+                int h = chooseenemy();
+                ro.attack(human.get(h));
+                System.out.printf("%s attack %s\n", ro.getname(), human.get(h).getname());
                 break;
             case 2: // special skill
 
@@ -126,15 +124,19 @@ public class Stage extends JFrame {
         }
     }
 
-    public void action_enemy(Human hu) { // Arraylist human,character
+    public void action_enemy(Human h) { // Arraylist human,character
+        int size = robot.size();
+        if(size==0){
         System.out.printf("Human action\n");
-        int a = rand.nextInt(robot.size());
-        hu.attack(robot.get(a));
+        
+        int a = rand.nextInt(size);
+        h.attack(robot.get(a));
+        }
     }
 
     public int chooseenemy() {
         int i = 1;
-        for (Human h : humanwave.get(wave)) {
+        for (Human h : human) {
             System.out.printf("%d. ", i);
             h.introduce();
             i++;
