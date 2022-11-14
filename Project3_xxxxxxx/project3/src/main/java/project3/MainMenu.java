@@ -45,12 +45,12 @@ public class MainMenu extends JFrame {
     protected Sound mainmenuSound;
 
     public MainMenu() {
-        String imagepath = "Project3_xxxxxxx/project3/src/pictures/";
-        String soundpath = "Project3_xxxxxxx/project3/src/sounds/";
+        String imagepath = "project3/Project3_xxxxxxx/project3/src/pictures/";
+        String soundpath = "project3/Project3_xxxxxxx/project3/src/sounds/";
 
         // set background music
         mainmenuSound = new Sound(soundpath + "BossTime.wav");
-        mainmenuSound.playLoop();
+       // mainmenuSound.playLoop(); // Off-On Music
 
         setType(Type.POPUP);
         setTitle("Menu");
@@ -232,7 +232,7 @@ public class MainMenu extends JFrame {
     }
 
     public static void main(String[] args) {
-        displayJFrame();
+        //displayJFrame();
         try {
             MainMenu frame = new MainMenu();
             frame.setVisible(true);

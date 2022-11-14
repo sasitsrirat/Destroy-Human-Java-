@@ -15,6 +15,7 @@ public class Stageframe extends JFrame {
     private JLabel enemy1, enemy2, enemy3;
     private JLabel Stat;
     private JLabel contentpane;
+    private int stagenum = 1;
 
     public Stageframe() { // อาจจะรับ ArrayList เข้ามา
 
@@ -46,6 +47,12 @@ public class Stageframe extends JFrame {
         repaint();
 
     }
+    public int getstagenum(){        
+        return this.stagenum;
+    }
+    public void setstagenum(int num){        
+         this.stagenum = num;
+    }
 
     public void addcomponent() {
         Characterlabel ro1 = new Characterlabel(path, "robot4.png", 150, 150, this); // it a robot
@@ -59,6 +66,15 @@ public class Stageframe extends JFrame {
         contentpane.add(ro1);
         contentpane.add(ro2);
     }
+    public void stage2(){
+        ImageIcon temp = new ImageIcon(path + "city.gif");
+        temp.setImage(temp.getImage().getScaledInstance(frameWidth, frameHeight, Image.SCALE_DEFAULT)); // size of background
+        //MyImageIcon temp = new MyImageIcon(path + "city.gif");
+        contentpane.setIcon(temp);
+        validate();
+        repaint();    
+    }
+
 
     public static void main(String[] args) { // for test ting frame
         new Stageframe();
@@ -86,6 +102,7 @@ class Characterlabel extends JLabel {
     protected MyImageIcon staticon, staticon2;
     protected int curX, curY, width, height;
     protected Stageframe parentFrame;
+    protected Character character;
 
     public Characterlabel(String path, String filename, int width, int height, Stageframe pf) {
 
@@ -148,7 +165,10 @@ class Characterlabel extends JLabel {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-
+                if(parentFrame.getstagenum()!=2){
+                parentFrame.stage2();
+                parentFrame.setstagenum(2);
+                }
             }
 
             @Override
