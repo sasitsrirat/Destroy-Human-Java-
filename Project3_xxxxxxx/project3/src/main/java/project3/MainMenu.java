@@ -99,7 +99,7 @@ public class MainMenu extends JFrame {
                 @Override
                 public void actionPerformed(ActionEvent event) {
                     if (oframe == null)
-                        oframe = new Optionframe(mainmenuSound);
+                        oframe = new Optionframe(mainmenuSound, imagepath);
                     else
                         oframe.setVisible(true);
                 }
@@ -213,10 +213,13 @@ public class MainMenu extends JFrame {
         // contentPane.validate();
 
     }
-
+    //intro and loading screen  
     static void displayJFrame() {
         // set the jframe title in the constructor
-        JFrame jframe = new JFrame("JFrame Title Example");
+        JFrame jframe = new JFrame("LOADING");
+        JLabel Logo = new JLabel();
+        
+       // Logo.setImage(Logo.getImage().getScaledInstance(frameWidth, frameHeight, Image.SCALE_DEFAULT)); // size of background
 
         // all the other jframe setup stuff
         jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -225,7 +228,7 @@ public class MainMenu extends JFrame {
         jframe.pack();
         jframe.setLocationRelativeTo(null);
         jframe.setVisible(true);
-
+        
     }
 
     public static void main(String[] args) {
