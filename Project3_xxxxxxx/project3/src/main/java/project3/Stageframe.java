@@ -1,6 +1,7 @@
 package project3;
 
 import javax.swing.JFrame;
+import javax.swing.border.Border;
 import javax.swing.event.MouseInputListener;
 import java.awt.*;
 import java.awt.event.*;
@@ -13,7 +14,7 @@ public class Stageframe extends JFrame {
     private String path = "project3/Project3_xxxxxxx/project3/src/pictures/";
     private JLabel robot1, robot2, robot3;
     private JLabel enemy1, enemy2, enemy3;
-    private JLabel Stat;
+    private Statpanel stat;
     private JLabel contentpane;
     private int stagenum = 1;
 
@@ -30,51 +31,73 @@ public class Stageframe extends JFrame {
         contentpane.setOpaque(true);
         contentpane.setLayout(null);
         this.addcomponent();
-        /*Characterlabel ro1 = new Characterlabel(path, "robot4.png", 150, 150, this); // it a robot
-        ro1.setMoveConditions(600, 450);
-        ro1.addMouse();
-
-        Characterlabel ro2 = new Characterlabel(path, "robot2.png", 150, 150, this); // it a robot
-        ro2.setMoveConditions(300, 450);
-        ro2.addMouse();
-
-        contentpane.add(ro1);
-        contentpane.add(ro2);*/
+        /*
+         * Characterlabel ro1 = new Characterlabel(path, "robot4.png", 150, 150, this);
+         * // it a robot
+         * ro1.setMoveConditions(600, 450);
+         * ro1.addMouse();
+         * 
+         * Characterlabel ro2 = new Characterlabel(path, "robot2.png", 150, 150, this);
+         * // it a robot
+         * ro2.setMoveConditions(300, 450);
+         * ro2.addMouse();
+         * 
+         * contentpane.add(ro1);
+         * contentpane.add(ro2);
+         */
 
         // stat label
 
-        // validate();
+        validate();
         repaint();
 
     }
-    public int getstagenum(){        
+
+    public int getstagenum() {
         return this.stagenum;
     }
-    public void setstagenum(int num){        
-         this.stagenum = num;
+
+    public void setstagenum(int num) {
+        this.stagenum = num;
     }
 
     public void addcomponent() {
-        Characterlabel ro1 = new Characterlabel(path, "robot4.png", 150, 150, this); // it a robot
+        Characterlabel ro1 = new Characterlabel(path, "robot4.png", 150, 150, this,stat); // it a robot
         ro1.setMoveConditions(600, 450);
         ro1.addMouse();
 
-        Characterlabel ro2 = new Characterlabel(path, "robot2.png", 150, 150, this); // it a robot
+        Characterlabel ro2 = new Characterlabel(path, "robot2.png", 150, 150, this,stat); // it a robot
         ro2.setMoveConditions(300, 450);
         ro2.addMouse();
 
+        stat = new Statpanel(path, null, 800, 100, this);
+        stat.setMoveConditions(283, 615);
+        stat.addpanelcomponent();
+
         contentpane.add(ro1);
         contentpane.add(ro2);
-    }
-    public void stage2(){
-        ImageIcon temp = new ImageIcon(path + "city.gif");
-        temp.setImage(temp.getImage().getScaledInstance(frameWidth, frameHeight, Image.SCALE_DEFAULT)); // size of background
-        //MyImageIcon temp = new MyImageIcon(path + "city.gif");
-        contentpane.setIcon(temp);
-        validate();
-        repaint();    
+        contentpane.add(stat);
     }
 
+    public void stage2() {
+        ImageIcon temp = new ImageIcon(path + "city.gif");
+        temp.setImage(temp.getImage().getScaledInstance(frameWidth, frameHeight, Image.SCALE_DEFAULT)); // size of
+                                                                                                        // background
+        // MyImageIcon temp = new MyImageIcon(path + "city.gif");
+        contentpane.setIcon(temp);
+        validate();
+        repaint();
+    }
+
+    public void stage1() {
+        ImageIcon temp = new ImageIcon(path + "warzone-scene.png");
+        temp.setImage(temp.getImage().getScaledInstance(frameWidth, frameHeight, Image.SCALE_DEFAULT)); // size of
+                                                                                                        // background
+        // MyImageIcon temp = new MyImageIcon(path + "city.gif");
+        contentpane.setIcon(temp);
+        validate();
+        repaint();
+    }
 
     public static void main(String[] args) { // for test ting frame
         new Stageframe();
@@ -103,11 +126,13 @@ class Characterlabel extends JLabel {
     protected int curX, curY, width, height;
     protected Stageframe parentFrame;
     protected Character character;
+    protected Statpanel stat;
 
-    public Characterlabel(String path, String filename, int width, int height, Stageframe pf) {
+    public Characterlabel(String path, String filename, int width, int height, Stageframe pf,Statpanel sp) {
 
         this.width = width;
         this.height = height;
+        this.stat = sp;
         staticon = new MyImageIcon(path + filename).resize(width, height);
         staticon2 = new MyImageIcon(path + "robot3.png").resize(width, height);
 
@@ -150,12 +175,15 @@ class Characterlabel extends JLabel {
 
             public void mouseEntered(MouseEvent e) {
                 setIcon(staticon2);
+                //stat.setVisible(true);
                 parentFrame.repaint();
+                
                 validate();
             }
 
             public void mouseExited(MouseEvent e) {
                 setIcon(staticon);
+                //stat.setVisible(false);
                 parentFrame.repaint();
                 validate();
             }
@@ -165,9 +193,12 @@ class Characterlabel extends JLabel {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(parentFrame.getstagenum()!=2){
-                parentFrame.stage2();
-                parentFrame.setstagenum(2);
+                if (parentFrame.getstagenum() != 2) {
+                    parentFrame.stage2();
+                    parentFrame.setstagenum(2);
+                } else {
+                    parentFrame.stage1();
+                    parentFrame.setstagenum(1);
                 }
             }
 
@@ -178,24 +209,33 @@ class Characterlabel extends JLabel {
     }
 }
 
-class Statlabel extends JLabel {
+/*class Statlabel extends JLabel {
 
-    protected MyImageIcon staticon, staticon2;
+    protected MyImageIcon statusicon;
     protected int curX, curY, width, height;
     protected Stageframe parentFrame;
+    protected Border border;
 
     public Statlabel(String path, String filename, int width, int height, Stageframe pf) {
 
         this.width = width;
         this.height = height;
-        staticon = new MyImageIcon(path + filename).resize(width, height);
-        staticon2 = new MyImageIcon(path + "robot3.png").resize(width, height);
+        border = BorderFactory.createLineBorder(Color.WHITE, 3);
+        // statusicon = new MyImageIcon(path + filename).resize(width, height);
 
-        setIcon(staticon);
+        // setIcon(statusicon);
         setHorizontalAlignment(JLabel.CENTER);
+        setBackground(new Color(0, 0, 0, 75));
+        setForeground(new Color(0, 0, 0));
+        setBorder(border);
+        setOpaque(true);
         parentFrame = pf;
         setBounds(getVisibleRect());
         setVisible(true);
+
+    }
+
+    public void settext() {
 
     }
 
@@ -206,10 +246,109 @@ class Statlabel extends JLabel {
 
     }
 
-    
+    public void addcomponent() {
+        JTextField atktext = new JTextField();
+        atktext.setPreferredSize(new Dimension(100, 25));
+        atktext.setFont(new Font("Algerian", Font.PLAIN, 16));
+        atktext.setCaretColor(Color.white);
+        atktext.setText("ATK : 20");
+
+        this.add(atktext);
+
+    }
+
+}*/
+
+class Statpanel extends JPanel {
+    protected MyImageIcon statusicon;
+    protected int curX, curY, width, height;
+    protected Stageframe parentFrame;
+    protected Border border;
+    protected JTextPane atktext;
+    protected JTextPane hptext;
+    protected JTextPane deftext;
+    protected JTextPane spdtext;
+    protected JTextPane nametext;
+
+
+    public Statpanel(String path, String filename, int width, int height, Stageframe pf) {
+
+        this.width = width;
+        this.height = height;
+        border = BorderFactory.createLineBorder(Color.WHITE, 3);
+        // statusicon = new MyImageIcon(path + filename).resize(width, height);
+
+        // setIcon(statusicon);
+        setBackground(new Color(0, 0, 0, 75));
+        setForeground(new Color(0, 0, 0));
+        setBorder(border);
+        setOpaque(true);
+        parentFrame = pf;
+        setBounds(getVisibleRect());
+        setVisible(true);
+
+    }
+    public void setvisiblestatpanel(boolean n){
+        this.setVisible(n);
+        validate();
+    }
+
+    public void settext() {
+
+    }
+
+    public void setMoveConditions(int x, int y) {
+        curX = x;
+        curY = y;
+        setBounds(curX, curY, width, height);
+
+    }
+
+    public void addpanelcomponent() {
+
+        atktext = new JTextPane();
+        atktext.setEditable(false);
+        atktext.setBackground(null);       
+        atktext.setForeground(Color.white);
+        atktext.setText("ATK : 20");
+        atktext.setBounds(50,10, width, height);
+
+        hptext = new JTextPane();
+        hptext.setEditable(false);
+        hptext.setBackground(null);       
+        hptext.setForeground(Color.white);
+        hptext.setText("HP : 20");
+        hptext.setBounds(50,10, width, height);
+
+        deftext = new JTextPane();
+        deftext.setEditable(false);
+        deftext.setBackground(null);       
+        deftext.setForeground(Color.white);
+        deftext.setText("DEF : 20");
+        deftext.setBounds(50,10, width, height);
+
+        nametext = new JTextPane();
+        nametext.setEditable(false);
+        nametext.setBackground(null);       
+        nametext.setForeground(Color.white);
+        nametext.setText("name : kawin");
+        nametext.setBounds(50,10, width, height);
+
+
+
+        this.add(atktext);
+        this.add(hptext);
+        this.add(deftext);
+        this.add(nametext);
+
+        
+        validate();
+        repaint();
+        
+
+    }
+
 }
-
-
 
 // ======================================================================================================================
 class templatelabel extends JLabel implements MouseInputListener, FocusListener {
