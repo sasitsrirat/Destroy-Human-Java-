@@ -170,8 +170,7 @@ public class MainMenu extends JFrame {
                     p.add(b2);
                     d.getContentPane().add(p);
                     d.setVisible(true);
-
-                    /* if () else exit */
+                    System.exit(0);
                 }
             });
         }
