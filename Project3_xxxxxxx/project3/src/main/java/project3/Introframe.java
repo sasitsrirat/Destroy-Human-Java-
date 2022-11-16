@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.UIManager;
 
 class Introframe extends JFrame {
 
@@ -23,10 +24,15 @@ class Introframe extends JFrame {
         // ProgressBar
         progressBar = new JProgressBar();
         progressBar.setLayout(null);
-        progressBar.setBackground(new Color(50,50,59));
-        progressBar.setSize(new Dimension(500,50));
-        progressBar.setLocation(400,768/2);
         progressBar.setStringPainted(true);
+        progressBar.setForeground(new Color(0,100,100,1));
+        UIManager.put("progressBar.background", Color.orange);
+        UIManager.put("progressBar.foreground", Color.black);
+        UIManager.put("progressBar.selectionBackground", Color.red);
+        UIManager.put("progressBar.selectionForeground", Color.green);
+        progressBar.setSize(new Dimension(500,50));
+        progressBar.setLocation(400,730/2);
+        
 
         loadingScreen.setBackground(Color.GRAY);
         loadingScreen.add(progressBar);

@@ -41,15 +41,7 @@ public class Scoreframe extends JFrame
             
             //best score in games 
             JLabel detail = new JLabel("SCORE");
-            
-            
-            
-        }
-        
-        
-         
+ 
+        } 
     }
-    
-    
-      
 }
