@@ -1,11 +1,11 @@
 package project3;
+
 import javax.sound.sampled.*;
 
 public class Sound {
-    
+
     Clip clip;
-    float previousVolume = 0;
-    float currentVolume = 0;
+    float currentVolume = -13;
     FloatControl fc;
     boolean mute = false;
 
@@ -15,22 +15,36 @@ public class Sound {
             AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
             clip = AudioSystem.getClip();
             clip.open(audioStream);
-            fc = (FloatControl)clip.getControl(FloatControl.Type.MASTER_GAIN);
+            fc = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
         } catch (Exception e) {
-           // e.printStackTrace();
+            e.printStackTrace();
         }
     }
-    public void playOnce()   { clip.setMicrosecondPosition(0); clip.start(); }
-    public void playLoop()   { clip.loop(Clip.LOOP_CONTINUOUSLY); }
-    public void stop()       { clip.stop(); }
-    public void muteVolume(){
-        if(mute == false){
-            previousVolume = currentVolume;
-            currentVolume = -80.0f;
-            fc.setValue(currentVolume);
+
+    public void playOnce() {
+        if(mute != true){
+        clip.setMicrosecondPosition(0);
+        clip.start();
+        this.currentVolume = -42.0f;
+        }
+    }
+
+    public void playLoop() {
+        if(mute != true){
+        clip.loop(Clip.LOOP_CONTINUOUSLY);
+        this.currentVolume = -42.0f;
+        }
+    }
+
+    public void stop() {
+        clip.stop();
+    }
+
+    public void muteVolume() {
+        if (mute == false) {
+            clip.stop();
             mute = true;
-        }else if(mute == true){
-            currentVolume = previousVolume;
+        } else if (mute == true) {
             fc.setValue(currentVolume);
             mute = false;
         }

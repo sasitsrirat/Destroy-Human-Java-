@@ -62,6 +62,10 @@ public class Stageframe extends JFrame {
     }
 
     public void addcomponent() {
+        stat = new Statpanel(path, null, 800, 100, this);
+        stat.setMoveConditions(283, 615);
+        stat.addpanelcomponent();
+
         Characterlabel ro1 = new Characterlabel(path, "robot4.png", 150, 150, this,stat); // it a robot
         ro1.setMoveConditions(600, 450);
         ro1.addMouse();
@@ -70,13 +74,12 @@ public class Stageframe extends JFrame {
         ro2.setMoveConditions(300, 450);
         ro2.addMouse();
 
-        stat = new Statpanel(path, null, 800, 100, this);
-        stat.setMoveConditions(283, 615);
-        stat.addpanelcomponent();
-
+        contentpane.add(stat);
         contentpane.add(ro1);
         contentpane.add(ro2);
-        contentpane.add(stat);
+
+        validate();
+        repaint();
     }
 
     public void stage2() {
@@ -126,13 +129,13 @@ class Characterlabel extends JLabel {
     protected int curX, curY, width, height;
     protected Stageframe parentFrame;
     protected Character character;
-    protected Statpanel stat;
+    protected Statpanel status;
 
     public Characterlabel(String path, String filename, int width, int height, Stageframe pf,Statpanel sp) {
 
         this.width = width;
         this.height = height;
-        this.stat = sp;
+        status = sp;
         staticon = new MyImageIcon(path + filename).resize(width, height);
         staticon2 = new MyImageIcon(path + "robot3.png").resize(width, height);
 
@@ -200,6 +203,7 @@ class Characterlabel extends JLabel {
                     parentFrame.stage1();
                     parentFrame.setstagenum(1);
                 }
+                status.settext(21,21,21,"kong3");
             }
 
             @Override
@@ -209,66 +213,17 @@ class Characterlabel extends JLabel {
     }
 }
 
-/*class Statlabel extends JLabel {
-
-    protected MyImageIcon statusicon;
-    protected int curX, curY, width, height;
-    protected Stageframe parentFrame;
-    protected Border border;
-
-    public Statlabel(String path, String filename, int width, int height, Stageframe pf) {
-
-        this.width = width;
-        this.height = height;
-        border = BorderFactory.createLineBorder(Color.WHITE, 3);
-        // statusicon = new MyImageIcon(path + filename).resize(width, height);
-
-        // setIcon(statusicon);
-        setHorizontalAlignment(JLabel.CENTER);
-        setBackground(new Color(0, 0, 0, 75));
-        setForeground(new Color(0, 0, 0));
-        setBorder(border);
-        setOpaque(true);
-        parentFrame = pf;
-        setBounds(getVisibleRect());
-        setVisible(true);
-
-    }
-
-    public void settext() {
-
-    }
-
-    public void setMoveConditions(int x, int y) {
-        curX = x;
-        curY = y;
-        setBounds(curX, curY, width, height);
-
-    }
-
-    public void addcomponent() {
-        JTextField atktext = new JTextField();
-        atktext.setPreferredSize(new Dimension(100, 25));
-        atktext.setFont(new Font("Algerian", Font.PLAIN, 16));
-        atktext.setCaretColor(Color.white);
-        atktext.setText("ATK : 20");
-
-        this.add(atktext);
-
-    }
-
-}*/
-
 class Statpanel extends JPanel {
     protected MyImageIcon statusicon;
     protected int curX, curY, width, height;
     protected Stageframe parentFrame;
     protected Border border;
-    protected JTextPane atktext;
-    protected JTextPane hptext;
-    protected JTextPane deftext;
-    protected JTextPane spdtext;
-    protected JTextPane nametext;
+    protected JLabel atktext = new JLabel();;
+    protected JLabel hptext = new JLabel();
+    protected JLabel deftext = new JLabel();
+    protected JLabel spdtext = new JLabel();
+    protected JLabel nametext = new JLabel();
+    private   JLabel panelpane;
 
 
     public Statpanel(String path, String filename, int width, int height, Stageframe pf) {
@@ -279,10 +234,12 @@ class Statpanel extends JPanel {
         // statusicon = new MyImageIcon(path + filename).resize(width, height);
 
         // setIcon(statusicon);
+        
         setBackground(new Color(0, 0, 0, 75));
         setForeground(new Color(0, 0, 0));
         setBorder(border);
         setOpaque(true);
+        setLayout(null);
         parentFrame = pf;
         setBounds(getVisibleRect());
         setVisible(true);
@@ -293,8 +250,14 @@ class Statpanel extends JPanel {
         validate();
     }
 
-    public void settext() {
+    public void settext(int atk,int hp,int def,String name) {
+        atktext.setText("ATK : "+ Integer.toString(atk));
+        hptext.setText("HP  : "+ Integer.toString(hp));
+        deftext.setText("DEF : "+ Integer.toString(def));
+        nametext.setText("name : "+name);
 
+        repaint();
+        parentFrame.repaint();
     }
 
     public void setMoveConditions(int x, int y) {
@@ -306,33 +269,26 @@ class Statpanel extends JPanel {
 
     public void addpanelcomponent() {
 
-        atktext = new JTextPane();
-        atktext.setEditable(false);
+        
         atktext.setBackground(null);       
         atktext.setForeground(Color.white);
         atktext.setText("ATK : 20");
-        atktext.setBounds(50,10, width, height);
+        atktext.setBounds(70,10, 60, 20);
 
-        hptext = new JTextPane();
-        hptext.setEditable(false);
         hptext.setBackground(null);       
         hptext.setForeground(Color.white);
         hptext.setText("HP : 20");
-        hptext.setBounds(50,10, width, height);
+        hptext.setBounds(70,30, 60, 20);
 
-        deftext = new JTextPane();
-        deftext.setEditable(false);
         deftext.setBackground(null);       
         deftext.setForeground(Color.white);
         deftext.setText("DEF : 20");
-        deftext.setBounds(50,10, width, height);
+        deftext.setBounds(70,50, 60, 20);
 
-        nametext = new JTextPane();
-        nametext.setEditable(false);
         nametext.setBackground(null);       
         nametext.setForeground(Color.white);
         nametext.setText("name : kawin");
-        nametext.setBounds(50,10, width, height);
+        nametext.setBounds(70,70, 100, 20);
 
 
 

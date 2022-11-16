@@ -43,6 +43,8 @@ public class MainMenu extends JFrame {
     protected Tutorialframe tframe;
     protected Creditframe cframe;
     protected Sound mainmenuSound;
+    protected Sound clickSound;
+
 
     public MainMenu() {
         String imagepath = "project3/Project3_xxxxxxx/project3/src/pictures/";
@@ -50,7 +52,9 @@ public class MainMenu extends JFrame {
 
         // set background music
         mainmenuSound = new Sound(soundpath + "BossTime.wav");
-       // mainmenuSound.playLoop(); // Off-On Music
+        mainmenuSound.playLoop();
+        mainmenuSound.currentVolume = -42;
+        clickSound = new Sound(soundpath + "click.wav");
 
         setType(Type.POPUP);
         setTitle("Menu");
@@ -79,6 +83,7 @@ public class MainMenu extends JFrame {
             playButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
+                    clickSound.playOnce();
                     if (sframe == null)
                         sframe = new Stageframe();
                     else
@@ -98,8 +103,9 @@ public class MainMenu extends JFrame {
             optionButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
+                    clickSound.playOnce();
                     if (oframe == null)
-                        oframe = new Optionframe(mainmenuSound, imagepath);
+                        oframe = new Optionframe(mainmenuSound, clickSound, imagepath);
                     else
                         oframe.setVisible(true);
                 }
@@ -117,6 +123,7 @@ public class MainMenu extends JFrame {
             tutorialButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
+                    clickSound.playOnce();
                     if (tframe == null)
                         tframe = new Tutorialframe();
                     else
@@ -136,6 +143,7 @@ public class MainMenu extends JFrame {
             creditButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
+                    clickSound.playOnce();
                     if (cframe == null)
                         cframe = new Creditframe();
                     else
@@ -156,6 +164,7 @@ public class MainMenu extends JFrame {
             quitButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
+                    clickSound.playOnce();
                     JButton button = (JButton) event.getSource();
                     JDialog d = new JDialog();
                     d.setTitle("test");
