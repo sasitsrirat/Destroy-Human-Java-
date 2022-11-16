@@ -44,11 +44,11 @@ public class MainMenu extends JFrame {
     protected Creditframe cframe;
     protected Sound mainmenuSound;
     protected Sound clickSound;
-
+    protected Scoreframe scoreframe;
 
     public MainMenu() {
-        String imagepath = "project3/Project3_xxxxxxx/project3/src/pictures/";
-        String soundpath = "project3/Project3_xxxxxxx/project3/src/sounds/";
+        String imagepath = "Project3_xxxxxxx/project3/src/pictures/";
+        String soundpath = "Project3_xxxxxxx/project3/src/sounds/";
 
         // set background music
         mainmenuSound = new Sound(soundpath + "BossTime.wav");
@@ -105,7 +105,7 @@ public class MainMenu extends JFrame {
                 public void actionPerformed(ActionEvent event) {
                     clickSound.playOnce();
                     if (oframe == null)
-                        oframe = new Optionframe(mainmenuSound, clickSound, imagepath);
+                        oframe = new Optionframe(mainmenuSound,clickSound, imagepath);
                     else
                         oframe.setVisible(true);
                 }
@@ -128,6 +128,26 @@ public class MainMenu extends JFrame {
                         tframe = new Tutorialframe();
                     else
                         tframe.setVisible(true);
+                }
+            });
+        }
+        JButton scoreButton = new JButton("SCORE");
+        {
+            scoreButton.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
+            scoreButton.setBackground(new Color(222, 0, 62));
+            scoreButton.setForeground(Color.white);
+            // customize the button with your own look
+            scoreButton.setUI(new StyledButtonUI());
+            scoreButton.setForeground(new Color(255, 255, 255));
+            // tutorialButton.setBounds(608, 250, 150, 50);
+            scoreButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent event) {
+                    clickSound.playOnce();
+                    if (scoreframe == null)
+                        scoreframe = new Scoreframe();
+                    else
+                        scoreframe.setVisible(true);
                 }
             });
         }
@@ -192,6 +212,7 @@ public class MainMenu extends JFrame {
             J2.add(playButton);
             J2.add(optionButton);
             J2.add(tutorialButton);
+            J2.add(scoreButton);
             J2.add(creditButton);
             J2.add(quitButton);
             J2.revalidate();
@@ -242,6 +263,9 @@ public class MainMenu extends JFrame {
     public static void main(String[] args) {
         //displayJFrame();
         try {
+            Introframe introframe = new Introframe();
+            //MainMenu frame = new MainMenu();
+            introframe.setVisible(true);
             MainMenu frame = new MainMenu();
             frame.setVisible(true);
         } catch (Exception e) {
