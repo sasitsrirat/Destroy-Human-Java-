@@ -38,7 +38,7 @@ class StyledButtonUI extends BasicButtonUI {
 public class MainMenu extends JFrame {
     private static int frameWidth = 1366, frameHeight = 768; // Don't Change it.
     protected Stageframe sframe;
-    private JLabel contentPane;
+    private JLabel contentPane; //JLabel contentPane = new JLabel;
     protected Optionframe oframe;
     protected Tutorialframe tframe;
     protected Creditframe cframe;
