@@ -242,29 +242,10 @@ public class MainMenu extends JFrame {
         // contentPane.validate();
 
     }
-    //intro and loading screen  
-    static void displayJFrame() {
-        // set the jframe title in the constructor
-        JFrame jframe = new JFrame("LOADING");
-        JLabel Logo = new JLabel();
-        
-       // Logo.setImage(Logo.getImage().getScaledInstance(frameWidth, frameHeight, Image.SCALE_DEFAULT)); // size of background
-
-        // all the other jframe setup stuff
-        jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jframe.setPreferredSize(new Dimension(1400, 300));
-        jframe.setBackground(Color.black);
-        jframe.pack();
-        jframe.setLocationRelativeTo(null);
-        jframe.setVisible(true);
-        
-    }
-
     public static void main(String[] args) {
         //displayJFrame();
         try {
             Introframe introframe = new Introframe();
-            //MainMenu frame = new MainMenu();
             introframe.setVisible(true);
             MainMenu frame = new MainMenu();
             frame.setVisible(true);

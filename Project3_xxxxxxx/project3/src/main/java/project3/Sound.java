@@ -12,9 +12,9 @@ public class Sound {
     public Sound(String filename) {
         try {
             java.io.File file = new java.io.File(filename);
-            AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
+            //AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
             clip = AudioSystem.getClip();
-            clip.open(audioStream);
+            //clip.open(audioStream);
             fc = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
         } catch (Exception e) {
             e.printStackTrace();

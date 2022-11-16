@@ -11,7 +11,7 @@ public class Stageframe extends JFrame {
 
     private int frameHeight = 768;
     private int frameWidth = 1366;
-    private String path = "project3/Project3_xxxxxxx/project3/src/pictures/";
+    private String path = "Project3_xxxxxxx/project3/src/pictures/";
     private JLabel robot1, robot2, robot3;
     private JLabel enemy1, enemy2, enemy3;
     private Statpanel stat;
