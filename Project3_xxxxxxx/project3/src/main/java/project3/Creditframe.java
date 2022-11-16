@@ -28,6 +28,7 @@ public class Creditframe extends JFrame
         setContentPane(contentPane = new JLabel());
         contentPane.setIcon(imageIcon);
         setContentPane(contentPane);
+        
          
     }
     
