@@ -47,13 +47,12 @@ public class MainMenu extends JFrame {
     protected Scoreframe scoreframe;
 
     public MainMenu() {
-        String imagepath = "Project3_xxxxxxx/project3/src/pictures/";
-        String soundpath = "Project3_xxxxxxx/project3/src/sounds/";
+        String imagepath = "src/pictures/";
+        String soundpath = "src/sounds/";
 
         // set background music
         mainmenuSound = new Sound(soundpath + "BossTime.wav");
         mainmenuSound.playLoop();
-        mainmenuSound.currentVolume = -42;
         clickSound = new Sound(soundpath + "click.wav");
 
         setType(Type.POPUP);
