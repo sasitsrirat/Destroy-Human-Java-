@@ -8,7 +8,9 @@ import javax.swing.event.ChangeListener;
 
 public class Optionframe extends JFrame {
 
-    protected JPanel contentpane;
+    protected JLabel musicText;
+    protected JLabel effectText;
+    protected JLabel contentpane;
     protected JSlider musicSlider;
     protected JSlider effectSlider;
     protected Sound musicSound;
@@ -16,39 +18,63 @@ public class Optionframe extends JFrame {
     protected JCheckBox musiccheck;
     protected JCheckBox effectcheck;
     protected String path;
+    protected int frameWidth = 700;
+    protected int frameHeight = 400;
 
     public Optionframe(Sound mSound, Sound eSound, String imagepath) {
-
+        
         musicSound = mSound;
         effectSound = eSound;
         path = imagepath;
 
         setTitle("Option");
-        setBounds(300, 200, 700, 400);
+        setBounds(300, 200, frameWidth, frameHeight);
         setVisible(true);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
-        contentpane = (JPanel) getContentPane();
+        /*contentpane = (JLabel) getContentPane();
         contentpane.setLayout(null);
-        setContentPane(contentpane);
+        setContentPane(contentpane);*/
+        
+        setContentPane(contentpane = new JLabel());
+        MyImageIcon imageIcon = new MyImageIcon(path + "jenny.jpg");
+        contentpane.setIcon(imageIcon.resize(frameWidth, frameHeight));
+        contentpane.setOpaque(true);
+        contentpane.setLayout(null);
 
         AddComponents();
     }
 
     private void AddComponents() {
+
+        musicText = new JLabel();
+        musicText.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 30));
+        musicText.setBackground(null);
+        musicText.setForeground(Color.blue);
+        musicText.setText("MUSIC VOLUME");
+        musicText.setBounds(80, 40, 700, 30);
+        effectText = new JLabel();
+        effectText.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 30));
+        effectText.setBackground(null);
+        effectText.setForeground(Color.blue);
+        effectText.setText("EFFECT VOLUME");
+        effectText.setBounds(80, 205, 700, 30);
+
         JPanel musicPanel = new JPanel();
-        musicPanel.setBounds(0, 100, 700, 100);
+        musicPanel.setBounds(0, 90, 700, 100);
         musicPanel.setLayout(null);
-        MyImageIcon music_max = new MyImageIcon(path + "Kawin_max.png").resize(50, 50);
-        MyImageIcon music_min = new MyImageIcon(path + "Kawin_min.png").resize(50, 50);
-        MyImageIcon music_mute = new MyImageIcon(path + "Kawin_mute.png").resize(50, 50);
+        musicPanel.setOpaque(false);
+        MyImageIcon music_max = new MyImageIcon(path + "Kawin_max.png").resize(75, 75);
+        MyImageIcon music_min = new MyImageIcon(path + "Kawin_min.png").resize(75, 75);
+        MyImageIcon music_mute = new MyImageIcon(path + "Kawin_mute.png").resize(75, 75);
         JLabel musiclabel = new JLabel();
         musiclabel.setIcon(music_max);
         musiclabel.setHorizontalAlignment(JLabel.CENTER);
-        musiclabel.setBounds(80, 12, 50, 50);
+        musiclabel.setBounds(70, 0, 75, 75);
         musicPanel.add(musiclabel);
         musicSlider = new JSlider(1, 10, 10);
         musicSlider.setBounds(150, 0, 400, 75);
+        musicSlider.setOpaque(false);
         musicSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -94,10 +120,12 @@ public class Optionframe extends JFrame {
                 musicSound.fc.setValue(musicSound.currentVolume);
             }
         });
-        
+
         JPanel mpanel = new JPanel();
-        mpanel.setBounds(535, 120, 100, 25);
+        mpanel.setBounds(535, 110, 100, 25);
+        mpanel.setOpaque(false);
         musiccheck = new JCheckBox(" mute ");
+        musiccheck.setOpaque(false);
         musiccheck.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -117,20 +145,22 @@ public class Optionframe extends JFrame {
                 }
             }
         });
-        
+
         JPanel effectPanel = new JPanel();
-        effectPanel.setBounds(0, 225, 700, 100);
+        effectPanel.setBounds(0, 250, 700, 100);
         effectPanel.setLayout(null);
-        MyImageIcon kawin_max = new MyImageIcon(path + "Kawin_max.png").resize(50, 50);
-        MyImageIcon kawin_min = new MyImageIcon(path + "Kawin_min.png").resize(50, 50);
-        MyImageIcon kawin_mute = new MyImageIcon(path + "Kawin_mute.png").resize(50, 50);
+        effectPanel.setOpaque(false);
+        MyImageIcon kawin_max = new MyImageIcon(path + "Kawin_max.png").resize(75, 75);
+        MyImageIcon kawin_min = new MyImageIcon(path + "Kawin_min.png").resize(75, 75);
+        MyImageIcon kawin_mute = new MyImageIcon(path + "Kawin_mute.png").resize(75, 75);
         JLabel effectlabel = new JLabel();
         effectlabel.setIcon(kawin_max);
         effectlabel.setHorizontalAlignment(JLabel.CENTER);
-        effectlabel.setBounds(80, 12, 50, 50);
+        effectlabel.setBounds(70, 0, 75, 75);
         effectPanel.add(effectlabel);
         effectSlider = new JSlider(1, 10, 10);
         effectSlider.setBounds(150, 0, 400, 75);
+        effectSlider.setOpaque(false);
         effectSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -177,10 +207,12 @@ public class Optionframe extends JFrame {
                 effectSound.playOnce();
             }
         });
-        
+
         JPanel epanel = new JPanel();
-        epanel.setBounds(535, 245, 100, 25);
+        epanel.setBounds(535, 270, 100, 25);
+        epanel.setOpaque(false);
         effectcheck = new JCheckBox(" mute ");
+        effectcheck.setOpaque(false);
         effectcheck.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -200,15 +232,36 @@ public class Optionframe extends JFrame {
                 }
             }
         });
-        
+
         mpanel.add(musiccheck);
+        
         epanel.add(effectcheck);
+        
         musicPanel.add(musicSlider);
+        
         effectPanel.add(effectSlider);
+        
+        contentpane.add(musicText);
+        contentpane.add(effectText);
         contentpane.add(mpanel);
         contentpane.add(epanel);
         contentpane.add(musicPanel);
         contentpane.add(effectPanel);
         validate();
+    }
+    class MyImageIcon extends ImageIcon {
+    public MyImageIcon(String fname) {
+        super(fname);
+    }
+
+    public MyImageIcon(Image image) {
+        super(image);
+    }
+
+    public MyImageIcon resize(int width, int height) {
+        Image oldimg = this.getImage();
+        Image newimg = oldimg.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
+        return new MyImageIcon(newimg);
+    }
     }
 }
