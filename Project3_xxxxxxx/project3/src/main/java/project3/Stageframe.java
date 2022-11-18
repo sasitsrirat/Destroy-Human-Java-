@@ -1,31 +1,39 @@
 package project3;
 
+import java.awt.*;
+import java.io.*;
+import java.util.*;
+import javax.swing.*;
+import java.lang.*;
 import javax.swing.JFrame;
 import javax.swing.border.Border;
 import javax.swing.event.MouseInputListener;
-import java.awt.*;
 import java.awt.event.*;
-import javax.swing.*;
 
 public class Stageframe extends JFrame {
 
     private int frameHeight = 768;
     private int frameWidth = 1366;
-    private String path = "Project3_xxxxxxx/project3/src/pictures/";
-    private JLabel robot1, robot2, robot3;
-    private JLabel enemy1, enemy2, enemy3;
+    private String path = "project3/Project3_xxxxxxx/project3/src/pictures/"; //project3\Project3_xxxxxxx\project3\src\pictures
+    private ArrayList<Robot> robot;
+    private ArrayList<Human> human;
+    private Random rand = new Random();
+    private Characterlabel robot1, robot2, robot3;
+    private Characterlabel enemy1, enemy2, enemy3;
     private Statpanel stat;
     private JLabel contentpane;
     private int stagenum = 1;
+    private int wave = 1;
 
     public Stageframe() { // อาจจะรับ ArrayList เข้ามา
 
-        setBounds(50, 50, frameWidth, frameHeight);
+       /* setBounds(50, 50, frameWidth, frameHeight);
         setTitle("Stage");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
 
-        setContentPane(contentpane = new JLabel());
+        setContentPane(contentpane = new JLabel()); */
+        contentpane = new JLabel();
         MyImageIcon background = new MyImageIcon(path + "8-Bit-Backgrounds.jpg"); // project3\Project3_xxxxxxx\project3\src\pictures\8-Bit-Backgrounds.jpg
         contentpane.setIcon(background.resize(frameWidth, frameHeight));
         contentpane.setOpaque(true);
@@ -53,6 +61,10 @@ public class Stageframe extends JFrame {
 
     }
 
+    public JLabel getContentpane(){
+        return contentpane;
+    }
+
     public int getstagenum() {
         return this.stagenum;
     }
@@ -66,17 +78,17 @@ public class Stageframe extends JFrame {
         stat.setMoveConditions(283, 615);
         stat.addpanelcomponent();
 
-        Characterlabel ro1 = new Characterlabel(path, "robot4.png", 150, 150, this,stat); // it a robot
-        ro1.setMoveConditions(600, 450);
-        ro1.addMouse();
+        robot1 = new Characterlabel(path, "robot4.png", 150, 150, this,stat); // it a robot
+        robot1.setMoveConditions(600, 450);
+        robot1.addMouse();
 
-        Characterlabel ro2 = new Characterlabel(path, "robot2.png", 150, 150, this,stat); // it a robot
-        ro2.setMoveConditions(300, 450);
-        ro2.addMouse();
+        robot2 = new Characterlabel(path, "robot2.png", 150, 150, this,stat); // it a robot
+        robot2.setMoveConditions(300, 450);
+        robot2.addMouse();
 
         contentpane.add(stat);
-        contentpane.add(ro1);
-        contentpane.add(ro2);
+        contentpane.add(robot1);
+        contentpane.add(robot2);
 
         validate();
         repaint();
@@ -104,6 +116,133 @@ public class Stageframe extends JFrame {
 
     public static void main(String[] args) { // for test ting frame
         new Stageframe();
+    }
+
+    public void stage(int n, int w) {
+        stagenum = n;
+        wave = w;
+        Robotwave ally = new Robotwave(n);
+        robot = ally.getro();
+        for (int index = 0; index < wave; index++) {
+            Humanwave enemy = new Humanwave(stagenum, index + 1);
+            human = enemy.gethu();
+            this.battle();
+        }
+    }
+
+    public void battle() { // stage battle
+        int i = 0;
+        for (Robot r : robot) {
+            r.introduce();
+        }
+        for (Human h : human) {
+            h.introduce();
+        }
+        while (i < 10) {
+            for (Robot r : robot) {
+                action_robot(r);
+                checkdeath();
+            }
+            for (Human h : human) {
+                action_enemy(h);
+                checkdeath();
+            } 
+            checkdeath();
+            System.out.printf("End round %d\n********************\n\n", i + 1);
+            // output from wave
+
+            // run
+            i++;
+            if (robot.size() == 0 || human.size() == 0) {
+                i = 10;
+            }
+        }
+    }
+
+    public void checkdeath() {
+        for (int j = 0; j < human.size(); j++) { // check death here
+            if (human.get(j).checkdeath() == 1) {
+                System.out.printf("%s is death\n", human.get(j).getname());
+                human.remove(j);
+                j = j - 1;
+            }
+        }
+        for (int j = 0; j < robot.size(); j++) {
+            if (robot.get(j).checkdeath() == 1) {
+                System.out.printf("%s is death\n", robot.get(j).getname());
+                robot.remove(j);
+                j = j - 1;
+            }
+        }
+    }
+
+    public void action_robot(Robot ro) { // Arraylist robot,character
+        System.out.printf("Robot action\n");
+        // show choice
+        System.out.printf("Enter 1 to use skill\n\n");
+        Scanner scan = new Scanner(System.in);
+        int choice = 0;
+        try {
+            choice = scan.nextInt();
+        } catch (Exception e) {
+        }
+        switch (choice) {
+            case 1: // choose skill
+                action_robot_skill(ro);
+                break;
+            case 2: // item use jcheckbox
+
+                break;
+            case 3: // choose rest
+
+            default:
+                break;
+        }
+        //System.out.print(robot.size());
+    }
+
+    public void action_robot_skill(Robot ro) {
+        System.out.printf("Enter 1 to use normal attack\n\n");
+        Scanner scan = new Scanner(System.in);
+        int choice_2 = scan.nextInt();
+        switch (choice_2) {
+            case 1: // choose normal attack
+                int h = chooseenemy();
+                ro.attack(human.get(h));
+                System.out.printf("%s attack %s\n", ro.getname(), human.get(h).getname());
+                break;
+            case 2: // special skill
+
+                break;
+            case 3: // ultimate skill
+
+                break;
+            default:
+                action_robot(ro);
+                break;
+        }
+    }
+
+    public void action_enemy(Human h) { // Arraylist human,character
+        int size = robot.size();
+        if(size==0){
+        System.out.printf("Human action\n");
+        
+        int a = rand.nextInt(size);
+        h.attack(robot.get(a));
+        }
+    }
+
+    public int chooseenemy() {
+        int i = 1;
+        for (Human h : human) {
+            System.out.printf("%d. ", i);
+            h.introduce();
+            i++;
+        }
+        Scanner scan = new Scanner(System.in);
+        int choice = scan.nextInt() - 1;
+        return choice;
     }
 }
 

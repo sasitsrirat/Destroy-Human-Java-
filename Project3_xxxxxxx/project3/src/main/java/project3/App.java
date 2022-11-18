@@ -7,23 +7,17 @@ import javax.swing.*;
 import java.lang.*;
 
 public final class App {
-    private App() {
-    }
 
     public static void main(String[] args) {
-        System.out.printf("Hello World!\nI am Kawin Sudloh\n");
-
-        ArrayList<Robot> robot = new ArrayList<Robot>(); 
-        robot.add(new Robot("KawinSudloh", 500, 50, 50, 50, 50, 50, 50));
-        //ArrayList<ArrayList <Human>> humanwave = new ArrayList<ArrayList <Human>>(); 
-        ArrayList<Human> human = new ArrayList<Human>(); 
-        human.add(new Human("Kong_1", 10, 1, 1, 1, 1));
-        human.add(new Human("Kong_2", 20, 1, 1,10, 1));
-        Humanwave huwave = new Humanwave(1, 1);
-        huwave.stage1_1();
-        human = huwave.gethu();
-        //humanwave.add(human);
-        new Stage(1,1);
+        //displayJFrame();
+        try {
+            //Introframe introframe = new Introframe();
+            //introframe.setVisible(true);
+            MainMenu frame = new MainMenu();
+            frame.setVisible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         // Don't delete
         /*ArrayList<ArrayList <Integer>> a = new ArrayList<ArrayList<Integer>>(5);

@@ -47,8 +47,8 @@ public class MainMenu extends JFrame {
     protected Scoreframe scoreframe;
 
     public MainMenu() {
-        String imagepath = "src/pictures/";
-        String soundpath = "src/sounds/";
+        String imagepath = "project3/Project3_xxxxxxx/project3/src/pictures/";
+        String soundpath = "project3/Project3_xxxxxxx/project3/src/sounds/";
 
         // set background music
         mainmenuSound = new Sound(soundpath + "BossTime.wav");
@@ -65,7 +65,7 @@ public class MainMenu extends JFrame {
         ImageIcon imageIcon = new ImageIcon(imagepath + "roboyscofi.gif");
         imageIcon.setImage(imageIcon.getImage().getScaledInstance(frameWidth, frameHeight, Image.SCALE_DEFAULT)); // size of background
         contentPane = new JLabel();
-        setContentPane(contentPane = new JLabel());
+        //setContentPane(contentPane = new JLabel());
         contentPane.setIcon(imageIcon);
         contentPane.setLayout(null);
         setContentPane(contentPane);
@@ -230,22 +230,26 @@ public class MainMenu extends JFrame {
             J.add(logo);
         }
 
-        /*
-         * contentPane.add(playButton);
-         * contentPane.add(optionButton);
-         * contentPane.add(tutorialButton);
-         * contentPane.add(creditButton);
-         * contentPane.add(quitButton);/*
-         */
-        // contentPane.setFocusable(true);
-        // contentPane.validate();
+        
+          /*contentPane.add(playButton);
+          contentPane.add(optionButton);
+          contentPane.add(tutorialButton);
+          contentPane.add(creditButton);
+          contentPane.add(quitButton);*/
+         
+         contentPane.setFocusable(true);
+         contentPane.validate();
 
+    }
+    public JLabel getPane(){
+        return contentPane;
+        
     }
     public static void main(String[] args) {
         //displayJFrame();
         try {
-            Introframe introframe = new Introframe();
-            introframe.setVisible(true);
+            //Introframe introframe = new Introframe();
+            //introframe.setVisible(true);
             MainMenu frame = new MainMenu();
             frame.setVisible(true);
         } catch (Exception e) {
