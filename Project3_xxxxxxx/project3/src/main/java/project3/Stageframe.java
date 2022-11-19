@@ -23,7 +23,7 @@ public class Stageframe extends JFrame {
     private Random rand = new Random();
     private Characterlabel robot1, robot2, robot3;
     private Characterlabel enemy1, enemy2, enemy3;
-    private Characterlabel activeLabel;
+    private Characterlabel activeLabel, targetLabel;
     private StatLabel stat;
     private JLabel contentpane;
     private int stagenum ;
@@ -49,9 +49,15 @@ public class Stageframe extends JFrame {
         repaint();
 
     }
+
+    public void gettargetLabel(Characterlabel tl){
+        targetLabel = tl;
+    }
+
     public void sethumanArraylist(){
         this.humanArraylist = hw.gethu();
     }
+
     public void setrobotArraylist(){
         this.robotArraylist = rw.getro();
     }
@@ -488,7 +494,7 @@ class Characterlabel extends JLabel {
                         ex = parentFrame.getrobotArraylist().get(i);
                     }
                 }
-                status.settext(ex.getatk(), ex.gethp(), ex.getmax_hp(), ex.getdf(), ex.getname());
+                status.setRtext(ex.getatk(), ex.gethp(), ex.getmax_hp(), ex.getdf(), ex.getname());
                 parentFrame.repaint();
                 
                 validate();
@@ -512,8 +518,8 @@ class Characterlabel extends JLabel {
                 } else {
                     parentFrame.stage1();
                     parentFrame.setstagenum(1);
-                }
-                status.settext(21,21,21,"kong3");*/
+                }*/
+                parentFrame.gettargetLabel(callthis());
             }
 
             @Override
@@ -521,6 +527,10 @@ class Characterlabel extends JLabel {
             }
         });
     }
+    protected Characterlabel callthis(){
+        return this;
+    }
+
 }
 
 class StatLabel extends JLabel {
@@ -529,11 +539,16 @@ class StatLabel extends JLabel {
     protected Stageframe parentFrame;
     protected Character activeCharacter;
     protected Border border;
-    protected JLabel atktext = new JLabel();;
-    protected JLabel hptext = new JLabel();
-    protected JLabel deftext = new JLabel();
-    protected JLabel spdtext = new JLabel();
-    protected JLabel nametext = new JLabel();
+    protected JLabel Latktext = new JLabel();;
+    protected JLabel Lhptext = new JLabel();
+    protected JLabel Ldeftext = new JLabel();
+    protected JLabel Lspdtext = new JLabel();
+    protected JLabel Lnametext = new JLabel();
+    protected JLabel Ratktext = new JLabel();;
+    protected JLabel Rhptext = new JLabel();
+    protected JLabel Rdeftext = new JLabel();
+    protected JLabel Rspdtext = new JLabel();
+    protected JLabel Rnametext = new JLabel();
     protected String imagepath;
     private   JLabel panelpane;
 
@@ -557,7 +572,7 @@ class StatLabel extends JLabel {
 
     public void getactiveCharacter(Character ac) {
         activeCharacter = ac;
-        settext(activeCharacter.getatk(), activeCharacter.gethp(), activeCharacter.getmax_hp(), activeCharacter.getdf(), activeCharacter.getname());
+        setLtext(activeCharacter.getatk(), activeCharacter.gethp(), activeCharacter.getmax_hp(), activeCharacter.getdf(), activeCharacter.getname());
     }
 
     public void setvisiblestatlabel(boolean n){
@@ -565,11 +580,21 @@ class StatLabel extends JLabel {
         validate();
     }
 
-    public void settext(int atk,int hp,int max_hp,int def,String name) {
-        atktext.setText("ATK : "+ Integer.toString(atk));
-        hptext.setText("HP  : "+ Integer.toString(hp) + "/ " + Integer.toString(max_hp));
-        deftext.setText("DEF : "+ Integer.toString(def));
-        nametext.setText("name : "+name);
+    public void setLtext(int atk,int hp,int max_hp,int def,String name) {
+        Latktext.setText("ATK : "+ Integer.toString(atk));
+        Lhptext.setText("HP  : "+ Integer.toString(hp) + "/ " + Integer.toString(max_hp));
+        Ldeftext.setText("DEF : "+ Integer.toString(def));
+        Lnametext.setText("name : "+name);
+
+        repaint();
+        parentFrame.repaint();
+    }
+
+    public void setRtext(int atk,int hp,int max_hp,int def,String name) {
+        Ratktext.setText("ATK : "+ Integer.toString(atk));
+        Rhptext.setText("HP  : "+ Integer.toString(hp) + "/ " + Integer.toString(max_hp));
+        Rdeftext.setText("DEF : "+ Integer.toString(def));
+        Rnametext.setText("name : "+name);
 
         repaint();
         parentFrame.repaint();
@@ -584,29 +609,45 @@ class StatLabel extends JLabel {
 
     public void addlabelcomponent() {
 
-        atktext.setBackground(null);       
-        atktext.setForeground(Color.white);
-        atktext.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
-        atktext.setText("ATK : 20");
-        atktext.setBounds(140,40, 200, 30);
+        Latktext.setBackground(null);       
+        Latktext.setForeground(Color.white);
+        Latktext.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
+        Latktext.setBounds(140,40, 200, 30);
 
-        hptext.setBackground(null);       
-        hptext.setForeground(Color.white);
-        hptext.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
-        hptext.setText("HP : 20/ 20");
-        hptext.setBounds(140,70, 200, 30);
+        Lhptext.setBackground(null);       
+        Lhptext.setForeground(Color.white);
+        Lhptext.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
+        Lhptext.setBounds(140,70, 200, 30);
 
-        deftext.setBackground(null);       
-        deftext.setForeground(Color.white);
-        deftext.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
-        deftext.setText("DEF : 20");
-        deftext.setBounds(140,100, 200, 30);
+        Ldeftext.setBackground(null);       
+        Ldeftext.setForeground(Color.white);
+        Ldeftext.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
+        Ldeftext.setBounds(140,100, 200, 30);
 
-        nametext.setBackground(null);       
-        nametext.setForeground(Color.white);
-        nametext.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
-        nametext.setText("name : Kawin");
-        nametext.setBounds(140,130, 200, 30);
+        Lnametext.setBackground(null);       
+        Lnametext.setForeground(Color.white);
+        Lnametext.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
+        Lnametext.setBounds(140,130, 200, 30);
+
+        Ratktext.setBackground(null);       
+        Ratktext.setForeground(Color.white);
+        Ratktext.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
+        Ratktext.setBounds(parentFrame.getWidth() - 340 ,40, 200, 30);
+
+        Rhptext.setBackground(null);       
+        Rhptext.setForeground(Color.white);
+        Rhptext.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
+        Rhptext.setBounds(parentFrame.getWidth() - 340,70, 200, 30);
+
+        Rdeftext.setBackground(null);       
+        Rdeftext.setForeground(Color.white);
+        Rdeftext.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
+        Rdeftext.setBounds(parentFrame.getWidth() - 340 ,100, 200, 30);
+
+        Rnametext.setBackground(null);       
+        Rnametext.setForeground(Color.white);
+        Rnametext.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
+        Rnametext.setBounds(parentFrame.getWidth() - 340 ,130, 200, 30);
 
         JButton attackButton = new JButton(" Attack");
         {
@@ -668,10 +709,14 @@ class StatLabel extends JLabel {
             });
         }
 
-        this.add(atktext);
-        this.add(hptext);
-        this.add(deftext);
-        this.add(nametext);
+        this.add(Latktext);
+        this.add(Lhptext);
+        this.add(Ldeftext);
+        this.add(Lnametext);
+        this.add(Ratktext);
+        this.add(Rhptext);
+        this.add(Rdeftext);
+        this.add(Rnametext);
         this.add(attackButton);
         this.add(skillButton);
         this.add(restButton);
