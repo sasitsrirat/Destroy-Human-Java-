@@ -30,34 +30,12 @@ public class Stageframe extends JFrame {
         
         imagepath = ipath;
         soundpath = spath;
-       /* setBounds(50, 50, frameWidth, frameHeight);
-        setTitle("Stage");
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setVisible(true);
-
-        setContentPane(contentpane = new JLabel()); */
         contentpane = new JLabel();
         MyImageIcon background = new MyImageIcon(imagepath + "8-Bit-Backgrounds2.jpg"); // project3\Project3_xxxxxxx\project3\src\pictures\8-Bit-Backgrounds.jpg
         contentpane.setIcon(background.resize(frameWidth, frameHeight));
         contentpane.setOpaque(true);
         contentpane.setLayout(null);
         this.addcomponent();
-        /*
-         * Characterlabel ro1 = new Characterlabel(path, "robot4.png", 150, 150, this);
-         * // it a robot
-         * ro1.setMoveConditions(600, 450);
-         * ro1.addMouse();
-         * 
-         * Characterlabel ro2 = new Characterlabel(path, "robot2.png", 150, 150, this);
-         * // it a robot
-         * ro2.setMoveConditions(300, 450);
-         * ro2.addMouse();
-         * 
-         * contentpane.add(ro1);
-         * contentpane.add(ro2);
-         */
-
-        // stat label
 
         validate();
         repaint();
@@ -82,16 +60,36 @@ public class Stageframe extends JFrame {
         stat.addlabelcomponent();
 
         robot1 = new Characterlabel(imagepath, "robot4.png", 200, 200, this,stat); // it a robot
-        robot1.setMoveConditions(350, 240);
+        robot1.setMoveConditions(250, 240);
         robot1.addMouse();
 
         robot2 = new Characterlabel(imagepath, "robot2.png", 200, 200, this,stat); // it a robot
-        robot2.setMoveConditions(100, 240);
+        robot2.setMoveConditions(50, 240);
         robot2.addMouse();
+        
+        robot3 = new Characterlabel(imagepath, "robot2.png", 200, 200, this,stat); // it a robot
+        robot3.setMoveConditions(450, 240);
+        robot3.addMouse();
 
+        enemy1 = new Characterlabel(imagepath, "Mutanthuman.png", 200, 200, this,stat); // it a robot
+        enemy1.setMoveConditions(716, 240);
+        enemy1.addMouse();
+        
+        enemy2 = new Characterlabel(imagepath, "repairman.png", 200, 200, this,stat); // it a robot
+        enemy2.setMoveConditions(916, 240);
+        enemy2.addMouse();
+        
+        enemy3 = new Characterlabel(imagepath, "sd1.png", 200, 200, this,stat); // it a robot
+        enemy3.setMoveConditions(1116, 240);
+        enemy3.addMouse();
+        
         contentpane.add(stat);
         contentpane.add(robot1);
         contentpane.add(robot2);
+        contentpane.add(robot3);
+        contentpane.add(enemy1);
+        contentpane.add(enemy2);
+        contentpane.add(enemy3);
 
         validate();
         repaint();
@@ -273,11 +271,11 @@ class Characterlabel extends JLabel {
     protected Character character;
     protected StatLabel status;
 
-    public Characterlabel(String path, String filename, int width, int height, Stageframe pf,StatLabel sp) {
+    public Characterlabel(String path, String filename, int width, int height, Stageframe pf,StatLabel sl) {
 
         this.width = width;
         this.height = height;
-        status = sp;
+        status = sl;
         staticon = new MyImageIcon(path + filename).resize(width, height);
         staticon2 = new MyImageIcon(path + "robot3.png").resize(width, height);
 
@@ -286,7 +284,6 @@ class Characterlabel extends JLabel {
         parentFrame = pf;
         setBounds(getVisibleRect());
         setVisible(true);
-
     }
 
     public void setMoveConditions(int x, int y) {
@@ -365,15 +362,17 @@ class StatLabel extends JLabel {
     protected JLabel deftext = new JLabel();
     protected JLabel spdtext = new JLabel();
     protected JLabel nametext = new JLabel();
+    protected String imagepath;
     private   JLabel panelpane;
 
 
     public StatLabel(String path, String filename, int width, int height, Stageframe pf) {
-
+        
+        imagepath = path;
         this.width = width;
         this.height = height;
         border = BorderFactory.createLineBorder(Color.WHITE, 3);
-        statusicon = new MyImageIcon(path + filename).resize(width, height);
+        statusicon = new MyImageIcon(imagepath + filename).resize(width, height);
         setIcon(statusicon);
         setBorder(border);
         setOpaque(true);
@@ -383,14 +382,14 @@ class StatLabel extends JLabel {
         setVisible(true);
 
     }
-    public void setvisiblestatpanel(boolean n){
+    public void setvisiblestatlabel(boolean n){
         this.setVisible(n);
         validate();
     }
 
     public void settext(int atk,int hp,int def,String name) {
         atktext.setText("ATK : "+ Integer.toString(atk));
-        hptext.setText("HP  : "+ Integer.toString(hp));
+        hptext.setText("HP  : "+ Integer.toString(hp) + "/ " + Integer.toString(hp));
         deftext.setText("DEF : "+ Integer.toString(def));
         nametext.setText("name : "+name);
 
@@ -407,7 +406,6 @@ class StatLabel extends JLabel {
 
     public void addlabelcomponent() {
 
-        
         atktext.setBackground(null);       
         atktext.setForeground(Color.white);
         atktext.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
@@ -417,7 +415,7 @@ class StatLabel extends JLabel {
         hptext.setBackground(null);       
         hptext.setForeground(Color.white);
         hptext.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
-        hptext.setText("HP : 20");
+        hptext.setText("HP : 20/ 20");
         hptext.setBounds(140,70, 200, 30);
 
         deftext.setBackground(null);       
@@ -432,20 +430,77 @@ class StatLabel extends JLabel {
         nametext.setText("name : kawin");
         nametext.setBounds(140,130, 200, 30);
 
-
+        JButton attackButton = new JButton(" Attack");
+        {
+            attackButton.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
+            attackButton.setIcon(new MyImageIcon(imagepath + "normalattack.png").resize(40, 40));
+            attackButton.setBackground(new Color(222, 0, 62));
+            attackButton.setForeground(Color.white);
+            attackButton.setSize(100, 200);
+            attackButton.setUI(new StyledButtonUI());
+            attackButton.setForeground(new Color(255, 255, 255));
+            attackButton.setBounds(500, 50, 150, 50);
+            attackButton.setLayout(null);
+            attackButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent event) {
+                    //clickSound.playOnce();
+                    
+                }
+            });
+        }
+        
+        JButton skillButton = new JButton(" Skill ");
+        {
+            skillButton.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
+            skillButton.setIcon(new MyImageIcon(imagepath + "skill_critical.png").resize(40, 40));
+            skillButton.setBackground(new Color(222, 0, 62));
+            skillButton.setForeground(Color.white);
+            skillButton.setSize(100, 200);
+            skillButton.setUI(new StyledButtonUI());
+            skillButton.setForeground(new Color(255, 255, 255));
+            skillButton.setBounds(500, 110, 150, 50);
+            skillButton.setLayout(null);
+            skillButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent event) {
+                    //clickSound.playOnce();
+                    
+                }
+            });
+        }
+        
+        JButton restButton = new JButton(" rest  ");
+        {
+            restButton.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
+            restButton.setIcon(new MyImageIcon(imagepath + "rest.png").resize(40, 40));
+            restButton.setBackground(new Color(222, 0, 62));
+            restButton.setForeground(Color.white);
+            restButton.setSize(100, 200);
+            restButton.setUI(new StyledButtonUI());
+            restButton.setForeground(new Color(255, 255, 255));
+            restButton.setBounds(500, 170, 150, 50);
+            restButton.setLayout(null);
+            restButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent event) {
+                    //clickSound.playOnce();
+                    
+                }
+            });
+        }
 
         this.add(atktext);
         this.add(hptext);
         this.add(deftext);
         this.add(nametext);
-
+        this.add(attackButton);
+        this.add(skillButton);
+        this.add(restButton);
         
         validate();
         repaint();
-        
-
     }
-
 }
 
 // ======================================================================================================================
