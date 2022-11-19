@@ -49,7 +49,7 @@ public class MainMenu extends JFrame {
     public MainMenu() {
         String imagepath = "project3/Project3_xxxxxxx/project3/src/pictures/";
         String soundpath = "project3/Project3_xxxxxxx/project3/src/sounds/";
-
+        sframe = new Stageframe(imagepath, soundpath);
         // set background music
         mainmenuSound = new Sound(soundpath + "BossTime.wav");
         mainmenuSound.playLoop();
@@ -83,10 +83,9 @@ public class MainMenu extends JFrame {
                 @Override
                 public void actionPerformed(ActionEvent event) {
                     clickSound.playOnce();
-                    if (sframe == null)
-                        sframe = new Stageframe();
-                    else
-                        sframe.setVisible(true);
+                    setTitle("Stage");
+                    setContentPane(sframe.getContentpane());
+                    validate();
                 }
             });
         }
@@ -238,7 +237,7 @@ public class MainMenu extends JFrame {
           contentPane.add(quitButton);*/
          
          contentPane.setFocusable(true);
-         contentPane.validate();
+         validate();
 
     }
     public JLabel getPane(){

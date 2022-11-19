@@ -14,19 +14,22 @@ public class Stageframe extends JFrame {
 
     private int frameHeight = 768;
     private int frameWidth = 1366;
-    private String path = "project3/Project3_xxxxxxx/project3/src/pictures/"; //project3\Project3_xxxxxxx\project3\src\pictures
+    private String imagepath ; //project3\Project3_xxxxxxx\project3\src\pictures
+    private String soundpath ;
     private ArrayList<Robot> robot;
     private ArrayList<Human> human;
     private Random rand = new Random();
     private Characterlabel robot1, robot2, robot3;
     private Characterlabel enemy1, enemy2, enemy3;
-    private Statpanel stat;
+    private StatLabel stat;
     private JLabel contentpane;
     private int stagenum = 1;
     private int wave = 1;
 
-    public Stageframe() { // อาจจะรับ ArrayList เข้ามา
-
+    public Stageframe(String ipath, String spath) { // อาจจะรับ ArrayList เข้ามา
+        
+        imagepath = ipath;
+        soundpath = spath;
        /* setBounds(50, 50, frameWidth, frameHeight);
         setTitle("Stage");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -34,7 +37,7 @@ public class Stageframe extends JFrame {
 
         setContentPane(contentpane = new JLabel()); */
         contentpane = new JLabel();
-        MyImageIcon background = new MyImageIcon(path + "8-Bit-Backgrounds.jpg"); // project3\Project3_xxxxxxx\project3\src\pictures\8-Bit-Backgrounds.jpg
+        MyImageIcon background = new MyImageIcon(imagepath + "8-Bit-Backgrounds2.jpg"); // project3\Project3_xxxxxxx\project3\src\pictures\8-Bit-Backgrounds.jpg
         contentpane.setIcon(background.resize(frameWidth, frameHeight));
         contentpane.setOpaque(true);
         contentpane.setLayout(null);
@@ -74,16 +77,16 @@ public class Stageframe extends JFrame {
     }
 
     public void addcomponent() {
-        stat = new Statpanel(path, null, 800, 100, this);
-        stat.setMoveConditions(283, 615);
-        stat.addpanelcomponent();
+        stat = new StatLabel(imagepath, "StatusBG.png", 1352, 250, this);
+        stat.setMoveConditions(0, 480);
+        stat.addlabelcomponent();
 
-        robot1 = new Characterlabel(path, "robot4.png", 150, 150, this,stat); // it a robot
-        robot1.setMoveConditions(600, 450);
+        robot1 = new Characterlabel(imagepath, "robot4.png", 200, 200, this,stat); // it a robot
+        robot1.setMoveConditions(350, 240);
         robot1.addMouse();
 
-        robot2 = new Characterlabel(path, "robot2.png", 150, 150, this,stat); // it a robot
-        robot2.setMoveConditions(300, 450);
+        robot2 = new Characterlabel(imagepath, "robot2.png", 200, 200, this,stat); // it a robot
+        robot2.setMoveConditions(100, 240);
         robot2.addMouse();
 
         contentpane.add(stat);
@@ -95,7 +98,7 @@ public class Stageframe extends JFrame {
     }
 
     public void stage2() {
-        ImageIcon temp = new ImageIcon(path + "city.gif");
+        ImageIcon temp = new ImageIcon(imagepath + "city.gif");
         temp.setImage(temp.getImage().getScaledInstance(frameWidth, frameHeight, Image.SCALE_DEFAULT)); // size of
                                                                                                         // background
         // MyImageIcon temp = new MyImageIcon(path + "city.gif");
@@ -105,7 +108,7 @@ public class Stageframe extends JFrame {
     }
 
     public void stage1() {
-        ImageIcon temp = new ImageIcon(path + "warzone-scene.png");
+        ImageIcon temp = new ImageIcon(imagepath + "warzone-scene.png");
         temp.setImage(temp.getImage().getScaledInstance(frameWidth, frameHeight, Image.SCALE_DEFAULT)); // size of
                                                                                                         // background
         // MyImageIcon temp = new MyImageIcon(path + "city.gif");
@@ -115,10 +118,10 @@ public class Stageframe extends JFrame {
     }
 
     public static void main(String[] args) { // for test ting frame
-        new Stageframe();
+        //new Stageframe();
     }
 
-    public void stage(int n, int w) {
+    public void runstage(int n, int w) {
         stagenum = n;
         wave = w;
         Robotwave ally = new Robotwave(n);
@@ -268,9 +271,9 @@ class Characterlabel extends JLabel {
     protected int curX, curY, width, height;
     protected Stageframe parentFrame;
     protected Character character;
-    protected Statpanel status;
+    protected StatLabel status;
 
-    public Characterlabel(String path, String filename, int width, int height, Stageframe pf,Statpanel sp) {
+    public Characterlabel(String path, String filename, int width, int height, Stageframe pf,StatLabel sp) {
 
         this.width = width;
         this.height = height;
@@ -352,7 +355,7 @@ class Characterlabel extends JLabel {
     }
 }
 
-class Statpanel extends JPanel {
+class StatLabel extends JLabel {
     protected MyImageIcon statusicon;
     protected int curX, curY, width, height;
     protected Stageframe parentFrame;
@@ -365,17 +368,13 @@ class Statpanel extends JPanel {
     private   JLabel panelpane;
 
 
-    public Statpanel(String path, String filename, int width, int height, Stageframe pf) {
+    public StatLabel(String path, String filename, int width, int height, Stageframe pf) {
 
         this.width = width;
         this.height = height;
         border = BorderFactory.createLineBorder(Color.WHITE, 3);
-        // statusicon = new MyImageIcon(path + filename).resize(width, height);
-
-        // setIcon(statusicon);
-        
-        setBackground(new Color(0, 0, 0, 75));
-        setForeground(new Color(0, 0, 0));
+        statusicon = new MyImageIcon(path + filename).resize(width, height);
+        setIcon(statusicon);
         setBorder(border);
         setOpaque(true);
         setLayout(null);
@@ -406,28 +405,32 @@ class Statpanel extends JPanel {
 
     }
 
-    public void addpanelcomponent() {
+    public void addlabelcomponent() {
 
         
         atktext.setBackground(null);       
         atktext.setForeground(Color.white);
+        atktext.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
         atktext.setText("ATK : 20");
-        atktext.setBounds(70,10, 60, 20);
+        atktext.setBounds(140,40, 200, 30);
 
         hptext.setBackground(null);       
         hptext.setForeground(Color.white);
+        hptext.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
         hptext.setText("HP : 20");
-        hptext.setBounds(70,30, 60, 20);
+        hptext.setBounds(140,70, 200, 30);
 
         deftext.setBackground(null);       
         deftext.setForeground(Color.white);
+        deftext.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
         deftext.setText("DEF : 20");
-        deftext.setBounds(70,50, 60, 20);
+        deftext.setBounds(140,100, 200, 30);
 
         nametext.setBackground(null);       
         nametext.setForeground(Color.white);
+        nametext.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
         nametext.setText("name : kawin");
-        nametext.setBounds(70,70, 100, 20);
+        nametext.setBounds(140,130, 200, 30);
 
 
 
