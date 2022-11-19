@@ -9,6 +9,7 @@ public class Character extends Thread implements Comparable<Character>{
     protected int spd = 0; // Speed Point
     protected int position; // will be set in another
     protected int maxspeed = 3000;
+    protected Characterlabel CLabel;
 
     // protected Speed speedthread;
 
@@ -23,6 +24,14 @@ public class Character extends Thread implements Comparable<Character>{
         def = d;
         spd = s;
         // speedthread = new Speed(spd);
+    }
+
+    public void setLabel(Characterlabel CL){
+        CLabel = CL;
+    }
+
+    public Characterlabel getLabel(){
+        return CLabel;
     }
 
     // Ramdom attack
@@ -83,6 +92,10 @@ public class Character extends Thread implements Comparable<Character>{
         return hp;
     }
 
+    public int getmax_hp() {
+        return max_hp;
+    }
+
     public int getdf() {
         return def;
     }
@@ -95,8 +108,12 @@ public class Character extends Thread implements Comparable<Character>{
         return spd;
     }
 
-    public void setposition() {
+    public void setposition(int po) {
+        position = po;
+    }
 
+    public int getposition() {
+        return position;
     }
 
     public void run() {

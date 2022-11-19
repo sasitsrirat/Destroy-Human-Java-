@@ -49,7 +49,7 @@ public class MainMenu extends JFrame {
     public MainMenu() {
         String imagepath = "project3/Project3_xxxxxxx/project3/src/pictures/";
         String soundpath = "project3/Project3_xxxxxxx/project3/src/sounds/";
-        sframe = new Stageframe(imagepath, soundpath);
+        sframe = new Stageframe(imagepath, soundpath,1); // play for first time stage 1
         // set background music
         mainmenuSound = new Sound(soundpath + "BossTime.wav");
         mainmenuSound.playLoop();

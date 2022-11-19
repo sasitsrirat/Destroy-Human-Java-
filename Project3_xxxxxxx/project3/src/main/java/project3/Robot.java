@@ -7,18 +7,30 @@ class Robot extends Character{
     protected int maxep = 10;
     protected int cd_s = 0; //Cooldown Special Skill
     protected int cd_u = 0; //Cooldown Ultimate Skill
+    protected String path;
+    protected String imagefile;
+    protected Characterlabel robotlabel;
+    
 
     public Robot(){}
-    public Robot(String n, int hp, int atk, int def, int spd, int p, int cs, int cu){
+    public Robot(String n, int hp, int atk, int def, int spd, int p, int cs, int cu,String imagepath){
         super(n, hp, atk, def, spd);
         ep = p;
         cd_s = cs;
         cd_u = cu;
+        this.path = imagepath;
+        
     }
 
     public void attack(Human human){
         int dmg = ramdomatk();
         human.takedamg(dmg);
+    }
+    public void initiallabel(Characterlabel label){
+        robotlabel = label;
+    }
+    public String getimage(){       
+        return imagefile; 
     }
 
     @Override
@@ -59,12 +71,50 @@ class Robot extends Character{
 
 class Robot1 extends Robot{
 
-    private String imagefile = "src/pictures/robot1.png";
+    private String imagefile = "robot1.png";
 
     //Constructor กำหนดคุณลักษณะของ Robot1 
-    public Robot1(String n, int hp, int atk, int def, int spd, int p, int cs, int cu){
-        super(n, hp, atk,  def, spd,  p,  cs,  cu);
+    public Robot1(String n, int hp, int atk, int def, int spd, int p, int cs, int cu,String imagepath){
+        super(n, hp, atk,  def, spd,  p,  cs,  cu,  imagepath);
     } 
+    @Override
+    public String getimage(){
+        return imagefile;
+
+    }
+
+}
+class Robot2 extends Robot{
+
+    private String imagefile = "robot2.png";
+
+    //Constructor กำหนดคุณลักษณะของ Robot1 
+    public Robot2(String n, int hp, int atk, int def, int spd, int p, int cs, int cu,String imagepath){
+        super(n, hp, atk,  def, spd,  p,  cs,  cu,  imagepath);
+    } 
+    @Override
+    public String getimage(){
+        return imagefile;
+
+    }
+
+    
+    
+
+    
+}
+class Robot3 extends Robot{
+
+    private String imagefile = "robot4.png";
+
+    //Constructor กำหนดคุณลักษณะของ Robot1 
+    public Robot3(String n, int hp, int atk, int def, int spd, int p, int cs, int cu,String imagepath){
+        super(n, hp, atk,  def, spd,  p,  cs,  cu,  imagepath);
+    } 
+    @Override
+    public String getimage(){
+        return this.imagefile;
+    }
 
     
     
