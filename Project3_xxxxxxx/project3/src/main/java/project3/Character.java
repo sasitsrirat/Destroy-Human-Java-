@@ -1,6 +1,7 @@
 package project3;
 
-public class Character extends Thread implements Comparable<Character>{
+public class Character extends Thread implements Comparable<Character> {
+
     String name = "";
     protected int max_hp = 0; // Max Health Point
     protected int hp = 0; // Health Point
@@ -9,28 +10,29 @@ public class Character extends Thread implements Comparable<Character>{
     protected int spd = 0; // Speed Point
     protected int position; // will be set in another
     protected int maxspeed = 3000;
+    protected String imagefile;
     protected Characterlabel CLabel;
 
     // protected Speed speedthread;
-
     public Character() {
     }
 
-    public Character(String n, int h, int a, int d, int s) {
+    public Character(String n, int h, int a, int d, int s, String i) {
         name = n;
         hp = h;
         max_hp = h;
         atk = a;
         def = d;
         spd = s;
+        imagefile = i;
         // speedthread = new Speed(spd);
     }
 
-    public void setLabel(Characterlabel CL){
+    public void setLabel(Characterlabel CL) {
         CLabel = CL;
     }
 
-    public Characterlabel getLabel(){
+    public Characterlabel getLabel() {
         return CLabel;
     }
 
@@ -66,8 +68,9 @@ public class Character extends Thread implements Comparable<Character>{
         if (heal + hp > max_hp) {
             heal = max_hp - hp;
             hp = max_hp;
-        } else
+        } else {
             hp = hp + heal;
+        }
         return heal; // Return for report on screen
     }
 
@@ -75,13 +78,15 @@ public class Character extends Thread implements Comparable<Character>{
     protected int checkdeath() {
         if (hp <= 0) {
             return 1;
-        } else
+        } else {
             return 0;
+        }
     }
 
-    // characterize the character
-    public void introduce() {
-        System.out.printf("%s %d/%d \n", name, hp, max_hp);
+    public void attack(Character enemy) {
+        int dmg = ramdomatk();
+        dmg = dmg - enemy.getdf();
+        enemy.takedamg(dmg);
     }
 
     public String getname() {
@@ -119,14 +124,17 @@ public class Character extends Thread implements Comparable<Character>{
     public void run() {
 
     }
+
     @Override
     public int compareTo(Character other) {
         if (this.spd > other.spd) {
             return -1;
-        } else
+        } else {
             return 1;
+        }
     }
 
-    
-
+    public String getimage() {
+        return imagefile;
+    }
 }

@@ -6,6 +6,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.BorderUIResource;
 import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.event.*;
+import java.io.FileNotFoundException;
 
 //Class for design Button like CSS
 class StyledButtonUI extends BasicButtonUI {
@@ -47,8 +48,8 @@ public class MainMenu extends JFrame {
     protected Scoreframe scoreframe;
 
     public MainMenu() {
-        String imagepath = "project3/Project3_xxxxxxx/project3/src/pictures/";
-        String soundpath = "project3/Project3_xxxxxxx/project3/src/sounds/";
+        String imagepath = "src/pictures/";
+        String soundpath = "src/sounds/";
         sframe = new Stageframe(imagepath, soundpath,1); // play for first time stage 1
         // set background music
         mainmenuSound = new Sound(soundpath + "BossTime.wav");
@@ -65,7 +66,6 @@ public class MainMenu extends JFrame {
         ImageIcon imageIcon = new ImageIcon(imagepath + "roboyscofi.gif");
         imageIcon.setImage(imageIcon.getImage().getScaledInstance(frameWidth, frameHeight, Image.SCALE_DEFAULT)); // size of background
         contentPane = new JLabel();
-        //setContentPane(contentPane = new JLabel());
         contentPane.setIcon(imageIcon);
         contentPane.setLayout(null);
         setContentPane(contentPane);
@@ -143,7 +143,11 @@ public class MainMenu extends JFrame {
                 public void actionPerformed(ActionEvent event) {
                     clickSound.playOnce();
                     if (scoreframe == null)
-                        scoreframe = new Scoreframe();
+                        try {
+                            scoreframe = new Scoreframe();
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
                     else
                         scoreframe.setVisible(true);
                 }

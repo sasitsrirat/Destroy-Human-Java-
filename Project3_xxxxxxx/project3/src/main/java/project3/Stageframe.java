@@ -14,21 +14,22 @@ public class Stageframe extends JFrame {
 
     private int frameHeight = 768;
     private int frameWidth = 1366;
-    private String imagepath ; //project3\Project3_xxxxxxx\project3\src\pictures
-    private String soundpath ;
+    private int stagenum, wave;
+    private boolean choose = false;
+    private String imagepath, soundpath ; //project3\Project3_xxxxxxx\project3\src\pictures
+    //private Character activeCharacter;
     private Humanwave hw;   // hw = new humanwave(1,1); // hwArraylist = hw.gethu();
     private Robotwave rw;  // rw = new Robotwave(1); // robotArraylist = rw.gethu();
     private ArrayList<Robot> robotArraylist;
     private ArrayList<Human> humanArraylist;
+    private ArrayList<Characterlabel> robotLabelArraylist, humanLabelArraylist;
     private Random rand = new Random();
     private Characterlabel robot1, robot2, robot3;
     private Characterlabel enemy1, enemy2, enemy3;
     private Characterlabel activeLabel, targetLabel;
     private StatLabel stat;
     private JLabel contentpane;
-    private int stagenum ;
-    private int wave ;
-
+    
     public Stageframe(String ipath, String spath,int stage) { // อาจจะรับ ArrayList เข้ามา
         hw = new Humanwave(stage,1);
         rw = new Robotwave(stage);
@@ -42,15 +43,19 @@ public class Stageframe extends JFrame {
         contentpane.setIcon(background.resize(frameWidth, frameHeight));
         contentpane.setOpaque(true);
         contentpane.setLayout(null);
-        battle();
+        
         this.addcomponent();
-
+        battle();
         validate();
         repaint();
 
     }
 
-    public void gettargetLabel(Characterlabel tl){
+    public boolean getchoose() {
+        return choose;
+    }
+
+    public void settargetLabel(Characterlabel tl){
         targetLabel = tl;
     }
 
@@ -91,98 +96,80 @@ public class Stageframe extends JFrame {
     }
 
     public void addcomponent() {
-        stat = new StatLabel(imagepath, "StatusBG.png", 1352, 250, this);
+        stat = new StatLabel(imagepath, "StatusBG.png", 1366, 286, this);
         stat.setMoveConditions(0, 480);
         stat.addlabelcomponent();
         addallhuman();
         addallrobot();
-        /*robot1 = new Characterlabel(imagepath, "robot4.png", 200, 200, this,stat); // it a robot
-        robot1.setposition(1);
-        robot1.addMouse();
-
-        robot2 = new Characterlabel(imagepath, "robot2.png", 200, 200, this,stat); // it a robot
-        robot2.setposition(2);
-        robot2.addMouse();
-        
-        robot3 = new Characterlabel(imagepath, "robot2.png", 200, 200, this,stat); // it a robot
-        robot3.setposition(3);
-        robot3.addMouse();
-
-        enemy1 = new Characterlabel(imagepath, "Mutanthuman.png", 200, 200, this,stat); // it a robot
-        enemy1.setposition(4);
-        enemy1.addMouse();
-        
-        enemy2 = new Characterlabel(imagepath, "repairman.png", 200, 200, this,stat); // it a robot
-        enemy2.setposition(5);
-        enemy2.addMouse();
-        
-        enemy3 = new Characterlabel(imagepath, "sd1.png", 200, 200, this,stat); // it a robot
-        enemy3.setposition(6);
-        enemy3.addMouse();
-        
-        
-        contentpane.add(robot1);
-        contentpane.add(robot2);
-        contentpane.add(robot3);
-        contentpane.add(enemy1);
-        contentpane.add(enemy2);
-        contentpane.add(enemy3);*/
         contentpane.add(stat);
 
         validate();
         repaint();
     }
     public void addallrobot() {
-        if (robotArraylist.size() == 3) {
-            robot1 = new Characterlabel(imagepath, robotArraylist.get(0).getimage(), 150, 150, this, stat); // it a robot
-            robot1.setposition(robotArraylist.get(0).getposition());
+        robotLabelArraylist = new ArrayList<Characterlabel>();
+        for(int i = 0; i < robotArraylist.size(); i++){
+            robotLabelArraylist.add(new Characterlabel(imagepath, 150, 150, this, stat,robotArraylist.get(i)));
+            robotLabelArraylist.get(i).addMouse();
+            contentpane.add(robotLabelArraylist.get(i));
+        }
+        
+        /*if (robotArraylist.size() == 3) {
+            robot1 = new Characterlabel(imagepath, 150, 150, this, stat,  robotArraylist.get(0)); // it a robot
+            //robot1.setposition(robotArraylist.get(0).getposition());
             robot1.addMouse();
-            robotArraylist.get(0).setLabel(robot1);
+            //robotArraylist.get(0).setLabel(robot1);
 
-            robot2 = new Characterlabel(imagepath, robotArraylist.get(1).getimage(), 150, 150, this, stat); // it a robot
-            robot2.setposition(robotArraylist.get(1).getposition());
+            robot2 = new Characterlabel(imagepath, 150, 150, this, stat,  robotArraylist.get(1)); // it a robot
+            //robot2.setposition(robotArraylist.get(1).getposition());
             robot2.addMouse();
-            robotArraylist.get(1).setLabel(robot2);
+            //robotArraylist.get(1).setLabel(robot2);
 
-            robot3 = new Characterlabel(imagepath, robotArraylist.get(2).getimage(), 150, 150, this, stat); // it a robot
-            robot3.setposition(robotArraylist.get(2).getposition());
+            robot3 = new Characterlabel(imagepath, 150, 150, this, stat,  robotArraylist.get(2)); // it a robot
+            //robot3.setposition(robotArraylist.get(2).getposition());
             robot3.addMouse();
-            robotArraylist.get(2).setLabel(robot3);
+            //robotArraylist.get(2).setLabel(robot3);
 
             contentpane.add(robot1);
             contentpane.add(robot2);
             contentpane.add(robot3);
 
         } else if (robotArraylist.size() == 2) {
-            robot1 = new Characterlabel(imagepath, robotArraylist.get(0).getimage(), 150, 150, this, stat); // it a robot
-            robot1.setposition(robotArraylist.get(0).getposition());
+            robot1 = new Characterlabel(imagepath, 150, 150, this, stat,  robotArraylist.get(0)); // it a robot
+            //robot1.setposition(robotArraylist.get(0).getposition());
             robot1.addMouse();
-            robotArraylist.get(0).setLabel(robot1);
+            //robotArraylist.get(0).setLabel(robot1);
 
-            robot2 = new Characterlabel(imagepath, robotArraylist.get(1).getimage(), 150, 150, this, stat); // it a robot
-            robot2.setposition(robotArraylist.get(1).getposition());
+            robot2 = new Characterlabel(imagepath, 150, 150, this, stat,  robotArraylist.get(1)); // it a robot
+            //robot2.setposition(robotArraylist.get(1).getposition());
             robot2.addMouse();
-            robotArraylist.get(1).setLabel(robot2);
+            //robotArraylist.get(1).setLabel(robot2);
 
             contentpane.add(robot1);
             contentpane.add(robot2);
 
         } else if(robotArraylist.size() == 1){
-            robot1 = new Characterlabel(imagepath, robotArraylist.get(0).getimage(), 150, 150, this, stat); // it a robot
-            robot1.setposition(robotArraylist.get(0).getposition());
+            robot1 = new Characterlabel(imagepath, 150, 150, this, stat,  robotArraylist.get(0)); // it a robot
+            //robot1.setposition(robotArraylist.get(0).getposition());
             robot1.addMouse();
-            robotArraylist.get(0).setLabel(robot1);
+            //robotArraylist.get(0).setLabel(robot1);
 
             contentpane.add(robot1);
-        }
+        }*/
 
     }
     public void addallhuman() {
-        if (humanArraylist.size() == 3) {
-            enemy1 = new Characterlabel(imagepath, humanArraylist.get(0).getimage(), 150, 150, this, stat); // it a robot
-            enemy1.setposition(humanArraylist.get(0).getposition());
+        humanLabelArraylist = new ArrayList<Characterlabel>();
+        for(int i = 0; i < humanArraylist.size(); i++){
+            humanLabelArraylist.add(new Characterlabel(imagepath, 150, 150, this, stat,humanArraylist.get(i)));
+            humanLabelArraylist.get(i).addMouse();
+            contentpane.add(humanLabelArraylist.get(i));
+        }
+        /*if (humanArraylist.size() == 3) {
+            enemy1 = new Characterlabel(imagepath, 150, 150, this, stat,  humanArraylist.get(0)); // it a robot
+            //enemy1.setposition(robotArraylist.get(0).getposition());
             enemy1.addMouse();
-            humanArraylist.get(0).setLabel(enemy1);
+            //humanArraylist.get(0).setLabel(robot1);
 
             enemy2 = new Characterlabel(imagepath, humanArraylist.get(1).getimage(), 150, 150, this, stat); // it a robot
             enemy2.setposition(humanArraylist.get(1).getposition());
@@ -219,7 +206,7 @@ public class Stageframe extends JFrame {
             humanArraylist.get(0).setLabel(enemy1);
 
             contentpane.add(enemy1);
-        }
+        }*/
 
     }
     public void setallrobot(){
@@ -249,52 +236,10 @@ public class Stageframe extends JFrame {
         repaint();
     }
 
-    public static void main(String[] args) { // for test ting frame
-        //new Stageframe();
-    }
-
-    //Old dude
-    /*public void stage(int n, int w) {
-        stagenum = n;
-        wave = w;
-        Robotwave ally = new Robotwave(n);
-        robotArraylist = ally.getro();
-        for (int index = 0; index < wave; index++) {
-            Humanwave enemy = new Humanwave(stagenum, index + 1);
-            humanArraylist = enemy.gethu();
-            this.battle();
-        }
-    }*/
-
     public void battle() { // stage battle
-        activeLabel = robotArraylist.get(0).getLabel();
-        /*int i = 0;
-        for (Robot r : robotArraylist) {
-            r.introduce();
-        }
-        for (Human h : humanArraylist) {
-            h.introduce();
-        }
-        while (i < 10) {
-            for (Robot r : robotArraylist) {
-                //action_robot(r);
-                activeLabel = r.getLabel() ;
-                checkdeath();
-            }
-            for (Human h : humanArraylist) {
-                action_enemy(h);
-                checkdeath();
-            } 
-            checkdeath();
-            System.out.printf("End round %d\n********************\n\n", i + 1);
-            // output from wave
-
-            // run
-            i++;
-            if (robotArraylist.size() == 0 || humanArraylist.size() == 0) {
-                i = 10;
-            }
-        }*/
+        activeLabel = robotLabelArraylist.get(0);
+        stat.setactiveCharacter(activeLabel.getOwner());
+        stat.ShowAction(activeLabel.getOwner());
     }
 
     public void checkdeath() {
@@ -314,55 +259,28 @@ public class Stageframe extends JFrame {
         }
     }
 
-    public void robot_attack(Robot ro) { // Arraylist robot,character
+    public void robot_attack() { // Arraylist robot,character
+        if(targetLabel == null){
         JLabel warn = new JLabel("Choose the enemy");
-        
-        
-        /*System.out.printf("Robot action\n");
-        // show choice
-        System.out.printf("Enter 1 to use skill\n\n");
-        Scanner scan = new Scanner(System.in);
-        int choice = 0;
-        try {
-            choice = scan.nextInt();
-        } catch (Exception e) {
+        warn.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 50));
+        warn.setBackground(new Color(222, 0, 62));
+        warn.setForeground(Color.white);
+        warn.setBounds(433, 150, 500, 70);
+        contentpane.add(warn);
+        choose = true;
         }
-        switch (choice) {
-            case 1: // choose skill
-                action_robot_skill(ro);
-                break;
-            case 2: // item use jcheckbox
-
-                break;
-            case 3: // choose rest
-
-            default:
-                break;
+        else{
+            activeLabel.getOwner().attack(targetLabel.getOwner());
+            choose = false;
+            stat.settargetCharacter(targetLabel.getOwner());
+            targetLabel = null;
         }
-        //System.out.print(robot.size());*/
+        contentpane.repaint();
+        validate();
     }
 
-    public void action_robot_skill(Robot ro) {
-        JLabel warn = new JLabel("Choose the enemy");
-        System.out.printf("Enter 1 to use normal attack\n\n");
-        Scanner scan = new Scanner(System.in);
-        int choice_2 = scan.nextInt();
-        switch (choice_2) {
-            case 1: // choose normal attack
-                int h = chooseenemy();
-                ro.attack(humanArraylist.get(h));
-                System.out.printf("%s attack %s\n", ro.getname(), humanArraylist.get(h).getname());
-                break;
-            case 2: // special skill
-
-                break;
-            case 3: // ultimate skill
-
-                break;
-            default:
-                //action_robot(ro);
-                break;
-        }
+    public void action_robot_skill() {
+        //stat.setLtext(activeLabel, activeLabel, activeLabel, activeLabel, activeLabel);
     }
 
     public void action_enemy(Human h) { // Arraylist human,character
@@ -375,7 +293,7 @@ public class Stageframe extends JFrame {
         }
     }
 
-    public int chooseenemy() {
+    /*public int chooseenemy() {
         int i = 1;
         for (Human h : humanArraylist) {
             System.out.printf("%d. ", i);
@@ -385,345 +303,7 @@ public class Stageframe extends JFrame {
         Scanner scan = new Scanner(System.in);
         int choice = scan.nextInt() - 1;
         return choice;
-    }
-}
-
-class MyImageIcon extends ImageIcon {
-    public MyImageIcon(String fname) {
-        super(fname);
-    }
-
-    public MyImageIcon(Image image) {
-        super(image);
-    }
-
-    public MyImageIcon resize(int width, int height) {
-        Image oldimg = this.getImage();
-        Image newimg = oldimg.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
-        return new MyImageIcon(newimg);
-    }
-};
-
-class Characterlabel extends JLabel {
-
-    protected MyImageIcon staticon, staticon2;
-    protected int curX, curY, width, height, position;
-    protected Stageframe parentFrame;
-    protected StatLabel status;
-
-    public Characterlabel(String path, String filename, int width, int height, Stageframe pf,StatLabel sl) {
-        
-        this.width = width;
-        this.height = height;
-        status = sl;
-        staticon = new MyImageIcon(path + filename).resize(width, height);
-        staticon2 = new MyImageIcon(path + "robot3.png").resize(width, height);
-
-        setIcon(staticon);
-        setHorizontalAlignment(JLabel.CENTER);
-        parentFrame = pf;
-        setBounds(getVisibleRect());
-        setVisible(true);
-    }
-
-    public void setMoveConditions(int x, int y) {
-        curX = x;
-        curY = y;
-        setBounds(curX, curY, width, height);
-    }
-
-    public void setposition(int po){
-        position = po;
-        switch (position) {
-            case 1:
-                setMoveConditions(50 , 240);
-                break;
-            case 2:
-                setMoveConditions(250 , 240);
-                break;
-            case 3:
-                setMoveConditions(450 , 240);
-                break;
-            case 4:
-                setMoveConditions(parentFrame.getWidth() - 250 , 240);
-                break;
-            case 5:
-                setMoveConditions(parentFrame.getWidth() - 450 , 240);
-                break;
-            case 6:
-                setMoveConditions(parentFrame.getWidth() - 650 , 240);
-                break;
-            default:
-                break;
-        }
-    }
-
-    public void addFocus() {
-        this.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-            }
-        });
-    }
-
-    public void addMouse() {
-        this.addMouseListener(new MouseInputListener() {
-            public void mousePressed(MouseEvent e) 
-            {
- 
-            }
-
-            public void mouseReleased(MouseEvent e) {
-            }
-
-            public void mouseEntered(MouseEvent e) {
-                setIcon(staticon2);
-                Character ex = new Character();
-                for(int i = 0 ; i < parentFrame.gethumanArraylist().size(); i++){
-                    if(position == parentFrame.gethumanArraylist().get(i).getposition()){
-                        ex = parentFrame.gethumanArraylist().get(i);
-                    }
-                }
-                for(int i = 0 ; i < parentFrame.getrobotArraylist().size(); i++){
-                    if(position == parentFrame.getrobotArraylist().get(i).getposition()){
-                        ex = parentFrame.getrobotArraylist().get(i);
-                    }
-                }
-                status.setRtext(ex.getatk(), ex.gethp(), ex.getmax_hp(), ex.getdf(), ex.getname());
-                parentFrame.repaint();
-                
-                validate();
-            }
-
-            public void mouseExited(MouseEvent e) {
-                setIcon(staticon);
-                //stat.setVisible(false);
-                parentFrame.repaint();
-                validate();
-            }
-
-            public void mouseMoved(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                /*if (parentFrame.getstagenum() != 2) {
-                    parentFrame.stage2();
-                    parentFrame.setstagenum(2);
-                } else {
-                    parentFrame.stage1();
-                    parentFrame.setstagenum(1);
-                }*/
-                parentFrame.gettargetLabel(callthis());
-            }
-
-            @Override
-            public void mouseDragged(MouseEvent e) {
-            }
-        });
-    }
-    protected Characterlabel callthis(){
-        return this;
-    }
-
-}
-
-class StatLabel extends JLabel {
-    protected MyImageIcon statusicon;
-    protected int curX, curY, width, height;
-    protected Stageframe parentFrame;
-    protected Character activeCharacter;
-    protected Border border;
-    protected JLabel Latktext = new JLabel();;
-    protected JLabel Lhptext = new JLabel();
-    protected JLabel Ldeftext = new JLabel();
-    protected JLabel Lspdtext = new JLabel();
-    protected JLabel Lnametext = new JLabel();
-    protected JLabel Ratktext = new JLabel();;
-    protected JLabel Rhptext = new JLabel();
-    protected JLabel Rdeftext = new JLabel();
-    protected JLabel Rspdtext = new JLabel();
-    protected JLabel Rnametext = new JLabel();
-    protected String imagepath;
-    private   JLabel panelpane;
-
-
-    public StatLabel(String path, String filename, int width, int height, Stageframe pf) {
-        
-        imagepath = path;
-        this.width = width;
-        this.height = height;
-        border = BorderFactory.createLineBorder(Color.WHITE, 3);
-        statusicon = new MyImageIcon(imagepath + filename).resize(width, height);
-        setIcon(statusicon);
-        setBorder(border);
-        setOpaque(true);
-        setLayout(null);
-        parentFrame = pf;
-        setBounds(getVisibleRect());
-        setVisible(true);
-
-    }
-
-    public void getactiveCharacter(Character ac) {
-        activeCharacter = ac;
-        setLtext(activeCharacter.getatk(), activeCharacter.gethp(), activeCharacter.getmax_hp(), activeCharacter.getdf(), activeCharacter.getname());
-    }
-
-    public void setvisiblestatlabel(boolean n){
-        this.setVisible(n);
-        validate();
-    }
-
-    public void setLtext(int atk,int hp,int max_hp,int def,String name) {
-        Latktext.setText("ATK : "+ Integer.toString(atk));
-        Lhptext.setText("HP  : "+ Integer.toString(hp) + "/ " + Integer.toString(max_hp));
-        Ldeftext.setText("DEF : "+ Integer.toString(def));
-        Lnametext.setText("name : "+name);
-
-        repaint();
-        parentFrame.repaint();
-    }
-
-    public void setRtext(int atk,int hp,int max_hp,int def,String name) {
-        Ratktext.setText("ATK : "+ Integer.toString(atk));
-        Rhptext.setText("HP  : "+ Integer.toString(hp) + "/ " + Integer.toString(max_hp));
-        Rdeftext.setText("DEF : "+ Integer.toString(def));
-        Rnametext.setText("name : "+name);
-
-        repaint();
-        parentFrame.repaint();
-    }
-
-    public void setMoveConditions(int x, int y) {
-        curX = x;
-        curY = y;
-        setBounds(curX, curY, width, height);
-
-    }
-
-    public void addlabelcomponent() {
-
-        Latktext.setBackground(null);       
-        Latktext.setForeground(Color.white);
-        Latktext.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
-        Latktext.setBounds(140,40, 200, 30);
-
-        Lhptext.setBackground(null);       
-        Lhptext.setForeground(Color.white);
-        Lhptext.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
-        Lhptext.setBounds(140,70, 200, 30);
-
-        Ldeftext.setBackground(null);       
-        Ldeftext.setForeground(Color.white);
-        Ldeftext.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
-        Ldeftext.setBounds(140,100, 200, 30);
-
-        Lnametext.setBackground(null);       
-        Lnametext.setForeground(Color.white);
-        Lnametext.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
-        Lnametext.setBounds(140,130, 200, 30);
-
-        Ratktext.setBackground(null);       
-        Ratktext.setForeground(Color.white);
-        Ratktext.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
-        Ratktext.setBounds(parentFrame.getWidth() - 340 ,40, 200, 30);
-
-        Rhptext.setBackground(null);       
-        Rhptext.setForeground(Color.white);
-        Rhptext.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
-        Rhptext.setBounds(parentFrame.getWidth() - 340,70, 200, 30);
-
-        Rdeftext.setBackground(null);       
-        Rdeftext.setForeground(Color.white);
-        Rdeftext.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
-        Rdeftext.setBounds(parentFrame.getWidth() - 340 ,100, 200, 30);
-
-        Rnametext.setBackground(null);       
-        Rnametext.setForeground(Color.white);
-        Rnametext.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
-        Rnametext.setBounds(parentFrame.getWidth() - 340 ,130, 200, 30);
-
-        JButton attackButton = new JButton(" Attack");
-        {
-            attackButton.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
-            attackButton.setIcon(new MyImageIcon(imagepath + "normalattack.png").resize(40, 40));
-            attackButton.setBackground(new Color(222, 0, 62));
-            attackButton.setForeground(Color.white);
-            attackButton.setSize(100, 200);
-            attackButton.setUI(new StyledButtonUI());
-            attackButton.setForeground(new Color(255, 255, 255));
-            attackButton.setBounds(500, 50, 150, 50);
-            attackButton.setLayout(null);
-            attackButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent event) {
-                    //clickSound.playOnce();
-                    
-                }
-            });
-        }
-        
-        JButton skillButton = new JButton(" Skill ");
-        {
-            skillButton.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
-            skillButton.setIcon(new MyImageIcon(imagepath + "skill_critical.png").resize(40, 40));
-            skillButton.setBackground(new Color(222, 0, 62));
-            skillButton.setForeground(Color.white);
-            skillButton.setSize(100, 200);
-            skillButton.setUI(new StyledButtonUI());
-            skillButton.setForeground(new Color(255, 255, 255));
-            skillButton.setBounds(500, 110, 150, 50);
-            skillButton.setLayout(null);
-            skillButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent event) {
-                    //clickSound.playOnce();
-                    
-                }
-            });
-        }
-        
-        JButton restButton = new JButton(" rest  ");
-        {
-            restButton.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
-            restButton.setIcon(new MyImageIcon(imagepath + "rest.png").resize(40, 40));
-            restButton.setBackground(new Color(222, 0, 62));
-            restButton.setForeground(Color.white);
-            restButton.setSize(100, 200);
-            restButton.setUI(new StyledButtonUI());
-            restButton.setForeground(new Color(255, 255, 255));
-            restButton.setBounds(500, 170, 150, 50);
-            restButton.setLayout(null);
-            restButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent event) {
-                    //clickSound.playOnce();
-                    
-                }
-            });
-        }
-
-        this.add(Latktext);
-        this.add(Lhptext);
-        this.add(Ldeftext);
-        this.add(Lnametext);
-        this.add(Ratktext);
-        this.add(Rhptext);
-        this.add(Rdeftext);
-        this.add(Rnametext);
-        this.add(attackButton);
-        this.add(skillButton);
-        this.add(restButton);
-        
-        validate();
-        repaint();
-    }
+    }*/
 }
 
 // ======================================================================================================================

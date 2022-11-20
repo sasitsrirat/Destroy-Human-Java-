@@ -7,8 +7,7 @@ public class Robotwave{
     private Robot ro1;
     private Robot ro2;
     private Robot ro3;
-    private String path = "project3/Project3_xxxxxxx/project3/src/pictures/";
-    // Im back
+    
     public Robotwave(int stage){
         switch (stage) {
             case 1:
@@ -32,14 +31,14 @@ public class Robotwave{
     }
 
     public void stage1() {
-        ro1 = new Robot1("Musix-6000", 1, 1, 1, 1, 1, 1, 1,path);
+        ro1 = new Robot1();
         ro.add(ro1);
         ro1.setposition(3);
     }
     
     public void stage2(){
-        ro1 = new Robot1("Musix-6000", 1, 1, 1, 1, 1, 1, 1,path);
-        ro2 = new Robot2("BA-BE", 1, 1, 1, 1, 1, 1, 1,path);
+        ro1 = new Robot1();
+        ro2 = new Robot2();
         ro.add(ro1);
         ro.add(ro2);
         ro1.setposition(3);

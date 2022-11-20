@@ -34,9 +34,9 @@ public class Humanwave{
     }
 
     public void stage1_1() {
-        hu1 = new Human1("kawin", 10, 2, 1, 14, 5);
-        hu2 = new Human1("kong", 10, 2, 1, 14, 5);
-        hu3 = new Human1("babe", 10, 2, 1, 14, 5);
+        hu1 = new Human_weak("kawin");
+        hu2 = new Human_weak("kong");
+        hu3 = new Human_fat("Rangsipan");
         hu1.setposition(4);
         hu2.setposition(5);
         hu3.setposition(6);
@@ -46,9 +46,9 @@ public class Humanwave{
     }
     
     public void stage1_2(){
-        hu1 = new Human1("kawin", 10, 2, 1, 14, 5);
-        hu2 = new Human1("kawin", 10, 2, 1, 14, 5);
-        hu3 = new Human2("kawin", 10, 2, 1, 14, 5);
+        hu1 = new Human_weak("kawin");
+        hu2 = new Human_weak("kong");
+        hu3 = new Human_weak("Rangsipan");
         hu1.setposition(4);
         hu2.setposition(5);
         hu3.setposition(6);

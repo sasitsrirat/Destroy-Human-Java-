@@ -3,11 +3,10 @@ package project3;
 class Human extends Character{
     protected int skillrate = 0; // Skill use rate 0/10
     protected Characterlabel humanlabel;
-    protected String imagefile;
 
     public Human(){}
-    public Human(String n, int h, int a, int d, int s, int sr){
-        super(n, h, a, d, s);
+    public Human(String n, int h, int a, int d, int s, int sr, String imagefile){
+        super(n, h, a, d, s, imagefile);
         skillrate = sr;
     }
     protected int checkskill(){
@@ -25,50 +24,29 @@ class Human extends Character{
         humanlabel = label;
     }
     
-    public String getimage(){
-        return imagefile;
-    }
-
-    
-        
     @Override
     public void run(){
 
     }
 }
 
-class Human1 extends Human{
-    private String imagefile = "robot1-attack-01.png";
+class Human_weak extends Human{
 
-    public Human1(String name,int hp,int atk,int def,int spd,int sr){
-        super(name,hp,atk,def,spd,sr);
-    }
-    @Override
-    public String getimage(){
-        return this.imagefile;
+    public Human_weak(String n){
+        super(n,15,1,1,1,0, "Mutanthuman.png");
     }
 }
 
-class Human2 extends Human{
-    private String imagefile = "robot3-attack-01.png";
-
-    public Human2(String name,int hp,int atk,int def,int spd,int sr){
-        super(name,hp,atk,def,spd,sr);
-    }
-    @Override
-    public String getimage(){
-        return this.imagefile;
+class Human_fat extends Human{
+    
+    public Human_fat(String n){
+        super(n,25,1,2,1,0, "repairman.png");
     }
 }
 
-class Human3 extends Human{
-    private String imagefile = "robot3-attack-01.png";
+class Human_soldier extends Human{
 
-    public Human3(String name,int hp,int atk,int def,int spd,int sr){
-        super(name,hp,atk,def,spd,sr);
-    }
-    @Override
-    public String getimage(){
-        return this.imagefile;
+    public Human_soldier(String n){
+        super(n,30,2,3,1,2, "sd1.png");
     }
 }
