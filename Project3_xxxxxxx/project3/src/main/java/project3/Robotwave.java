@@ -7,8 +7,10 @@ public class Robotwave{
     private Robot ro1;
     private Robot ro2;
     private Robot ro3;
+    private Stageframe frame;
     
-    public Robotwave(int stage){
+    public Robotwave(int stage, Stageframe sf){
+        frame = sf;
         switch (stage) {
             case 1:
                 stage1();
@@ -31,14 +33,14 @@ public class Robotwave{
     }
 
     public void stage1() {
-        ro1 = new Robot1();
+        ro1 = new Robot1(frame);
         ro.add(ro1);
         ro1.setposition(3);
     }
     
     public void stage2(){
-        ro1 = new Robot1();
-        ro2 = new Robot2();
+        ro1 = new Robot1(frame);
+        ro2 = new Robot2(frame);
         ro.add(ro1);
         ro.add(ro2);
         ro1.setposition(3);

@@ -5,8 +5,8 @@ class Human extends Character{
     protected Characterlabel humanlabel;
 
     public Human(){}
-    public Human(String n, int h, int a, int d, int s, int sr, String imagefile){
-        super(n, h, a, d, s, imagefile);
+    public Human(String n, int h, int a, int d, int s, int sr, String imagefile,Stageframe sf){
+        super(n, h, a, d, s, imagefile,sf);
         skillrate = sr;
     }
     protected int checkskill(){
@@ -32,21 +32,21 @@ class Human extends Character{
 
 class Human_weak extends Human{
 
-    public Human_weak(String n){
-        super(n,15,1,1,1,0, "Mutanthuman.png");
+    public Human_weak(String n, Stageframe sf){
+        super(n,15,1,1,1,0, "Mutanthuman.png", sf);
     }
 }
 
 class Human_fat extends Human{
     
-    public Human_fat(String n){
-        super(n,25,1,2,1,0, "repairman.png");
+    public Human_fat(String n, Stageframe sf){
+        super(n,25,1,2,1,0, "repairman.png", sf);
     }
 }
 
 class Human_soldier extends Human{
 
-    public Human_soldier(String n){
-        super(n,30,2,3,1,2, "sd1.png");
+    public Human_soldier(String n, Stageframe sf){
+        super(n,30,2,3,1,2, "sd1.png", sf);
     }
 }

@@ -16,10 +16,10 @@ public class Stageframe extends JFrame {
     private int frameWidth = 1366;
     private int stagenum, wave;
     private boolean choose = false;
-    private String imagepath, soundpath ; //project3\Project3_xxxxxxx\project3\src\pictures
-    //private Character activeCharacter;
-    private Humanwave hw;   // hw = new humanwave(1,1); // hwArraylist = hw.gethu();
-    private Robotwave rw;  // rw = new Robotwave(1); // robotArraylist = rw.gethu();
+    private String imagepath, soundpath; // project3\Project3_xxxxxxx\project3\src\pictures
+    // private Character activeCharacter;
+    private Humanwave hw; // hw = new humanwave(1,1); // hwArraylist = hw.gethu();
+    private Robotwave rw; // rw = new Robotwave(1); // robotArraylist = rw.gethu();
     private ArrayList<Robot> robotArraylist;
     private ArrayList<Human> humanArraylist;
     private ArrayList<Characterlabel> robotLabelArraylist, humanLabelArraylist;
@@ -29,10 +29,15 @@ public class Stageframe extends JFrame {
     private Characterlabel activeLabel, targetLabel;
     private StatLabel stat;
     private JLabel contentpane;
-    
-    public Stageframe(String ipath, String spath,int stage) { // อาจจะรับ ArrayList เข้ามา
-        hw = new Humanwave(stage,1);
-        rw = new Robotwave(stage);
+    private int currentstate;
+    private int robotstate = 1;
+    private int humanstate = 2;
+    private int skillstate = 3;
+
+
+    public Stageframe(String ipath, String spath, int stage) { // อาจจะรับ ArrayList เข้ามา
+        hw = new Humanwave(stage, 1, this);
+        rw = new Robotwave(stage, this);
         sethumanArraylist();
         setrobotArraylist();
         stagenum = stage;
@@ -43,7 +48,7 @@ public class Stageframe extends JFrame {
         contentpane.setIcon(background.resize(frameWidth, frameHeight));
         contentpane.setOpaque(true);
         contentpane.setLayout(null);
-        
+
         this.addcomponent();
         battle();
         validate();
@@ -55,35 +60,35 @@ public class Stageframe extends JFrame {
         return choose;
     }
 
-    public void settargetLabel(Characterlabel tl){
+    public void settargetLabel(Characterlabel tl) {
         targetLabel = tl;
     }
 
-    public void sethumanArraylist(){
+    public void sethumanArraylist() {
         this.humanArraylist = hw.gethu();
     }
 
-    public void setrobotArraylist(){
+    public void setrobotArraylist() {
         this.robotArraylist = rw.getro();
     }
 
-    public ArrayList<Human> gethumanArraylist(){
+    public ArrayList<Human> gethumanArraylist() {
         return humanArraylist;
     }
 
-    public ArrayList<Robot> getrobotArraylist(){
+    public ArrayList<Robot> getrobotArraylist() {
         return robotArraylist;
     }
 
-    public int getWidth(){
+    public int getWidth() {
         return frameWidth;
     }
 
-    public int getHeighth(){
+    public int getHeighth() {
         return frameHeight;
     }
 
-    public JLabel getContentpane(){
+    public JLabel getContentpane() {
         return contentpane;
     }
 
@@ -106,113 +111,30 @@ public class Stageframe extends JFrame {
         validate();
         repaint();
     }
+
     public void addallrobot() {
         robotLabelArraylist = new ArrayList<Characterlabel>();
-        for(int i = 0; i < robotArraylist.size(); i++){
-            robotLabelArraylist.add(new Characterlabel(imagepath, 150, 150, this, stat,robotArraylist.get(i)));
+        for (int i = 0; i < robotArraylist.size(); i++) {
+            robotLabelArraylist.add(new Characterlabel(imagepath, 150, 150, this, stat, robotArraylist.get(i)));
             robotLabelArraylist.get(i).addMouse();
             contentpane.add(robotLabelArraylist.get(i));
         }
-        
-        /*if (robotArraylist.size() == 3) {
-            robot1 = new Characterlabel(imagepath, 150, 150, this, stat,  robotArraylist.get(0)); // it a robot
-            //robot1.setposition(robotArraylist.get(0).getposition());
-            robot1.addMouse();
-            //robotArraylist.get(0).setLabel(robot1);
-
-            robot2 = new Characterlabel(imagepath, 150, 150, this, stat,  robotArraylist.get(1)); // it a robot
-            //robot2.setposition(robotArraylist.get(1).getposition());
-            robot2.addMouse();
-            //robotArraylist.get(1).setLabel(robot2);
-
-            robot3 = new Characterlabel(imagepath, 150, 150, this, stat,  robotArraylist.get(2)); // it a robot
-            //robot3.setposition(robotArraylist.get(2).getposition());
-            robot3.addMouse();
-            //robotArraylist.get(2).setLabel(robot3);
-
-            contentpane.add(robot1);
-            contentpane.add(robot2);
-            contentpane.add(robot3);
-
-        } else if (robotArraylist.size() == 2) {
-            robot1 = new Characterlabel(imagepath, 150, 150, this, stat,  robotArraylist.get(0)); // it a robot
-            //robot1.setposition(robotArraylist.get(0).getposition());
-            robot1.addMouse();
-            //robotArraylist.get(0).setLabel(robot1);
-
-            robot2 = new Characterlabel(imagepath, 150, 150, this, stat,  robotArraylist.get(1)); // it a robot
-            //robot2.setposition(robotArraylist.get(1).getposition());
-            robot2.addMouse();
-            //robotArraylist.get(1).setLabel(robot2);
-
-            contentpane.add(robot1);
-            contentpane.add(robot2);
-
-        } else if(robotArraylist.size() == 1){
-            robot1 = new Characterlabel(imagepath, 150, 150, this, stat,  robotArraylist.get(0)); // it a robot
-            //robot1.setposition(robotArraylist.get(0).getposition());
-            robot1.addMouse();
-            //robotArraylist.get(0).setLabel(robot1);
-
-            contentpane.add(robot1);
-        }*/
-
     }
+
     public void addallhuman() {
         humanLabelArraylist = new ArrayList<Characterlabel>();
-        for(int i = 0; i < humanArraylist.size(); i++){
-            humanLabelArraylist.add(new Characterlabel(imagepath, 150, 150, this, stat,humanArraylist.get(i)));
+        for (int i = 0; i < humanArraylist.size(); i++) {
+            humanLabelArraylist.add(new Characterlabel(imagepath, 150, 150, this, stat, humanArraylist.get(i)));
             humanLabelArraylist.get(i).addMouse();
             contentpane.add(humanLabelArraylist.get(i));
         }
-        /*if (humanArraylist.size() == 3) {
-            enemy1 = new Characterlabel(imagepath, 150, 150, this, stat,  humanArraylist.get(0)); // it a robot
-            //enemy1.setposition(robotArraylist.get(0).getposition());
-            enemy1.addMouse();
-            //humanArraylist.get(0).setLabel(robot1);
+    }
 
-            enemy2 = new Characterlabel(imagepath, humanArraylist.get(1).getimage(), 150, 150, this, stat); // it a robot
-            enemy2.setposition(humanArraylist.get(1).getposition());
-            enemy2.addMouse();
-            humanArraylist.get(1).setLabel(enemy2);
-
-            enemy3 = new Characterlabel(imagepath, humanArraylist.get(2).getimage(), 150, 150, this, stat); // it a robot
-            enemy3.setposition(humanArraylist.get(2).getposition());
-            enemy3.addMouse();
-            humanArraylist.get(2).setLabel(enemy3);
-
-            contentpane.add(enemy1);
-            contentpane.add(enemy2);
-            contentpane.add(enemy3);
-
-        } else if (humanArraylist.size() == 2) {
-            enemy1 = new Characterlabel(imagepath, humanArraylist.get(0).getimage(), 150, 150, this, stat); // it a robot
-            enemy1.setposition(humanArraylist.get(0).getposition());
-            enemy1.addMouse();
-            humanArraylist.get(0).setLabel(enemy1);
-
-            enemy2 = new Characterlabel(imagepath, humanArraylist.get(1).getimage(), 150, 150, this, stat); // it a robot
-            enemy2.setposition(humanArraylist.get(1).getposition());
-            enemy2.addMouse();
-            humanArraylist.get(1).setLabel(enemy2);
-
-            contentpane.add(enemy1);
-            contentpane.add(enemy2);
-
-        } else if(humanArraylist.size() == 1){
-            enemy1 = new Characterlabel(imagepath, humanArraylist.get(0).getimage(), 150, 150, this, stat); // it a robot
-            enemy1.setposition(humanArraylist.get(0).getposition());
-            enemy1.addMouse();
-            humanArraylist.get(0).setLabel(enemy1);
-
-            contentpane.add(enemy1);
-        }*/
+    public void setallrobot() {
 
     }
-    public void setallrobot(){
 
-    }
-    public void setallhuman(){
+    public void setallhuman() {
 
     }
 
@@ -237,10 +159,46 @@ public class Stageframe extends JFrame {
     }
 
     public void battle() { // stage battle
-        activeLabel = robotLabelArraylist.get(0);
+
+        
+
+        if ((rand.nextInt(2) + 1) == 1) {
+            for (Robot ro : robotArraylist) {
+                ro.getspeedthread().run();
+            }
+            for (Human hu : humanArraylist) {
+                hu.getspeedthread().run();
+            }
+        }else{
+            for (Human hu : humanArraylist) {
+                hu.getspeedthread().run();
+            }
+            for (Robot ro : robotArraylist) {
+                ro.getspeedthread().run();
+            }
+        }
+
+        
+        /*activeLabel = robotLabelArraylist.get(0);
+        stat.setactiveCharacter(activeLabel.getOwner());
+        stat.ShowAction(activeLabel.getOwner());*/
+          
+
+          //activeLabel.checkthread();
+         
+    }
+
+    public synchronized void setactiveLabel(Character c) {
+        activeLabel = c.getLabel();
         stat.setactiveCharacter(activeLabel.getOwner());
         stat.ShowAction(activeLabel.getOwner());
+        try{
+        c.getspeedthread().wait();
+        }catch(Exception e){
+            
+        }
     }
+
 
     public void checkdeath() {
         for (int j = 0; j < humanArraylist.size(); j++) { // check death here
@@ -260,50 +218,57 @@ public class Stageframe extends JFrame {
     }
 
     public void robot_attack() { // Arraylist robot,character
-        if(targetLabel == null){
-        JLabel warn = new JLabel("Choose the enemy");
-        warn.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 50));
-        warn.setBackground(new Color(222, 0, 62));
-        warn.setForeground(Color.white);
-        warn.setBounds(433, 150, 500, 70);
-        contentpane.add(warn);
-        choose = true;
-        }
-        else{
+        JLabel warn = new JLabel();
+        if (targetLabel == null) {
+            warn.setText("Choose the enemy");
+            warn.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 50));
+            warn.setBackground(new Color(222, 0, 62));
+            warn.setForeground(Color.white);
+            warn.setBounds(333, 150, 700, 70);
+            contentpane.add(warn);
+            choose = true;
+        } else if (targetLabel.getOwner() instanceof Human) {
             activeLabel.getOwner().attack(targetLabel.getOwner());
             choose = false;
             stat.settargetCharacter(targetLabel.getOwner());
             targetLabel = null;
+            contentpane.remove(warn);
+        } else {
+            warn.setText("Don't Choose the Ally");
         }
         contentpane.repaint();
         validate();
     }
 
+    public void human_attack() {
+        if (targetLabel == null) {
+            int a = rand.nextInt(robotArraylist.size());
+            targetLabel = robotArraylist.get(a).getLabel();
+            human_attack();
+        } else if (targetLabel.getOwner() instanceof Human) {
+            activeLabel.getOwner().attack(targetLabel.getOwner());
+            stat.settargetCharacter(targetLabel.getOwner());
+            targetLabel = null;
+        } else {
+            targetLabel = null;
+            human_attack();
+        }
+    }
+
     public void action_robot_skill() {
-        //stat.setLtext(activeLabel, activeLabel, activeLabel, activeLabel, activeLabel);
+        // stat.setLtext(activeLabel, activeLabel, activeLabel, activeLabel,
+        // activeLabel);
     }
 
     public void action_enemy(Human h) { // Arraylist human,character
         int size = robotArraylist.size();
-        if(size==0){
-        System.out.printf("Human action\n");
-        
-        int a = rand.nextInt(size);
-        h.attack(robotArraylist.get(a));
+        if (size == 0) {
+            System.out.printf("Human action\n");
+
+            int a = rand.nextInt(size);
+            h.attack(robotArraylist.get(a));
         }
     }
-
-    /*public int chooseenemy() {
-        int i = 1;
-        for (Human h : humanArraylist) {
-            System.out.printf("%d. ", i);
-            h.introduce();
-            i++;
-        }
-        Scanner scan = new Scanner(System.in);
-        int choice = scan.nextInt() - 1;
-        return choice;
-    }*/
 }
 
 // ======================================================================================================================
