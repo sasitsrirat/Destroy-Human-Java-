@@ -13,8 +13,8 @@ class Robot extends Character {
     public Robot() {
     }
 
-    public Robot(String n, int hp, int atk, int def, int spd, int p, int cs, int cu, String imagefile) {
-        super(n, hp, atk, def, spd, imagefile);
+    public Robot(String n, int hp, int atk, int def, int spd, int p, int cs, int cu, String imagefile,Stageframe sf) {
+        super(n, hp, atk, def, spd, imagefile,sf);
         ep = p;
         cd_s = cs;
         cd_u = cu;
@@ -47,21 +47,21 @@ class Robot extends Character {
 
 class Robot1 extends Robot {
 
-    public Robot1() {
-        super("Musix-6000", 20, 500, 1, 1, 3, 2, 5, "robot1-normal-01.png");
+    public Robot1(Stageframe sf) {
+        super("Musix-6000", 20, 500, 1, 1, 3, 2, 5, "robot1-normal-01.png", sf);
     }
 }
 
 class Robot2 extends Robot {
 
-    public Robot2() {
-        super("Ba-Be", 50, 1, 3, 1, 3, 2, 5, "robot2.png");
+    public Robot2(Stageframe sf) {
+        super("Ba-Be", 50, 1, 3, 1, 3, 2, 5, "robot2.png" , sf);
     }
 }
 
 class Robot3 extends Robot {
 
-    public Robot3() {
-        super("N2Y2", 30, 2, 2, 1, 3, 2, 5, "robot2.png");
+    public Robot3(Stageframe sf) {
+        super("N2Y2", 30, 2, 2, 1, 3, 2, 5, "robot2.png", sf) ;
     }
 }

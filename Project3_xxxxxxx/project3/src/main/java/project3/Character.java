@@ -12,12 +12,14 @@ public class Character extends Thread implements Comparable<Character> {
     protected int maxspeed = 3000;
     protected String imagefile;
     protected Characterlabel CLabel;
+    private Speed speedthread;
+    private Stageframe frame;
 
     // protected Speed speedthread;
     public Character() {
     }
 
-    public Character(String n, int h, int a, int d, int s, String i) {
+    public Character(String n, int h, int a, int d, int s, String i, Stageframe sf) {
         name = n;
         hp = h;
         max_hp = h;
@@ -25,7 +27,20 @@ public class Character extends Thread implements Comparable<Character> {
         def = d;
         spd = s;
         imagefile = i;
-        // speedthread = new Speed(spd);
+        frame = sf;
+        speedthread = new Speed(spd, frame, this);
+    }
+    public Speed getspeedthread(){
+        return speedthread;
+    }
+    public void setspeedthread() {
+        if (!speedthread.isAlive()) {
+            speedthread = new Speed(spd, frame, this);
+        }
+    }
+
+    public void checkthread() {
+        
     }
 
     public void setLabel(Characterlabel CL) {
