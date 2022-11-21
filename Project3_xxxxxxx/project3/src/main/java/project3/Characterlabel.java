@@ -20,7 +20,7 @@ public class Characterlabel extends JLabel {
 
     public Characterlabel(String path, int width, int height, Stageframe pf, StatLabel sl, Character c) {
 
-        owner = c;
+        owner =  c;
         owner.setLabel(this);
         this.width = width;
         this.height = height;
