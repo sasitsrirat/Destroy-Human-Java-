@@ -1,7 +1,7 @@
 package project3;
 
 public class Speed extends Thread {
-    protected int maxspeed = 10;
+    protected int maxspeed = 200;
     protected int currentspd = 0;
     protected Stageframe frame;
     protected Character owner;
@@ -16,11 +16,11 @@ public class Speed extends Thread {
         int temp = 0;
         //if(this.isAlive())
         while (currentspd < maxspeed) {
-            currentspd++;
+            temp += this.currentspd;
             try {
-                //Thread.sleep(200);
+                Thread.sleep(200);
             } catch (Exception e) {
-
+                
             }
         }
         frame.setactiveLabel(owner);

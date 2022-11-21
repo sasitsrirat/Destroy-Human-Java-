@@ -147,7 +147,7 @@ class StatLabel extends JLabel {
                 public void actionPerformed(ActionEvent event) {
                     // clickSound.playOnce();
                     parentFrame.robot_attack();
-                    activeCharacter.getspeedthread().notify(); // notify thread to run
+                    //activeCharacter.getspeedthread().notify(); // notify thread to run
                 }
             });
         }
