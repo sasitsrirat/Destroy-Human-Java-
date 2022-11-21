@@ -32,10 +32,6 @@ public class Optionframe extends JFrame {
         setVisible(true);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
-        /*contentpane = (JLabel) getContentPane();
-        contentpane.setLayout(null);
-        setContentPane(contentpane);*/
-        
         setContentPane(contentpane = new JLabel());
         MyImageIcon imageIcon = new MyImageIcon(path + "jenny.jpg");
         contentpane.setIcon(imageIcon.resize(frameWidth, frameHeight));
@@ -64,9 +60,9 @@ public class Optionframe extends JFrame {
         musicPanel.setBounds(0, 90, 700, 100);
         musicPanel.setLayout(null);
         musicPanel.setOpaque(false);
-        MyImageIcon music_max = new MyImageIcon(path + "Kawin_max.png").resize(75, 75);
-        MyImageIcon music_min = new MyImageIcon(path + "Kawin_min.png").resize(75, 75);
-        MyImageIcon music_mute = new MyImageIcon(path + "Kawin_mute.png").resize(75, 75);
+        MyImageIcon music_max = new MyImageIcon(path + "Music_max.png").resize(75, 75);
+        MyImageIcon music_min = new MyImageIcon(path + "Music_min.png").resize(75, 75);
+        MyImageIcon music_mute = new MyImageIcon(path + "Music_mute.png").resize(75, 75);
         JLabel musiclabel = new JLabel();
         musiclabel.setIcon(music_max);
         musiclabel.setHorizontalAlignment(JLabel.CENTER);
