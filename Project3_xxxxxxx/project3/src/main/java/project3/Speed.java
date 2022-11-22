@@ -15,14 +15,14 @@ public class Speed extends Thread {
     public void run() {
         int temp = 0;
         //if(this.isAlive())
-        while (currentspd < maxspeed) {
+        /*while (currentspd < maxspeed) {
             currentspd++;
             try {
                 //Thread.sleep(200);
             } catch (Exception e) {
                 
             }
-        }
+        }*/
         frame.setactiveLabel(owner);
 
     }

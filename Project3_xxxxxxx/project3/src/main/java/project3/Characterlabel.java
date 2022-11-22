@@ -1,15 +1,14 @@
 package project3;
 
-import java.awt.*;
-import java.io.*;
-import java.util.*;
-import java.util.concurrent.TimeUnit;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.MouseEvent;
 import javax.swing.*;
-import java.lang.*;
-import javax.swing.JFrame;
-import javax.swing.border.Border;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.event.MouseInputListener;
-import java.awt.event.*;
+import java.util.*;
+import java.awt.*;
 
 public class Characterlabel extends JLabel {
 
@@ -22,7 +21,7 @@ public class Characterlabel extends JLabel {
 
     public Characterlabel(String pathfile, int width, int height, Stageframe pf, StatLabel sl, Character c) {
 
-        owner =  c;
+        owner = c;
         owner.setLabel(this);
         this.width = width;
         this.height = height;
@@ -36,42 +35,75 @@ public class Characterlabel extends JLabel {
         parentFrame = pf;
         position = owner.getposition();
         
+
         setposition();
-        
+
         setVisible(true);
     }
 
     public void attack_animation() {
-        setIcon(attackicon);
-        parentFrame.repaint();
+
+        Thread th = new Thread() {
+            public void run() {
+                parentFrame.setstagestate(4);
+                setIcon(attackicon);
+                parentFrame.repaint();
                 validate();
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException ex) {
-            Thread.currentThread().interrupt();
-        }
-        setIcon(staticon);
-        parentFrame.repaint();
+                try {
+                    Thread.currentThread().sleep(1500);
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+                setIcon(staticon);
+                parentFrame.repaint();
                 validate();
+            }
+
+            /*
+             * parentFrame.setstagestate(4);
+             * setIcon(attackicon);
+             * parentFrame.repaint();
+             * validate();
+             */
+
+        };
+        th.start();
     }
-    
-    public void takedmg_animation(String effect){
+
+    public void takedmg_animation(String effect) {
         JLabel effectLabel = new JLabel();
-        effectLabel.setIcon(new MyImageIcon(path + effect).resize(width, height));
-        effectLabel.setBounds(50, 50, 50, 50);
-        this.add(effectLabel);
-        validate();
-        repaint();
-        parentFrame.repaint();
-        try {
-            Thread.sleep(1500);
-        } catch (InterruptedException ex) {
-            Thread.currentThread().interrupt();
-        }
-        this.remove(effectLabel);
-        validate();
-        repaint();
-        parentFrame.repaint();
+        ImageIcon imageIcon = new ImageIcon(path + effect);
+        imageIcon.setImage(imageIcon.getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
+
+        effectLabel.setIcon(imageIcon);
+        effectLabel.setBounds(50, 50, 100, 100);
+        effectLabel.setVisible(true);
+        effectLabel.setHorizontalAlignment(JLabel.CENTER);
+        effectLabel.setLayout(null);
+        Characterlabel temp = this;
+        temp.add(effectLabel);
+                this.validate();
+                repaint();
+                parentFrame.repaint();
+        Thread bruh = new Thread() {
+            public void run() {
+
+                
+
+                try {
+                    Thread.currentThread().sleep(1500);
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
+                effectLabel.setVisible(false);
+                temp.remove(effectLabel);
+                temp.revalidate();
+                temp.repaint();
+                parentFrame.repaint();
+            }
+        };
+        bruh.start();
+
     }
 
     public void setMoveConditions(int x, int y) {
@@ -81,7 +113,7 @@ public class Characterlabel extends JLabel {
     }
 
     public void setposition() {
-        //position = po;
+        // position = po;
         switch (position) {
             case 1:
                 setMoveConditions(50, 240);
@@ -130,17 +162,22 @@ public class Characterlabel extends JLabel {
             }
 
             public void mouseEntered(MouseEvent e) {
-                setIcon(staticon2);
-                status.setRtext(owner.getatk(), owner.gethp(), owner.getmax_hp(), owner.getdf(), owner.getname());
-                parentFrame.repaint();
-                validate();
+                if (parentFrame.getstagestate() != 4) {
+                    setIcon(staticon2);
+                    status.setRtext(owner.getatk(), owner.gethp(), owner.getmax_hp(), owner.getdf(), owner.getname());
+                    parentFrame.repaint();
+                    validate();
+                }
             }
 
             public void mouseExited(MouseEvent e) {
-                setIcon(staticon);
-                //stat.setVisible(false);
-                parentFrame.repaint();
-                validate();
+                if (parentFrame.getstagestate() != 4) {
+                    // System.out.println(parentFrame.getState());
+                    setIcon(staticon);
+                    // stat.setVisible(false);
+                    parentFrame.repaint();
+                    validate();
+                }
             }
 
             public void mouseMoved(MouseEvent e) {
@@ -151,13 +188,15 @@ public class Characterlabel extends JLabel {
                 if (parentFrame.getchoose() == true) {
                     parentFrame.settargetLabel(temp);
                     parentFrame.robot_attack();
-                    /*if (parentFrame.getstagenum() != 2) {
-                        parentFrame.stage2();
-                        parentFrame.setstagenum(2);
-                    } else {
-                        parentFrame.stage1();
-                        parentFrame.setstagenum(1);
-                    }*/
+                    /*
+                     * if (parentFrame.getstagenum() != 2) {
+                     * parentFrame.stage2();
+                     * parentFrame.setstagenum(2);
+                     * } else {
+                     * parentFrame.stage1();
+                     * parentFrame.setstagenum(1);
+                     * }
+                     */
                 }
             }
 

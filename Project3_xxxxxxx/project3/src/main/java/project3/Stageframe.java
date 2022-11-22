@@ -30,10 +30,11 @@ public class Stageframe extends JFrame {
     private StatLabel stat;
     private JLabel contentpane;
     private JLabel warn = new JLabel();
-    private int currentstate;
-    private int robotstate = 1;
-    private int humanstate = 2;
-    private int skillstate = 3;
+    private int currentstate = 0;;
+    private final int robotstate = 1;
+    private final int humanstate = 2;
+    private final int skillstate = 3;
+    private final int actiostate = 4;
 
     public Stageframe(String ipath, String spath, int stage) { // อาจจะรับ ArrayList เข้ามา
         hw = new Humanwave(stage, 1, this);
@@ -98,6 +99,12 @@ public class Stageframe extends JFrame {
 
     public void setstagenum(int num) {
         this.stagenum = num;
+    }
+    public void setstagestate(int a){
+        this.currentstate = a;
+    }
+    public int getstagestate(){
+        return this.currentstate;
     }
 
     public void addcomponent() {
@@ -220,6 +227,7 @@ public class Stageframe extends JFrame {
             contentpane.add(warn);
             choose = true;
         } else if (targetLabel.getOwner() instanceof Human) {
+            this.currentstate = 4;
             activeLabel.getOwner().attack(targetLabel.getOwner());
             activeLabel.attack_animation();
             targetLabel.takedmg_animation("hit.gif");
@@ -228,6 +236,7 @@ public class Stageframe extends JFrame {
             choose = false;
             targetLabel = null;
             contentpane.remove(warn);
+            this.currentstate = 0;
         } else if (targetLabel.getOwner() instanceof Robot){
             warn.setText(" Don't Choose the Ally");
         }
