@@ -32,10 +32,6 @@ public class Optionframe extends JFrame {
         setVisible(true);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
-        /*contentpane = (JLabel) getContentPane();
-        contentpane.setLayout(null);
-        setContentPane(contentpane);*/
-        
         setContentPane(contentpane = new JLabel());
         MyImageIcon imageIcon = new MyImageIcon(path + "jenny.jpg");
         contentpane.setIcon(imageIcon.resize(frameWidth, frameHeight));

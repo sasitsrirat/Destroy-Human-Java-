@@ -22,7 +22,7 @@ public class Characterlabel extends JLabel {
 
     public Characterlabel(String pathfile, int width, int height, Stageframe pf, StatLabel sl, Character c) {
 
-        owner = c;
+        owner =  c;
         owner.setLabel(this);
         this.width = width;
         this.height = height;
@@ -35,7 +35,9 @@ public class Characterlabel extends JLabel {
         setHorizontalAlignment(JLabel.CENTER);
         parentFrame = pf;
         position = owner.getposition();
-        this.setposition();
+        
+        setposition();
+        
         setVisible(true);
     }
 

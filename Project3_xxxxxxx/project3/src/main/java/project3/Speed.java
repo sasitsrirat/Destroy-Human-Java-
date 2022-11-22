@@ -20,7 +20,7 @@ public class Speed extends Thread {
             try {
                 //Thread.sleep(200);
             } catch (Exception e) {
-
+                
             }
         }
         frame.setactiveLabel(owner);
