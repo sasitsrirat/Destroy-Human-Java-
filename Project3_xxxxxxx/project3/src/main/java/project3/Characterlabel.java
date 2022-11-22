@@ -3,6 +3,7 @@ package project3;
 import java.awt.*;
 import java.io.*;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import javax.swing.*;
 import java.lang.*;
 import javax.swing.JFrame;
@@ -12,29 +13,63 @@ import java.awt.event.*;
 
 public class Characterlabel extends JLabel {
 
-    protected MyImageIcon staticon, staticon2;
+    protected MyImageIcon staticon, staticon2, attackicon;
     protected int curX, curY, width, height, position;
+    protected String path;
     protected Stageframe parentFrame;
     protected StatLabel status;
     protected Character owner;
 
-    public Characterlabel(String path, int width, int height, Stageframe pf, StatLabel sl, Character c) {
+    public Characterlabel(String pathfile, int width, int height, Stageframe pf, StatLabel sl, Character c) {
 
         owner = c;
         owner.setLabel(this);
         this.width = width;
         this.height = height;
+        path = pathfile;
         status = sl;
         staticon = new MyImageIcon(path + owner.getimage()).resize(width, height);
         staticon2 = new MyImageIcon(path + "robot3.png").resize(width, height);
+        attackicon = new MyImageIcon(path + owner.getattackimage()).resize(width, height);
         setIcon(staticon);
         setHorizontalAlignment(JLabel.CENTER);
         parentFrame = pf;
         position = owner.getposition();
-        System.out.println(owner.getposition());
-        setposition();
-        //setBounds(getVisibleRect());
+        this.setposition();
         setVisible(true);
+    }
+
+    public void attack_animation() {
+        setIcon(attackicon);
+        parentFrame.repaint();
+                validate();
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
+        setIcon(staticon);
+        parentFrame.repaint();
+                validate();
+    }
+    
+    public void takedmg_animation(String effect){
+        JLabel effectLabel = new JLabel();
+        effectLabel.setIcon(new MyImageIcon(path + effect).resize(width, height));
+        effectLabel.setBounds(50, 50, 50, 50);
+        this.add(effectLabel);
+        validate();
+        repaint();
+        parentFrame.repaint();
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
+        this.remove(effectLabel);
+        validate();
+        repaint();
+        parentFrame.repaint();
     }
 
     public void setMoveConditions(int x, int y) {
@@ -94,21 +129,8 @@ public class Characterlabel extends JLabel {
 
             public void mouseEntered(MouseEvent e) {
                 setIcon(staticon2);
-                /*Character ex = new Character();
-                for(int i = 0 ; i < parentFrame.gethumanArraylist().size(); i++){
-                    if(position == parentFrame.gethumanArraylist().get(i).getposition()){
-                        ex = parentFrame.gethumanArraylist().get(i);
-                    }
-                }
-                for(int i = 0 ; i < parentFrame.getrobotArraylist().size(); i++){
-                    if(position == parentFrame.getrobotArraylist().get(i).getposition()){
-                        ex = parentFrame.getrobotArraylist().get(i);
-                    }
-                }
-                status.setRtext(ex.getatk(), ex.gethp(), ex.getmax_hp(), ex.getdf(), ex.getname());*/
                 status.setRtext(owner.getatk(), owner.gethp(), owner.getmax_hp(), owner.getdf(), owner.getname());
                 parentFrame.repaint();
-
                 validate();
             }
 

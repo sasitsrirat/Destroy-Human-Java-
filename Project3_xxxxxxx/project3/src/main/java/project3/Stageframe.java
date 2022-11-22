@@ -29,11 +29,11 @@ public class Stageframe extends JFrame {
     private Characterlabel activeLabel, targetLabel;
     private StatLabel stat;
     private JLabel contentpane;
+    private JLabel warn = new JLabel();
     private int currentstate;
     private int robotstate = 1;
     private int humanstate = 2;
     private int skillstate = 3;
-
 
     public Stageframe(String ipath, String spath, int stage) { // อาจจะรับ ArrayList เข้ามา
         hw = new Humanwave(stage, 1, this);
@@ -115,7 +115,7 @@ public class Stageframe extends JFrame {
     public void addallrobot() {
         robotLabelArraylist = new ArrayList<Characterlabel>();
         for (int i = 0; i < robotArraylist.size(); i++) {
-            robotLabelArraylist.add(new Characterlabel(imagepath, 150, 150, this, stat, robotArraylist.get(i)));
+            robotLabelArraylist.add(new Characterlabel(imagepath, 180, 180, this, stat, robotArraylist.get(i)));
             robotLabelArraylist.get(i).addMouse();
             contentpane.add(robotLabelArraylist.get(i));
         }
@@ -124,7 +124,7 @@ public class Stageframe extends JFrame {
     public void addallhuman() {
         humanLabelArraylist = new ArrayList<Characterlabel>();
         for (int i = 0; i < humanArraylist.size(); i++) {
-            humanLabelArraylist.add(new Characterlabel(imagepath, 150, 150, this, stat, humanArraylist.get(i)));
+            humanLabelArraylist.add(new Characterlabel(imagepath, 180, 180, this, stat, humanArraylist.get(i)));
             humanLabelArraylist.get(i).addMouse();
             contentpane.add(humanLabelArraylist.get(i));
         }
@@ -141,7 +141,7 @@ public class Stageframe extends JFrame {
     public void stage2() {
         ImageIcon temp = new ImageIcon(imagepath + "city.gif");
         temp.setImage(temp.getImage().getScaledInstance(frameWidth, frameHeight, Image.SCALE_DEFAULT)); // size of
-                                                                                                        // background
+        // background
         // MyImageIcon temp = new MyImageIcon(path + "city.gif");
         contentpane.setIcon(temp);
         validate();
@@ -151,7 +151,7 @@ public class Stageframe extends JFrame {
     public void stage1() {
         ImageIcon temp = new ImageIcon(imagepath + "warzone-scene.png");
         temp.setImage(temp.getImage().getScaledInstance(frameWidth, frameHeight, Image.SCALE_DEFAULT)); // size of
-                                                                                                        // background
+        // background
         // MyImageIcon temp = new MyImageIcon(path + "city.gif");
         contentpane.setIcon(temp);
         validate();
@@ -160,45 +160,37 @@ public class Stageframe extends JFrame {
 
     public void battle() { // stage battle
 
-        
+        for (Robot ro : robotArraylist) {
+            ro.getspeedthread().start();
+        }
 
-        if ((rand.nextInt(2) + 1) == 1) {
+        /*if ((rand.nextInt(2) + 1) == 1) {
             for (Robot ro : robotArraylist) {
-                ro.getspeedthread().run();
+                ro.getspeedthread().start();
             }
             for (Human hu : humanArraylist) {
-                hu.getspeedthread().run();
+                hu.getspeedthread().start();
             }
         }else{
             for (Human hu : humanArraylist) {
-                hu.getspeedthread().run();
+                hu.getspeedthread().start();
             }
             for (Robot ro : robotArraylist) {
-                ro.getspeedthread().run();
+                ro.getspeedthread().start();
             }
-        }
-
-        
-        /*activeLabel = robotLabelArraylist.get(0);
-        stat.setactiveCharacter(activeLabel.getOwner());
-        stat.ShowAction(activeLabel.getOwner());*/
-          
-
-          //activeLabel.checkthread();
-         
+        }*/
     }
 
     public synchronized void setactiveLabel(Character c) {
         activeLabel = c.getLabel();
         stat.setactiveCharacter(activeLabel.getOwner());
         stat.ShowAction(activeLabel.getOwner());
-        try{
-        c.getspeedthread().wait();
-        }catch(Exception e){
-            
-        }
-    }
+        /*try {
+            c.getspeedthread().wait();
+        } catch (Exception e) {
 
+        }*/
+    }
 
     public void checkdeath() {
         for (int j = 0; j < humanArraylist.size(); j++) { // check death here
@@ -218,24 +210,28 @@ public class Stageframe extends JFrame {
     }
 
     public void robot_attack() { // Arraylist robot,character
-        JLabel warn = new JLabel();
         if (targetLabel == null) {
-            warn.setText("Choose the enemy");
+            warn.setText("   Choose the enemy");
             warn.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 50));
             warn.setBackground(new Color(222, 0, 62));
+            warn.setOpaque(true);
             warn.setForeground(Color.white);
-            warn.setBounds(333, 150, 700, 70);
+            warn.setBounds(423, 150, 520, 70);
             contentpane.add(warn);
             choose = true;
         } else if (targetLabel.getOwner() instanceof Human) {
             activeLabel.getOwner().attack(targetLabel.getOwner());
-            choose = false;
+            activeLabel.attack_animation();
+            targetLabel.takedmg_animation("hit.gif");
             stat.settargetCharacter(targetLabel.getOwner());
+            
+            choose = false;
             targetLabel = null;
             contentpane.remove(warn);
-        } else {
-            warn.setText("Don't Choose the Ally");
+        } else if (targetLabel.getOwner() instanceof Robot){
+            warn.setText(" Don't Choose the Ally");
         }
+        
         contentpane.repaint();
         validate();
     }
@@ -327,7 +323,6 @@ class templatelabel extends JLabel implements MouseInputListener, FocusListener 
     }
 
     // focuslistener
-
     public void focusGained(FocusEvent e) {
         this.setIcon(staticon2);
         parentFrame.repaint();
