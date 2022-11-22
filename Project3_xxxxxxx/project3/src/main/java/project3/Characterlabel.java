@@ -50,7 +50,7 @@ public class Characterlabel extends JLabel {
                 parentFrame.repaint();
                 validate();
                 try {
-                    Thread.currentThread().sleep(1500);
+                    Thread.currentThread().sleep(500);
                 } catch (Exception e) {
                     System.out.println(e);
                 }
@@ -87,9 +87,6 @@ public class Characterlabel extends JLabel {
                 parentFrame.repaint();
         Thread bruh = new Thread() {
             public void run() {
-
-                
-
                 try {
                     Thread.currentThread().sleep(1500);
                 } catch (InterruptedException ex) {
@@ -185,9 +182,19 @@ public class Characterlabel extends JLabel {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (parentFrame.getchoose() == true) {
-                    parentFrame.settargetLabel(temp);
-                    parentFrame.robot_attack();
+
+                switch (parentFrame.getchoose()) {
+                    case 1:
+                        parentFrame.settargetLabel(temp);
+                        parentFrame.robot_attack();
+                        break;
+                    case 2:
+                        parentFrame.settargetLabel(temp);
+                        parentFrame.action_robot1_skill();
+                        break;
+                    default:
+                        break;
+                }
                     /*
                      * if (parentFrame.getstagenum() != 2) {
                      * parentFrame.stage2();
@@ -197,7 +204,7 @@ public class Characterlabel extends JLabel {
                      * parentFrame.setstagenum(1);
                      * }
                      */
-                }
+                
             }
 
             @Override

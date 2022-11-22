@@ -64,11 +64,11 @@ public class Optionframe extends JFrame {
         MyImageIcon music_min = new MyImageIcon(path + "Music_min.png").resize(75, 75);
         MyImageIcon music_mute = new MyImageIcon(path + "Music_mute.png").resize(75, 75);
         JLabel musiclabel = new JLabel();
-        musiclabel.setIcon(music_max);
+        musiclabel.setIcon(music_min);
         musiclabel.setHorizontalAlignment(JLabel.CENTER);
         musiclabel.setBounds(70, 0, 75, 75);
         musicPanel.add(musiclabel);
-        musicSlider = new JSlider(1, 10, 10);
+        musicSlider = new JSlider(1, 10, 5);
         musicSlider.setBounds(150, 0, 400, 75);
         musicSlider.setOpaque(false);
         musicSlider.addChangeListener(new ChangeListener() {
@@ -150,11 +150,11 @@ public class Optionframe extends JFrame {
         MyImageIcon kawin_min = new MyImageIcon(path + "Kawin_min.png").resize(75, 75);
         MyImageIcon kawin_mute = new MyImageIcon(path + "Kawin_mute.png").resize(75, 75);
         JLabel effectlabel = new JLabel();
-        effectlabel.setIcon(kawin_max);
+        effectlabel.setIcon(kawin_min);
         effectlabel.setHorizontalAlignment(JLabel.CENTER);
         effectlabel.setBounds(70, 0, 75, 75);
         effectPanel.add(effectlabel);
-        effectSlider = new JSlider(1, 10, 10);
+        effectSlider = new JSlider(1, 10, 5);
         effectSlider.setBounds(150, 0, 400, 75);
         effectSlider.setOpaque(false);
         effectSlider.addChangeListener(new ChangeListener() {

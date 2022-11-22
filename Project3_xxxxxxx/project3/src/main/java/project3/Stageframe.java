@@ -15,8 +15,8 @@ public class Stageframe extends JFrame {
     private int frameHeight = 768;
     private int frameWidth = 1366;
     private int stagenum, wave;
-    private boolean choose = false;
-    private String imagepath, soundpath; // project3\Project3_xxxxxxx\project3\src\pictures
+    private int choose = 0;
+    private String imagepath; // project3\Project3_xxxxxxx\project3\src\pictures
     // private Character activeCharacter;
     private Humanwave hw; // hw = new humanwave(1,1); // hwArraylist = hw.gethu();
     private Robotwave rw; // rw = new Robotwave(1); // robotArraylist = rw.gethu();
@@ -31,19 +31,20 @@ public class Stageframe extends JFrame {
     private JLabel contentpane;
     private JLabel warn = new JLabel();
     private int currentstate = 0;;
+    private Sound clickSound;
     private final int robotstate = 1;
     private final int humanstate = 2;
     private final int skillstate = 3;
     private final int actiostate = 4;
 
-    public Stageframe(String ipath, String spath, int stage) { // อาจจะรับ ArrayList เข้ามา
+    public Stageframe(String ipath, Sound clicksound, int stage) { // อาจจะรับ ArrayList เข้ามา
         hw = new Humanwave(stage, 1, this);
         rw = new Robotwave(stage, this);
         sethumanArraylist();
         setrobotArraylist();
         stagenum = stage;
         imagepath = ipath;
-        soundpath = spath;
+        clickSound = clicksound;
         contentpane = new JLabel();
         MyImageIcon background = new MyImageIcon(imagepath + "8-Bit-Backgrounds2.jpg"); // project3\Project3_xxxxxxx\project3\src\pictures\8-Bit-Backgrounds.jpg
         contentpane.setIcon(background.resize(frameWidth, frameHeight));
@@ -57,8 +58,12 @@ public class Stageframe extends JFrame {
 
     }
 
-    public boolean getchoose() {
+    public int getchoose() {
         return choose;
+    }
+
+    public Characterlabel getTargetLabel() {
+        return targetLabel;
     }
 
     public void settargetLabel(Characterlabel tl) {
@@ -100,15 +105,17 @@ public class Stageframe extends JFrame {
     public void setstagenum(int num) {
         this.stagenum = num;
     }
-    public void setstagestate(int a){
+
+    public void setstagestate(int a) {
         this.currentstate = a;
     }
-    public int getstagestate(){
+
+    public int getstagestate() {
         return this.currentstate;
     }
 
     public void addcomponent() {
-        stat = new StatLabel(imagepath, "StatusBG.png", 1366, 286, this);
+        stat = new StatLabel(imagepath, "StatusBG.png", clickSound, 1366, 286, this);
         stat.setMoveConditions(0, 480);
         stat.addlabelcomponent();
         addallhuman();
@@ -170,33 +177,58 @@ public class Stageframe extends JFrame {
         for (Robot ro : robotArraylist) {
             ro.getspeedthread().start();
         }
-
-        /*if ((rand.nextInt(2) + 1) == 1) {
-            for (Robot ro : robotArraylist) {
-                ro.getspeedthread().start();
+        for (Human hu : humanArraylist) {
+            hu.getspeedthread().start();
+        }
+        /*for (Robot ro : robotArraylist) {
+            try {
+                ro.getspeedthread().join();
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
             }
-            for (Human hu : humanArraylist) {
-                hu.getspeedthread().start();
-            }
-        }else{
-            for (Human hu : humanArraylist) {
-                hu.getspeedthread().start();
-            }
-            for (Robot ro : robotArraylist) {
-                ro.getspeedthread().start();
+        }
+        for (Human hu : humanArraylist) {
+            try {
+                hu.getspeedthread().join();
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
             }
         }*/
+        
+        for (int i = 0; i < 10; i++) {
+            /*
+             * if ((rand.nextInt(2) + 1) == 1) {
+             * for (Robot ro : robotArraylist) {
+             * ro.getspeedthread().start();
+             * }
+             * for (Human hu : humanArraylist) {
+             * hu.getspeedthread().start();
+             * }
+             * }else{
+             * for (Human hu : humanArraylist) {
+             * hu.getspeedthread().start();
+             * }
+             * for (Robot ro : robotArraylist) {
+             * ro.getspeedthread().start();
+             * }
+             * }
+             */
+        }
     }
 
     public synchronized void setactiveLabel(Character c) {
         activeLabel = c.getLabel();
         stat.setactiveCharacter(activeLabel.getOwner());
         stat.ShowAction(activeLabel.getOwner());
-        /*try {
-            c.getspeedthread().wait();
+        try {
+            wait();
         } catch (Exception e) {
 
-        }*/
+        }
+        System.out.println("Im waiting 2");
+        stat.HideButton();
     }
 
     public void checkdeath() {
@@ -225,44 +257,68 @@ public class Stageframe extends JFrame {
             warn.setForeground(Color.white);
             warn.setBounds(423, 150, 520, 70);
             contentpane.add(warn);
-            choose = true;
+            choose = 1;
         } else if (targetLabel.getOwner() instanceof Human) {
             this.currentstate = 4;
             activeLabel.getOwner().attack(targetLabel.getOwner());
             activeLabel.attack_animation();
             targetLabel.takedmg_animation("hit.gif");
             stat.settargetCharacter(targetLabel.getOwner());
-            
-            choose = false;
+
+            choose = 0;
             targetLabel = null;
             contentpane.remove(warn);
             this.currentstate = 0;
-        } else if (targetLabel.getOwner() instanceof Robot){
+            activeLabel.getOwner().getspeedthread().interrupt();
+
+        } else if (targetLabel.getOwner() instanceof Robot) {
             warn.setText(" Don't Choose the Ally");
         }
-        
+
         contentpane.repaint();
         validate();
     }
 
-    public void human_attack() {
-        if (targetLabel == null) {
-            int a = rand.nextInt(robotArraylist.size());
-            targetLabel = robotArraylist.get(a).getLabel();
-            human_attack();
-        } else if (targetLabel.getOwner() instanceof Human) {
-            activeLabel.getOwner().attack(targetLabel.getOwner());
-            stat.settargetCharacter(targetLabel.getOwner());
-            targetLabel = null;
-        } else {
-            targetLabel = null;
-            human_attack();
-        }
+    public void randomRobot() {
+        int a = rand.nextInt(robotArraylist.size());
+        targetLabel = robotArraylist.get(a).getLabel();
     }
 
-    public void action_robot_skill() {
-        // stat.setLtext(activeLabel, activeLabel, activeLabel, activeLabel,
-        // activeLabel);
+    public void human_attack() {
+        activeLabel.getOwner().attack(targetLabel.getOwner());
+        stat.settargetCharacter(targetLabel.getOwner());
+        targetLabel = null;
+        activeLabel.getOwner().getspeedthread().interrupt();
+    }
+
+    public void action_robot1_skill() {
+        if (targetLabel == null) {
+            warn.setText("   USE SKILL");
+            warn.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 50));
+            warn.setBackground(new Color(222, 0, 62));
+            warn.setOpaque(true);
+            warn.setForeground(Color.white);
+            warn.setBounds(423, 150, 520, 70);
+            contentpane.add(warn);
+            choose = 2;
+        } else if (targetLabel.getOwner() instanceof Human) {
+            // this.currentstate = 4;
+            activeLabel.getOwner().skill1(targetLabel.getOwner());
+            activeLabel.attack_animation();
+            targetLabel.takedmg_animation("terminator.gif");
+            stat.settargetCharacter(targetLabel.getOwner());
+
+            choose = 0;
+            targetLabel = null;
+            contentpane.remove(warn);
+            this.currentstate = 0;
+            activeLabel.getOwner().getspeedthread().interrupt();
+        } else if (targetLabel.getOwner() instanceof Robot) {
+            warn.setText(" Don't Choose the Ally");
+        }
+
+        contentpane.repaint();
+        validate();
     }
 
     public void action_enemy(Human h) { // Arraylist human,character

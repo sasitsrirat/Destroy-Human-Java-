@@ -50,12 +50,12 @@ public class MainMenu extends JFrame {
     public MainMenu() {
         String imagepath = "project3/Project3_xxxxxxx/project3/src/pictures/"; //"project3/Project3_xxxxxxx/project3/src/pictures/"
         String soundpath = "project3/Project3_xxxxxxx/project3/src/sounds/";
-        sframe = new Stageframe(imagepath, soundpath,1); // play for first time stage 1
+        
         // set background music
         mainmenuSound = new Sound(soundpath + "BossTime.wav");
         mainmenuSound.playLoop();
         clickSound = new Sound(soundpath + "click.wav");
-
+        sframe = new Stageframe(imagepath, clickSound,1); // play for first time stage 1
         setType(Type.POPUP);
         setTitle("Menu");
         setBounds(50, 50, frameWidth, frameHeight);

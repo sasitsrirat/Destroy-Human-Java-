@@ -1,5 +1,7 @@
 package project3;
 
+import java.util.ArrayList;
+
 public class Character extends Thread implements Comparable<Character> {
 
     String name = "";
@@ -54,8 +56,8 @@ public class Character extends Thread implements Comparable<Character> {
 
     // Ramdom attack
     protected int ramdomatk() {
-        int max = atk + 3;
-        int min = atk - 3;
+        int max = atk + 1;
+        int min = atk - 1;
         if (min < 0) {
             min = 0;
         }
@@ -65,12 +67,6 @@ public class Character extends Thread implements Comparable<Character> {
 
     // Take damage
     protected int takedamg(int dam) {
-        if (dam >= def) {
-            dam = dam - def;
-        } else {
-            dam = 0;
-        }
-
         hp = hp - dam;
 
         if (hp <= 0) {
@@ -157,4 +153,8 @@ public class Character extends Thread implements Comparable<Character> {
     public String getattackimage() {
         return attackimagefile;
     }
+
+    public void skill1(Character enemy) {}
+    public void skill2(Character ally) {}
+    public void skill3(ArrayList<Character> enemies) {}
 }

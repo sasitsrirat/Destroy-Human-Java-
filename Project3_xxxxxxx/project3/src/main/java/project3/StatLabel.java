@@ -18,27 +18,31 @@ class StatLabel extends JLabel {
     protected Stageframe parentFrame;
     protected Character activeCharacter;
     protected Border border;
+    protected Sound clickSound;
+
     protected JLabel Latktext = new JLabel();
-    ;
     protected JLabel Lhptext = new JLabel();
     protected JLabel Ldeftext = new JLabel();
     protected JLabel Lspdtext = new JLabel();
     protected JLabel Lnametext = new JLabel();
     protected JLabel Ratktext = new JLabel();
-    ;
     protected JLabel Rhptext = new JLabel();
     protected JLabel Rdeftext = new JLabel();
     protected JLabel Rspdtext = new JLabel();
     protected JLabel Rnametext = new JLabel();
-    protected JButton attackButton, skillButton, restButton;
-    private JLabel panelpane;
+    protected JLabel humanstat = new JLabel();
+    protected JLabel humanaction = new JLabel();
+    protected JLabel targetstat = new JLabel();
+    protected JButton attackButton, skill1Button, skill2Button, skill3Button, restButton;
+    protected JLabel panelpane;
 
-    public StatLabel(String path, String filename, int width, int height, Stageframe pf) {
+    public StatLabel(String path, String image, Sound sound, int width, int height, Stageframe pf) {
 
         imagepath = path;
         this.width = width;
         this.height = height;
-        statusicon = new MyImageIcon(imagepath + filename).resize(width, height);
+        statusicon = new MyImageIcon(imagepath + image).resize(width, height);
+        clickSound = sound;
         setIcon(statusicon);
         setOpaque(true);
         setLayout(null);
@@ -50,11 +54,12 @@ class StatLabel extends JLabel {
 
     public void setactiveCharacter(Character ac) {
         activeCharacter = ac;
-        setLtext(activeCharacter.getatk(), activeCharacter.gethp(), activeCharacter.getmax_hp(),activeCharacter.getdf(), activeCharacter.getname());
+        setLtext(activeCharacter.getatk(), activeCharacter.gethp(), activeCharacter.getmax_hp(),
+                activeCharacter.getdf(), activeCharacter.getname());
     }
 
     public void settargetCharacter(Character tc) {
-        setRtext(tc.getatk(), tc.gethp(), tc.getmax_hp(),tc.getdf(), tc.getname());
+        setRtext(tc.getatk(), tc.gethp(), tc.getmax_hp(), tc.getdf(), tc.getname());
     }
 
     public void setvisiblestatlabel(boolean n) {
@@ -145,30 +150,30 @@ class StatLabel extends JLabel {
             attackButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
-                    // clickSound.playOnce();
+                    clickSound.playOnce();
                     parentFrame.robot_attack();
-                    //activeCharacter.getspeedthread().notify(); // notify thread to run
+                    // activeCharacter.getspeedthread().notify(); // notify thread to run
                 }
             });
         }
 
-        skillButton = new JButton(" Skill ");
+        skill1Button = new JButton(" Skill ");
         {
-            skillButton.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
-            skillButton.setIcon(new MyImageIcon(imagepath + "skill_critical.png").resize(40, 40));
-            skillButton.setBackground(new Color(222, 0, 62));
-            skillButton.setForeground(Color.white);
-            skillButton.setSize(100, 200);
-            skillButton.setUI(new StyledButtonUI());
-            skillButton.setForeground(new Color(255, 255, 255));
-            skillButton.setBounds(500, 110, 150, 50);
-            skillButton.setLayout(null);
-            skillButton.setVisible(false);
-            skillButton.addActionListener(new ActionListener() {
+            skill1Button.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
+            skill1Button.setIcon(new MyImageIcon(imagepath + "skill_critical.png").resize(40, 40));
+            skill1Button.setBackground(new Color(222, 0, 62));
+            skill1Button.setForeground(Color.white);
+            skill1Button.setSize(100, 200);
+            skill1Button.setUI(new StyledButtonUI());
+            skill1Button.setForeground(new Color(255, 255, 255));
+            skill1Button.setBounds(500, 110, 150, 50);
+            skill1Button.setLayout(null);
+            skill1Button.setVisible(false);
+            skill1Button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
-                    // clickSound.playOnce();
-
+                    clickSound.playOnce();
+                    parentFrame.action_robot1_skill();
                 }
             });
         }
@@ -188,15 +193,12 @@ class StatLabel extends JLabel {
             restButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
-                    // clickSound.playOnce();
+                    clickSound.playOnce();
 
                 }
             });
         }
 
-        this.add(attackButton);
-        this.add(skillButton);
-        this.add(restButton);
         this.add(Latktext);
         this.add(Lhptext);
         this.add(Ldeftext);
@@ -212,19 +214,86 @@ class StatLabel extends JLabel {
 
     public void ShowAction(Character ch) {
         if (ch instanceof Robot1) {
-            attackButton.setVisible(true);
-            skillButton.setVisible(true);
             attackButton.setIcon(new MyImageIcon(imagepath + "normalattack.png").resize(40, 40));
+            attackButton.setVisible(true);
+            skill1Button.setVisible(true);
             restButton.setVisible(true);
+            this.add(attackButton);
+            this.add(skill1Button);
+            this.add(restButton);
+        } else if (ch instanceof Robot2) {
+            attackButton.setIcon(new MyImageIcon(imagepath + "normalattack.png").resize(40, 40));
+            attackButton.setVisible(true);
+            skill1Button.setVisible(true);
+            restButton.setVisible(true);
+            this.add(attackButton);
+            this.add(skill2Button);
+            this.add(restButton);
+        } else if (ch instanceof Robot2) {
+            attackButton.setIcon(new MyImageIcon(imagepath + "normalattack.png").resize(40, 40));
+            attackButton.setVisible(true);
+            skill1Button.setVisible(true);
+            restButton.setVisible(true);
+            this.add(attackButton);
+            this.add(skill3Button);
+            this.add(restButton);
+        } else {
+            parentFrame.randomRobot();
+            this.humanaction(parentFrame.getTargetLabel());
+            try {
+                Thread.currentThread().sleep(1000);
+            } catch (InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
+            parentFrame.human_attack();
         }
         validate();
         repaint();
     }
 
+    public void humanaction(Characterlabel target) {
+
+        humanstat.setBackground(null);
+        humanstat.setForeground(Color.white);
+        humanstat.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 30));
+        humanstat.setBounds(500, 110, 300, 40);
+        humanstat.setText(activeCharacter.getname());
+        humanstat.setVisible(true);
+
+        humanaction.setBackground(null);
+        humanaction.setForeground(Color.white);
+        humanaction.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 30));
+        humanaction.setBounds(500, 160, 300, 40);
+        humanaction.setText(" is attack to ");
+        humanaction.setVisible(true);
+
+        targetstat.setBackground(null);
+        targetstat.setForeground(Color.white);
+        targetstat.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 30));
+        targetstat.setBounds(500, 210, 300, 40);
+        targetstat.setText(target.getOwner().getname());
+        targetstat.setVisible(true);
+
+        add(humanstat);
+        add(humanaction);
+        add(targetstat);
+        repaint();
+        parentFrame.repaint();
+    }
+
     public void HideButton() {
+        if(activeCharacter instanceof Robot){
         attackButton.setVisible(false);
-        skillButton.setVisible(false);
-        restButton.setVisible(false);
+        skill1Button.setVisible(false);
+        //skill2Button.setVisible(false);
+        //skill3Button.setVisible(false);
+        restButton.setVisible(false);}
+        else {
+        humanstat.setVisible(true);
+        humanaction.setVisible(true);
+        targetstat.setVisible(true);}
+        validate();
+        repaint();
     }
 
 }

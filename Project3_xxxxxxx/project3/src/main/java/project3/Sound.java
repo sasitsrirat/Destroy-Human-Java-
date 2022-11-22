@@ -5,7 +5,7 @@ import javax.sound.sampled.*;
 public class Sound {
 
     Clip clip;
-    float currentVolume = 6;
+    float currentVolume = -18;
     FloatControl fc;
     boolean mute = false;
 
