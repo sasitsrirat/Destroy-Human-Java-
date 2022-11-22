@@ -48,8 +48,8 @@ public class MainMenu extends JFrame {
     protected Scoreframe scoreframe;
 
     public MainMenu() {
-        String imagepath = "project3/Project3_xxxxxxx/project3/src/pictures/"; //"project3/Project3_xxxxxxx/project3/src/pictures/"
-        String soundpath = "project3/Project3_xxxxxxx/project3/src/sounds/";
+        String imagepath = "Project3_xxxxxxx/project3/src/pictures/"; //"project3/Project3_xxxxxxx/project3/src/pictures/"
+        String soundpath = "Project3_xxxxxxx/project3/src/sounds/";
         
         // set background music
         mainmenuSound = new Sound(soundpath + "BossTime.wav");

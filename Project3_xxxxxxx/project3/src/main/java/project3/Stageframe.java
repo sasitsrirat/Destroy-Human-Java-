@@ -1,12 +1,12 @@
 package project3;
 
 import java.awt.*;
-import java.io.*;
+ 
 import java.util.*;
 import javax.swing.*;
-import java.lang.*;
+ 
 import javax.swing.JFrame;
-import javax.swing.border.Border;
+ 
 import javax.swing.event.MouseInputListener;
 import java.awt.event.*;
 
