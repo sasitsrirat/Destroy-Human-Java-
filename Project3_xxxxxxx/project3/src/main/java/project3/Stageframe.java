@@ -1,12 +1,12 @@
 package project3;
 
 import java.awt.*;
- 
+
 import java.util.*;
 import javax.swing.*;
- 
+
 import javax.swing.JFrame;
- 
+
 import javax.swing.event.MouseInputListener;
 import java.awt.event.*;
 
@@ -24,28 +24,32 @@ public class Stageframe extends JFrame {
     private ArrayList<Human> humanArraylist;
     private ArrayList<Characterlabel> robotLabelArraylist, humanLabelArraylist;
     private Random rand = new Random();
-    private Characterlabel robot1, robot2, robot3;
-    private Characterlabel enemy1, enemy2, enemy3;
     private Characterlabel activeLabel, targetLabel;
     private StatLabel stat;
     private JLabel contentpane;
     private JLabel warn = new JLabel();
-    private int currentstate = 0;;
-    private Sound clickSound;
+    private int currentstate = 0;
+    protected ArrayList<Sound> musicSound = new ArrayList<Sound>(), effectSound = new ArrayList<Sound>()    ;
     private ArrayList<Thread> threadArraylist;
     private final int robotstate = 1;
     private final int humanstate = 2;
     private final int skillstate = 3;
     private final int actiostate = 4;
 
-    public Stageframe(String ipath, Sound clicksound, int stage) { // อาจจะรับ ArrayList เข้ามา
+    public Stageframe(String ipath, ArrayList<Sound> mSound, ArrayList<Sound> eSound, int stage) { // อาจจะรับ ArrayList เข้ามา
         hw = new Humanwave(stage, 1, this);
         rw = new Robotwave(stage, this);
         sethumanArraylist();
         setrobotArraylist();
         stagenum = stage;
         imagepath = ipath;
-        clickSound = clicksound;
+        musicSound = mSound;
+        effectSound = eSound;
+        for (Sound i : musicSound) {
+            if (i.getName() == "gereBG") {
+                i.playLoop();
+            }
+        }
         contentpane = new JLabel();
         MyImageIcon background = new MyImageIcon(imagepath + "8-Bit-Backgrounds2.jpg"); // project3\Project3_xxxxxxx\project3\src\pictures\8-Bit-Backgrounds.jpg
         contentpane.setIcon(background.resize(frameWidth, frameHeight));
@@ -53,13 +57,14 @@ public class Stageframe extends JFrame {
         contentpane.setLayout(null);
 
         this.addcomponent();
-        //battle();
+        // battle();
         validate();
         repaint();
 
     }
-    public void setcharacterstage(int stage){
-        hw = new Humanwave(stage ,1,this);
+
+    public void setcharacterstage(int stage) {
+        hw = new Humanwave(stage, 1, this);
         rw = new Robotwave(stage, this);
     }
 
@@ -120,7 +125,12 @@ public class Stageframe extends JFrame {
     }
 
     public void addcomponent() {
-        stat = new StatLabel(imagepath, "StatusBG.png", clickSound, 1366, 286, this);
+        for (Sound i : effectSound) {
+                        if (i.getName() == "clickEF") {
+                            stat = new StatLabel(imagepath, "StatusBG.png", i, 1366, 286, this);
+                        } 
+                    }
+        //stat = new StatLabel(imagepath, "StatusBG.png", clickSound, 1366, 286, this);
         stat.setMoveConditions(0, 480);
         stat.addlabelcomponent();
         addallhuman();
@@ -178,34 +188,36 @@ public class Stageframe extends JFrame {
     }
 
     public void battle() { // stage battle
-         threadArraylist = new ArrayList<Thread>();
+        threadArraylist = new ArrayList<Thread>();
         for (Robot ro : robotArraylist) {
             threadArraylist.add(ro.getspeedthread());
         }
         for (Human hu : humanArraylist) {
             threadArraylist.add(hu.getspeedthread());
         }
-        for (Thread th : threadArraylist){
+        for (Thread th : threadArraylist) {
             th.start();
         }
-        
-        /*for (Robot ro : robotArraylist) {
-            try {
-                ro.getspeedthread().join();
-            } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
-        for (Human hu : humanArraylist) {
-            try {
-                hu.getspeedthread().join();
-            } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }*/
-        
+
+        /*
+         * for (Robot ro : robotArraylist) {
+         * try {
+         * ro.getspeedthread().join();
+         * } catch (InterruptedException e) {
+         * // TODO Auto-generated catch block
+         * e.printStackTrace();
+         * }
+         * }
+         * for (Human hu : humanArraylist) {
+         * try {
+         * hu.getspeedthread().join();
+         * } catch (InterruptedException e) {
+         * // TODO Auto-generated catch block
+         * e.printStackTrace();
+         * }
+         * }
+         */
+
         for (int i = 0; i < 10; i++) {
             /*
              * if ((rand.nextInt(2) + 1) == 1) {
@@ -232,9 +244,16 @@ public class Stageframe extends JFrame {
         stat.setactiveCharacter(activeLabel.getOwner());
         stat.ShowAction(activeLabel.getOwner());
         try {
-            //wait();
+            // wait();
 
             Thread.currentThread().sleep(10000);
+        } catch (Exception e) {
+
+        }
+        try {
+            // wait();
+
+            Thread.currentThread().sleep(2000);
         } catch (Exception e) {
 
         }
@@ -273,13 +292,19 @@ public class Stageframe extends JFrame {
             this.currentstate = 4;
             activeLabel.getOwner().attack(targetLabel.getOwner());
             activeLabel.attack_animation();
-            targetLabel.takedmg_animation("hit.gif");
+            for (Sound i : effectSound) {
+                        if (i.getName() == "normalattackEF") {
+                            targetLabel.takedmg_animation("hit.gif", i);
+                        } 
+                    }
+            //targetLabel.takedmg_animation("hit.gif");
             stat.settargetCharacter(targetLabel.getOwner());
 
             choose = 0;
             targetLabel = null;
             contentpane.remove(warn);
             this.currentstate = 0;
+            
             activeLabel.getOwner().getspeedthread().interrupt();
 
         } else if (targetLabel.getOwner() instanceof Robot) {
@@ -297,14 +322,24 @@ public class Stageframe extends JFrame {
 
     public void human_attack() {
         activeLabel.getOwner().attack(targetLabel.getOwner());
+        activeLabel.attack_animation();
+        for (Sound i : effectSound) {
+                        if (i.getName() == "normalattackEF") {
+                            targetLabel.takedmg_animation("hit.gif", i);
+                        } 
+                    }
+        //targetLabel.takedmg_animation("hit.gif");
         stat.settargetCharacter(targetLabel.getOwner());
         targetLabel = null;
+        
+        contentpane.repaint();
+        validate();
         activeLabel.getOwner().getspeedthread().interrupt();
     }
 
     public void action_robot1_skill() {
         if (targetLabel == null) {
-            warn.setText("   USE SKILL");
+            warn.setText("   Choose the Enemy");
             warn.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 50));
             warn.setBackground(new Color(222, 0, 62));
             warn.setOpaque(true);
@@ -316,7 +351,12 @@ public class Stageframe extends JFrame {
             // this.currentstate = 4;
             activeLabel.getOwner().skill1(targetLabel.getOwner());
             activeLabel.attack_animation();
-            targetLabel.takedmg_animation("terminator.gif");
+            for (Sound i : effectSound) {
+                        if (i.getName() == "normalattackEF") {
+                            targetLabel.takedmg_animation("terminator.gif", i);
+                        } 
+                    }
+            //targetLabel.takedmg_animation("terminator.gif");
             stat.settargetCharacter(targetLabel.getOwner());
 
             choose = 0;
@@ -332,6 +372,57 @@ public class Stageframe extends JFrame {
         validate();
     }
 
+    public void action_robot2_skill() {
+        if (targetLabel == null) {
+            warn.setText("   Choose the Ally");
+            warn.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 50));
+            warn.setBackground(new Color(222, 0, 62));
+            warn.setOpaque(true);
+            warn.setForeground(Color.white);
+            warn.setBounds(423, 150, 520, 70);
+            contentpane.add(warn);
+            choose = 3;
+        } else if (targetLabel.getOwner() instanceof Human) {
+            warn.setText(" Don't Choose the Enemy");
+
+        } else if (targetLabel.getOwner() instanceof Robot) {
+            activeLabel.getOwner().skill2(targetLabel.getOwner());
+            activeLabel.attack_animation();
+            for (Sound i : effectSound) {
+                        if (i.getName() == "normalattackEF") {
+                            targetLabel.takedmg_animation("healing.gif", i);
+                        } 
+                    }
+            //targetLabel.takedmg_animation("healing.gif");
+            stat.settargetCharacter(targetLabel.getOwner());
+
+            choose = 0;
+            targetLabel = null;
+            contentpane.remove(warn);
+            this.currentstate = 0;
+            activeLabel.getOwner().getspeedthread().interrupt();
+        }
+
+        contentpane.repaint();
+        validate();
+    }
+
+    public void action_robot3_skill() {
+        activeLabel.getOwner().skill3(humanArraylist);
+        activeLabel.attack_animation();
+        for(Human hu:humanArraylist){
+            for (Sound i : effectSound) {
+                        if (i.getName() == "normalattackEF") {
+                            hu.getLabel().takedmg_animation("bomb.gif", i);
+                        } 
+                    }
+            //hu.getLabel().takedmg_animation("bomb.gif");
+            stat.settargetCharacter(hu);
+        }
+        this.currentstate = 0;
+        activeLabel.getOwner().getspeedthread().interrupt();
+    }
+
     public void action_enemy(Human h) { // Arraylist human,character
         int size = robotArraylist.size();
         if (size == 0) {
@@ -343,127 +434,3 @@ public class Stageframe extends JFrame {
     }
 }
 
-// ======================================================================================================================
-class templatelabel extends JLabel implements MouseInputListener, FocusListener {
-
-    protected MyImageIcon staticon, staticon2;
-    protected int curX, curY, width, height;
-    protected Stageframe parentFrame;
-
-    public templatelabel(String path, String filename, int width, int height, Stageframe pf) {
-
-        this.width = width;
-        this.height = height;
-        staticon = new MyImageIcon(path + filename).resize(width, height);
-        staticon2 = new MyImageIcon(path + "robot2.png").resize(width, height);
-        setIcon(staticon);
-        setHorizontalAlignment(JLabel.CENTER);
-        parentFrame = pf;
-        setBounds(getVisibleRect());
-        setVisible(true);
-
-    }
-
-    public void setMoveConditions(int x, int y) {
-        curX = x;
-        curY = y;
-        setBounds(curX, curY, width, height);
-
-    }
-
-    // mouselistener
-    public void mousePressed(MouseEvent e) {
-    }
-
-    public void mouseReleased(MouseEvent e) {
-    }
-
-    public void mouseEntered(MouseEvent e) {
-    }
-
-    public void mouseExited(MouseEvent e) {
-    }
-
-    public void mouseMoved(MouseEvent e) {
-    }
-
-    // ----- (1) handler for MouseListener
-    @Override
-    public void mouseClicked(MouseEvent e) {
-
-    }
-
-    // ----- (2) handler for MouseMotionListener
-    @Override
-    public void mouseDragged(MouseEvent e) {
-    }
-
-    // focuslistener
-    public void focusGained(FocusEvent e) {
-        this.setIcon(staticon2);
-        parentFrame.repaint();
-        validate();
-    }
-
-    public void focusLost(FocusEvent e) {
-        this.setIcon(staticon);
-        parentFrame.repaint();
-        validate();
-    }
-
-    public void addFocus(templatelabel what) {
-        what.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                what.setIcon(staticon2);
-                parentFrame.repaint();
-                validate();
-
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                what.setIcon(staticon);
-                parentFrame.repaint();
-                validate();
-
-            }
-        });
-    }
-
-    public void addMouse() {
-        this.addMouseListener(new MouseInputListener() {
-            public void mousePressed(MouseEvent e) {
-
-            }
-
-            public void mouseReleased(MouseEvent e) {
-            }
-
-            public void mouseEntered(MouseEvent e) {
-                setIcon(staticon2);
-                parentFrame.repaint();
-                validate();
-            }
-
-            public void mouseExited(MouseEvent e) {
-                setIcon(staticon);
-                parentFrame.repaint();
-                validate();
-            }
-
-            public void mouseMoved(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseClicked(MouseEvent e) {
-
-            }
-
-            // ----- (2) handler for MouseMotionListener
-            @Override
-            public void mouseDragged(MouseEvent e) {
-            }
-        });
-    }
-}

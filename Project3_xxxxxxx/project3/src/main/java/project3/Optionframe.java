@@ -2,6 +2,7 @@ package project3;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.*;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -13,16 +14,16 @@ public class Optionframe extends JFrame {
     protected JLabel contentpane;
     protected JSlider musicSlider;
     protected JSlider effectSlider;
-    protected Sound musicSound;
-    protected Sound effectSound;
+    protected ArrayList<Sound> musicSound;
+    protected ArrayList<Sound> effectSound;
     protected JCheckBox musiccheck;
     protected JCheckBox effectcheck;
     protected String path;
     protected int frameWidth = 700;
     protected int frameHeight = 400;
 
-    public Optionframe(Sound mSound, Sound eSound, String imagepath) {
-        
+    public Optionframe(ArrayList<Sound> mSound, ArrayList<Sound> eSound, String imagepath) {
+
         musicSound = mSound;
         effectSound = eSound;
         path = imagepath;
@@ -76,44 +77,44 @@ public class Optionframe extends JFrame {
             public void stateChanged(ChangeEvent e) {
                 switch (musicSlider.getValue()) {
                     case 1:
-                        musicSound.currentVolume = -42;
+                        setAllcurrentVolume(musicSound, -42);
                         break;
                     case 2:
-                        musicSound.currentVolume = -33;
+                        setAllcurrentVolume(musicSound, -33);
                         break;
                     case 3:
-                        musicSound.currentVolume = -28;
+                        setAllcurrentVolume(musicSound, -28);
                         break;
                     case 4:
-                        musicSound.currentVolume = -23;
+                        setAllcurrentVolume(musicSound, -23);
                         break;
                     case 5:
-                        musicSound.currentVolume = -18;
+                        setAllcurrentVolume(musicSound, -18);
                         break;
                     case 6:
-                        musicSound.currentVolume = -13;
+                        setAllcurrentVolume(musicSound, -13);
                         break;
                     case 7:
-                        musicSound.currentVolume = -8;
+                        setAllcurrentVolume(musicSound, -8);
                         break;
                     case 8:
-                        musicSound.currentVolume = -3;
+                        setAllcurrentVolume(musicSound, -3);
                         break;
                     case 9:
-                        musicSound.currentVolume = 1;
+                        setAllcurrentVolume(musicSound, 1);
                         break;
                     case 10:
-                        musicSound.currentVolume = 6;
+                        setAllcurrentVolume(musicSound, 6);
                         break;
                 }
                 if (musiclabel.getIcon() == music_mute) {
-                    //do notin
+                    // do notin
                 } else if (musicSlider.getValue() <= 5) {
                     musiclabel.setIcon(music_min);
                 } else if (musicSlider.getValue() > 5) {
                     musiclabel.setIcon(music_max);
                 }
-                musicSound.fc.setValue(musicSound.currentVolume);
+                setAllValue(musicSound);
             }
         });
 
@@ -127,12 +128,16 @@ public class Optionframe extends JFrame {
             public void actionPerformed(ActionEvent event) {
                 JCheckBox cb = (JCheckBox) event.getSource();
                 if (cb.isSelected()) {
-                    musicSound.muteVolume();
+                    setAllmute(musicSound);
                     musiclabel.setIcon(music_mute);
                 } else {
-                    musicSound.muteVolume();
-                    effectSound.fc.setValue(effectSound.currentVolume);
-                    musicSound.playLoop();
+                    setAllmute(musicSound);
+                    setAllValue(musicSound);
+                    for (Sound i : musicSound) {
+                        if (i.getName() == "mainmenuBG") {
+                            i.playLoop();
+                        }
+                    }
                     if (musicSlider.getValue() <= 5) {
                         musiclabel.setIcon(music_min);
                     } else if (musicSlider.getValue() > 5) {
@@ -162,45 +167,49 @@ public class Optionframe extends JFrame {
             public void stateChanged(ChangeEvent e) {
                 switch (effectSlider.getValue()) {
                     case 1:
-                        effectSound.currentVolume = -42;
+                        setAllcurrentVolume(effectSound, -42);
                         break;
                     case 2:
-                        effectSound.currentVolume = -33;
+                        setAllcurrentVolume(effectSound, -33);
                         break;
                     case 3:
-                        effectSound.currentVolume = -28;
+                        setAllcurrentVolume(effectSound, -28);
                         break;
                     case 4:
-                        effectSound.currentVolume = -23;
+                        setAllcurrentVolume(effectSound, -23);
                         break;
                     case 5:
-                        effectSound.currentVolume = -18;
+                        setAllcurrentVolume(effectSound, -18);
                         break;
                     case 6:
-                        effectSound.currentVolume = -13;
+                        setAllcurrentVolume(effectSound, -13);
                         break;
                     case 7:
-                        effectSound.currentVolume = -8;
+                        setAllcurrentVolume(effectSound, -8);
                         break;
                     case 8:
-                        effectSound.currentVolume = -3;
+                        setAllcurrentVolume(effectSound, -3);
                         break;
                     case 9:
-                        effectSound.currentVolume = 1;
+                        setAllcurrentVolume(effectSound, 1);
                         break;
                     case 10:
-                        effectSound.currentVolume = 6;
+                        setAllcurrentVolume(effectSound, 6);
                         break;
                 }
                 if (effectlabel.getIcon() == kawin_mute) {
-                    //do notin
+                    // do notin
                 } else if (effectSlider.getValue() <= 5) {
                     effectlabel.setIcon(kawin_min);
                 } else if (effectSlider.getValue() > 5) {
                     effectlabel.setIcon(kawin_max);
                 }
-                effectSound.fc.setValue(effectSound.currentVolume);
-                effectSound.playOnce();
+                setAllValue(effectSound);
+                for (Sound i : effectSound) {
+                    if (i.getName() == "clickEF") {
+                        i.playOnce();
+                    }
+                }
             }
         });
 
@@ -214,12 +223,16 @@ public class Optionframe extends JFrame {
             public void actionPerformed(ActionEvent event) {
                 JCheckBox cb = (JCheckBox) event.getSource();
                 if (cb.isSelected()) {
-                    effectSound.muteVolume();
+                    setAllmute(effectSound);
                     effectlabel.setIcon(kawin_mute);
                 } else {
-                    effectSound.muteVolume();
-                    effectSound.fc.setValue(effectSound.currentVolume);
-                    effectSound.playOnce();
+                    setAllmute(effectSound);
+                    setAllValue(effectSound);
+                    for (Sound i : effectSound) {
+                        if (i.getName() == "clickEF") {
+                            i.playOnce();
+                        }
+                    }
                     if (effectSlider.getValue() <= 5) {
                         effectlabel.setIcon(kawin_min);
                     } else if (effectSlider.getValue() > 5) {
@@ -230,34 +243,53 @@ public class Optionframe extends JFrame {
         });
 
         mpanel.add(musiccheck);
-        
+
         epanel.add(effectcheck);
-        
+
         musicPanel.add(musicSlider);
-        
+
         effectPanel.add(effectSlider);
-        
+
         contentpane.add(musicText);
         contentpane.add(effectText);
         contentpane.add(mpanel);
         contentpane.add(epanel);
         contentpane.add(musicPanel);
         contentpane.add(effectPanel);
-        validate();
+        validate(); 
     }
+
+    public void setAllcurrentVolume(ArrayList<Sound> SA, int v) {
+        for (Sound s : SA) {
+            s.currentVolume = v;
+        }
+    }
+
+    public void setAllValue(ArrayList<Sound> SA) {
+        for (Sound s : SA) {
+            s.fc.setValue(s.currentVolume);
+        }
+    }
+
+    public void setAllmute(ArrayList<Sound> SA) {
+        for (Sound s : SA) {
+            s.muteVolume();
+        }
+    }
+
     class MyImageIcon extends ImageIcon {
-    public MyImageIcon(String fname) {
-        super(fname);
-    }
+        public MyImageIcon(String fname) {
+            super(fname);
+        }
 
-    public MyImageIcon(Image image) {
-        super(image);
-    }
+        public MyImageIcon(Image image) {
+            super(image);
+        }
 
-    public MyImageIcon resize(int width, int height) {
-        Image oldimg = this.getImage();
-        Image newimg = oldimg.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
-        return new MyImageIcon(newimg);
-    }
+        public MyImageIcon resize(int width, int height) {
+            Image oldimg = this.getImage();
+            Image newimg = oldimg.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
+            return new MyImageIcon(newimg);
+        }
     }
 }

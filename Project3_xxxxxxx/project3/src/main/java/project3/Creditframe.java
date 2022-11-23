@@ -29,6 +29,17 @@ public class Creditframe extends JFrame
         contentPane.setIcon(imageIcon);
         setContentPane(contentPane);
         
+        JPanel panel = new JPanel();
+        {
+            JLabel text_1 = new JLabel("Credit");
+            JLabel text_2 = new JLabel("MR.XXAABB XXAABB 1234556");
+            panel.add(text_1);
+            panel.add(text_2);
+            validate();
+
+        }
+     
+        
          
     }
     

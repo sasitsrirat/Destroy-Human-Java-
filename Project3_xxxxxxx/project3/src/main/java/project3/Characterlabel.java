@@ -34,7 +34,6 @@ public class Characterlabel extends JLabel {
         setHorizontalAlignment(JLabel.CENTER);
         parentFrame = pf;
         position = owner.getposition();
-        
 
         setposition();
 
@@ -70,7 +69,8 @@ public class Characterlabel extends JLabel {
         th.start();
     }
 
-    public void takedmg_animation(String effect) {
+    public void takedmg_animation(String effect, Sound sound) {
+        sound.playOnce();
         JLabel effectLabel = new JLabel();
         ImageIcon imageIcon = new ImageIcon(path + effect);
         imageIcon.setImage(imageIcon.getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
@@ -82,9 +82,9 @@ public class Characterlabel extends JLabel {
         effectLabel.setLayout(null);
         Characterlabel temp = this;
         temp.add(effectLabel);
-                this.validate();
-                repaint();
-                parentFrame.repaint();
+        this.validate();
+        repaint();
+        parentFrame.repaint();
         Thread bruh = new Thread() {
             public void run() {
                 try {
@@ -192,19 +192,22 @@ public class Characterlabel extends JLabel {
                         parentFrame.settargetLabel(temp);
                         parentFrame.action_robot1_skill();
                         break;
+                    case 3:
+                        parentFrame.settargetLabel(temp);
+                        parentFrame.action_robot2_skill();
                     default:
                         break;
                 }
-                    /*
-                     * if (parentFrame.getstagenum() != 2) {
-                     * parentFrame.stage2();
-                     * parentFrame.setstagenum(2);
-                     * } else {
-                     * parentFrame.stage1();
-                     * parentFrame.setstagenum(1);
-                     * }
-                     */
-                
+                /*
+                 * if (parentFrame.getstagenum() != 2) {
+                 * parentFrame.stage2();
+                 * parentFrame.setstagenum(2);
+                 * } else {
+                 * parentFrame.stage1();
+                 * parentFrame.setstagenum(1);
+                 * }
+                 */
+
             }
 
             @Override

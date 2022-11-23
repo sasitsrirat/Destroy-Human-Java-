@@ -34,7 +34,7 @@ class Robot extends Character {
     @Override
     public void skill2(Character ally) {}
     @Override
-    public void skill3(ArrayList<Character> enemies) {}
+    public void skill3(ArrayList<Human> enemies) {}
 }
 
 class Robot1 extends Robot {
@@ -54,12 +54,12 @@ class Robot1 extends Robot {
 class Robot2 extends Robot {
 
     public Robot2(Stageframe sf) {
-        super("Ba-Be", 50, 1, 3, 1, 3, 2, 5, "robot2.png" , "robot2.png", sf);
+        super("Ba-Be", 50, 3, 3, 1, 3, 2, 5, "robot2.png" , "robot2.png", sf);
     }
 
     @Override
     public void skill2(Character ally) {  //restore ally's hp
-        ally.takeheal(ramdomatk() * 3);
+        int a = ally.takeheal(ramdomatk() * 3);  // random atk คืออะไร
         ep = ep - 3;
     }
 }
@@ -70,7 +70,7 @@ class Robot3 extends Robot {
         super("N2Y2", 30, 2, 2, 1, 3, 2, 5, "robot2.png", "robot2.png", sf) ;
     }
     @Override
-    public void skill3(ArrayList<Character> enemies) { //attack all enemy
+    public void skill3(ArrayList<Human> enemies) { //attack all enemy
         for(Character e : enemies){
             int dmg = ramdomatk();
             dmg = dmg - e.getdf();
