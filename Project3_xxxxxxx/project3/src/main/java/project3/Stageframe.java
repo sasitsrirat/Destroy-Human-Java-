@@ -32,6 +32,7 @@ public class Stageframe extends JFrame {
     private JLabel warn = new JLabel();
     private int currentstate = 0;;
     private Sound clickSound;
+    private ArrayList<Thread> threadArraylist;
     private final int robotstate = 1;
     private final int humanstate = 2;
     private final int skillstate = 3;
@@ -52,10 +53,14 @@ public class Stageframe extends JFrame {
         contentpane.setLayout(null);
 
         this.addcomponent();
-        battle();
+        //battle();
         validate();
         repaint();
 
+    }
+    public void setcharacterstage(int stage){
+        hw = new Humanwave(stage ,1,this);
+        rw = new Robotwave(stage, this);
     }
 
     public int getchoose() {
@@ -173,13 +178,17 @@ public class Stageframe extends JFrame {
     }
 
     public void battle() { // stage battle
-
+         threadArraylist = new ArrayList<Thread>();
         for (Robot ro : robotArraylist) {
-            ro.getspeedthread().start();
+            threadArraylist.add(ro.getspeedthread());
         }
         for (Human hu : humanArraylist) {
-            hu.getspeedthread().start();
+            threadArraylist.add(hu.getspeedthread());
         }
+        for (Thread th : threadArraylist){
+            th.start();
+        }
+        
         /*for (Robot ro : robotArraylist) {
             try {
                 ro.getspeedthread().join();
@@ -223,7 +232,9 @@ public class Stageframe extends JFrame {
         stat.setactiveCharacter(activeLabel.getOwner());
         stat.ShowAction(activeLabel.getOwner());
         try {
-            wait();
+            //wait();
+
+            Thread.currentThread().sleep(10000);
         } catch (Exception e) {
 
         }

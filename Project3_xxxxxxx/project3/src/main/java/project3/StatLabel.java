@@ -52,13 +52,13 @@ class StatLabel extends JLabel {
 
     }
 
-    public void setactiveCharacter(Character ac) {
+    public synchronized void setactiveCharacter(Character ac) {
         activeCharacter = ac;
         setLtext(activeCharacter.getatk(), activeCharacter.gethp(), activeCharacter.getmax_hp(),
                 activeCharacter.getdf(), activeCharacter.getname());
     }
 
-    public void settargetCharacter(Character tc) {
+    public synchronized void settargetCharacter(Character tc) {
         setRtext(tc.getatk(), tc.gethp(), tc.getmax_hp(), tc.getdf(), tc.getname());
     }
 
@@ -212,7 +212,7 @@ class StatLabel extends JLabel {
         repaint();
     }
 
-    public void ShowAction(Character ch) {
+    public synchronized void ShowAction(Character ch) {
         if (ch instanceof Robot1) {
             attackButton.setIcon(new MyImageIcon(imagepath + "normalattack.png").resize(40, 40));
             attackButton.setVisible(true);
@@ -229,7 +229,7 @@ class StatLabel extends JLabel {
             this.add(attackButton);
             this.add(skill2Button);
             this.add(restButton);
-        } else if (ch instanceof Robot2) {
+        } else if (ch instanceof Robot3) {
             attackButton.setIcon(new MyImageIcon(imagepath + "normalattack.png").resize(40, 40));
             attackButton.setVisible(true);
             skill1Button.setVisible(true);

@@ -85,6 +85,7 @@ public class MainMenu extends JFrame {
                     clickSound.playOnce();
                     setTitle("Stage");
                     setContentPane(sframe.getContentpane());
+                    sframe.battle();
                     validate();
                 }
             });
