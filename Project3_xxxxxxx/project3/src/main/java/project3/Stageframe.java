@@ -184,7 +184,8 @@ public class Stageframe extends JFrame {
     }
 
     public void battle() { // stage battle
-        threadArraylist = new ArrayList<Thread>();
+        for (int i = 0; i < 10; i++) {
+            threadArraylist = new ArrayList<Thread>();
         for (Robot ro : robotArraylist) {
             threadArraylist.add(ro.getspeedthread());
         }
@@ -193,6 +194,7 @@ public class Stageframe extends JFrame {
         }
         for (Thread th : threadArraylist) {
             th.start();
+        }
         }
     }
 
