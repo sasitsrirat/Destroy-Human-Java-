@@ -251,10 +251,10 @@ public class MainMenu extends JFrame {
     public static void main(String[] args) {
         //displayJFrame();
         try {
-            //Introframe introframe = new Introframe();
-            //introframe.setVisible(true);
-            MainMenu frame = new MainMenu();
-            frame.setVisible(true);
+            Introframe introframe = new Introframe();
+            introframe.setVisible(true);
+            //MainMenu frame = new MainMenu();
+            //frame.setVisible(true);
             // Stageframe stageframe = new Stageframe("src/pictures", "src/sounds",1);
         } catch (Exception e) {
             e.printStackTrace();

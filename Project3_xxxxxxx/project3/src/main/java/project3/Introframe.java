@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.UIManager;
+import javax.swing.text.AbstractDocument.Content;
 
 class Introframe extends JFrame {
 
@@ -38,12 +39,9 @@ class Introframe extends JFrame {
         loadingScreen.add(progressBar);
         loadingScreen.setVisible(true);
         startProgress();
-        //MainMenu frame = new MainMenu();
-        //frame.setVisible(true);
-
     }
   
-    public static void startProgress() {
+    public static void startProgress(){
 
         Runnable runnable = new Runnable() {
 
@@ -59,8 +57,8 @@ class Introframe extends JFrame {
 
                     if(i==100)
                     {
-                        Introframe introframe = new Introframe();
-                        introframe.dispose();
+                        MainMenu frame = new MainMenu();
+                        frame.setVisible(true);
                     }
                 }
             }
