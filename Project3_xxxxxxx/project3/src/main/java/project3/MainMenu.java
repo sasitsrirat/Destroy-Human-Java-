@@ -48,20 +48,25 @@ public class MainMenu extends JFrame {
     protected Scoreframe scoreframe;
 
     public MainMenu() {
-        String imagepath = "project3/Project3_xxxxxxx/project3/src/pictures/"; // "project3/Project3_xxxxxxx/project3/src/pictures/"
-        String soundpath = "project3/Project3_xxxxxxx/project3/src/sounds/";
+        String imagepath = "src/pictures/"; // "project3/Project3_xxxxxxx/project3/src/pictures/"
+        String soundpath = "src/sounds/";
 
         // set background music
         musicSound.add(new Sound(soundpath + "BossTime.wav", "mainmenuBG"));
         musicSound.add(new Sound(soundpath + "namlie.wav", "gereBG"));
         for (Sound i : musicSound) {
-            if (i.getName() == "mainmenuBG") {
+            if ("mainmenuBG".equals(i.getName())) {
                 i.playLoop();
             }
         }
-        // mainmenuSound.playLoop();
         effectSound.add(new Sound(soundpath + "click.wav", "clickEF"));
-        effectSound.add(new Sound(soundpath + "Laser.wav", "normalattackEF"));
+        effectSound.add(new Sound(soundpath + "Laser.wav", "robotnormalattackEF"));
+        effectSound.add(new Sound(soundpath + "lightening.wav", "robotskill1EF"));
+        effectSound.add(new Sound(soundpath + "heal_robot.wav", "robotskill2EF"));
+        effectSound.add(new Sound(soundpath + "bombef.wav", "robotskill3EF"));
+        effectSound.add(new Sound(soundpath + "punch.wav", "humannormalattackEF"));
+        //effectSound.add(new Sound(soundpath + "humangunfire.wav", "humanskill1EF"));
+
         setType(Type.POPUP);
         setTitle("Menu");
         setBounds(50, 50, frameWidth, frameHeight);
@@ -91,12 +96,12 @@ public class MainMenu extends JFrame {
                 @Override
                 public void actionPerformed(ActionEvent event) {
                     for (Sound i : effectSound) {
-                        if (i.getName() == "clickEF") {
+                        if ("clickEF".equals(i.getName())) {
                             i.playOnce();
                         } 
                     }
                     for (Sound i : musicSound) {
-                        if (i.getName() == "mainmenuBG") { 
+                        if ("mainmenuBG".equals(i.getName())) { 
                             i.stop();
                         }
                     }
@@ -121,7 +126,7 @@ public class MainMenu extends JFrame {
                 @Override
                 public void actionPerformed(ActionEvent event) {
                     for (Sound i : effectSound) {
-                        if (i.getName() == "clickEF") {
+                        if ("clickEF".equals(i.getName())) {
                             i.playOnce();
                         } 
                     }
@@ -145,7 +150,7 @@ public class MainMenu extends JFrame {
                 @Override
                 public void actionPerformed(ActionEvent event) {
                     for (Sound i : effectSound) {
-                        if (i.getName() == "clickEF") {
+                        if ("clickEF".equals(i.getName())) {
                             i.playOnce();
                         } 
                     }
@@ -169,7 +174,7 @@ public class MainMenu extends JFrame {
                 @Override
                 public void actionPerformed(ActionEvent event) {
                     for (Sound i : effectSound) {
-                        if (i.getName() == "clickEF") {
+                        if ("clickEF".equals(i.getName())) {
                             i.playOnce();
                         } 
                     }
@@ -177,7 +182,6 @@ public class MainMenu extends JFrame {
                         try {
                             scoreframe = new Scoreframe();
                         } catch (FileNotFoundException e) {
-                            e.printStackTrace();
                         }
                     else
                         scoreframe.setVisible(true);
@@ -197,7 +201,7 @@ public class MainMenu extends JFrame {
                 @Override
                 public void actionPerformed(ActionEvent event) {
                     for (Sound i : effectSound) {
-                        if (i.getName() == "clickEF") {
+                        if ("clickEF".equals(i.getName())) {
                             i.playOnce();
                         } 
                     }
@@ -222,7 +226,7 @@ public class MainMenu extends JFrame {
                 @Override
                 public void actionPerformed(ActionEvent event) {
                     for (Sound i : effectSound) {
-                        if (i.getName() == "clickEF") {
+                        if ("clickEF".equals(i.getName())) {
                             i.playOnce();
                         } 
                     }
@@ -299,7 +303,6 @@ public class MainMenu extends JFrame {
             frame.setVisible(true);
             // Stageframe stageframe = new Stageframe("src/pictures", "src/sounds",1);
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }

@@ -54,7 +54,7 @@ class Robot1 extends Robot {
 class Robot2 extends Robot {
 
     public Robot2(Stageframe sf) {
-        super("Ba-Be", 50, 3, 3, 1, 3, 2, 5, "robot2.png" , "robot2.png", sf);
+        super("Ba-Be", 50, 3, 3, 1, 3, 2, 5, "robot2-normal-01.png" , "robot2-attack-01.png", sf);
     }
 
     @Override
@@ -67,13 +67,14 @@ class Robot2 extends Robot {
 class Robot3 extends Robot {
 
     public Robot3(Stageframe sf) {
-        super("N2Y2", 30, 2, 2, 1, 3, 2, 5, "robot2.png", "robot2.png", sf) ;
+        super("N2Y2", 30, 2, 2, 1, 3, 2, 5, "robot3-normal-01.png", "robot3-attack-01.png", sf) ;
     }
     @Override
     public void skill3(ArrayList<Human> enemies) { //attack all enemy
         for(Character e : enemies){
             int dmg = ramdomatk();
             dmg = dmg - e.getdf();
+            if (dmg < 0) dmg = 0;
             e.takedamg(dmg);
         }
     }

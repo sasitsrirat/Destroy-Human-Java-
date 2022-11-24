@@ -134,7 +134,7 @@ public class Optionframe extends JFrame {
                     setAllmute(musicSound);
                     setAllValue(musicSound);
                     for (Sound i : musicSound) {
-                        if (i.getName() == "mainmenuBG") {
+                        if ("mainmenuBG".equals(i.getName())) {
                             i.playLoop();
                         }
                     }
@@ -206,7 +206,7 @@ public class Optionframe extends JFrame {
                 }
                 setAllValue(effectSound);
                 for (Sound i : effectSound) {
-                    if (i.getName() == "clickEF") {
+                    if ("clickEF".equals(i.getName())) {
                         i.playOnce();
                     }
                 }

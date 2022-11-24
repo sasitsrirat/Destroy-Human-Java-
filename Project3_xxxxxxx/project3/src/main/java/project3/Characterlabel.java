@@ -46,25 +46,24 @@ public class Characterlabel extends JLabel {
             public void run() {
                 parentFrame.setstagestate(4);
                 setIcon(attackicon);
+                if(owner instanceof Robot){
+                    setBounds(curX + 50, curY, width, height);
+                } else {
+                    setBounds(curX - 50, curY, width, height);
+                }
                 parentFrame.repaint();
                 validate();
                 try {
-                    Thread.currentThread().sleep(500);
+                    Thread.currentThread();
+                    Thread.sleep(650);
                 } catch (Exception e) {
                     System.out.println(e);
                 }
                 setIcon(staticon);
+                setBounds(curX, curY, width, height);
                 parentFrame.repaint();
                 validate();
             }
-
-            /*
-             * parentFrame.setstagestate(4);
-             * setIcon(attackicon);
-             * parentFrame.repaint();
-             * validate();
-             */
-
         };
         th.start();
     }
@@ -73,10 +72,10 @@ public class Characterlabel extends JLabel {
         sound.playOnce();
         JLabel effectLabel = new JLabel();
         ImageIcon imageIcon = new ImageIcon(path + effect);
-        imageIcon.setImage(imageIcon.getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
+        imageIcon.setImage(imageIcon.getImage().getScaledInstance(width-30, height-30, Image.SCALE_DEFAULT));
 
         effectLabel.setIcon(imageIcon);
-        effectLabel.setBounds(50, 50, 100, 100);
+        effectLabel.setBounds(15, 15, width-30, height-30);
         effectLabel.setVisible(true);
         effectLabel.setHorizontalAlignment(JLabel.CENTER);
         effectLabel.setLayout(null);
@@ -88,7 +87,8 @@ public class Characterlabel extends JLabel {
         Thread bruh = new Thread() {
             public void run() {
                 try {
-                    Thread.currentThread().sleep(1500);
+                    Thread.currentThread();
+                    Thread.sleep(1500);
                 } catch (InterruptedException ex) {
                     Thread.currentThread().interrupt();
                 }
@@ -100,7 +100,6 @@ public class Characterlabel extends JLabel {
             }
         };
         bruh.start();
-
     }
 
     public void setMoveConditions(int x, int y) {
@@ -159,22 +158,16 @@ public class Characterlabel extends JLabel {
             }
 
             public void mouseEntered(MouseEvent e) {
-                if (parentFrame.getstagestate() != 4) {
                     setIcon(staticon2);
                     status.setRtext(owner.getatk(), owner.gethp(), owner.getmax_hp(), owner.getdf(), owner.getname());
                     parentFrame.repaint();
                     validate();
-                }
             }
 
             public void mouseExited(MouseEvent e) {
-                if (parentFrame.getstagestate() != 4) {
-                    // System.out.println(parentFrame.getState());
                     setIcon(staticon);
-                    // stat.setVisible(false);
                     parentFrame.repaint();
                     validate();
-                }
             }
 
             public void mouseMoved(MouseEvent e) {
