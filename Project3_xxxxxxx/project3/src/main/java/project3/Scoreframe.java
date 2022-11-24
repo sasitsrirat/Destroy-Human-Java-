@@ -103,3 +103,76 @@ public class Scoreframe extends JFrame {
 
     }
 }
+/*
+package project3;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.*;
+import java.util.stream.Stream;
+import java.lang.*;
+
+class mainScore {
+
+    public static void main (String[] args)
+    {
+        ArrayList<ScoreSystem> ScoreList = new ArrayList<>();
+        Stream<ScoreSystem> mystream;
+    
+        final String File = "Project3_xxxxxxx/project3/src/score.txt";
+        
+        while(true)
+        {
+            try{
+                Scanner scanner  = new Scanner(new File(File));
+                while(scanner.hasNext())
+                {
+                    String line = scanner.nextLine();
+                    String buf[] = line.split(" ");
+                    ScoreSystem file = new ScoreSystem(buf[0].trim(),Integer.parseInt(buf[1].trim()));
+                    ScoreList.add(file);
+                }
+            }catch(FileNotFoundException e)
+            {
+                e.printStackTrace();
+                continue;
+            }
+        }
+        System.out.printf(File, args));
+        mystream = ScoreList.stream();
+        mystream.filter(level -> level.getLevel() > 0).sorted(Comparator.comparing(ScoreSystem::getLevel).reversed()).forEach(name->System.out.printf("%s\tLevel: %d\n",name.getName(),name.getLevel()));
+        
+    }
+}
+class ScoreSystem implements Comparable<ScoreSystem>
+{
+    private String name;
+    private int level;
+
+    public ScoreSystem(String n,int l)
+    {
+        name = n;
+        level = l;
+    }
+    public void setName(String n) {
+        name = n;
+    }
+    public void setLevel(int l) {
+        level = l;
+    }
+    public String getName() {
+        return name;
+    }
+    public int getLevel() {
+        return level;
+    }
+
+    @Override
+    public int compareTo(ScoreSystem other) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+    
+}
+
+*/

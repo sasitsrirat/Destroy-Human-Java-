@@ -7,6 +7,7 @@ import javax.swing.plaf.BorderUIResource;
 import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.event.*;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 //Class for design Button like CSS
 class StyledButtonUI extends BasicButtonUI {
@@ -39,23 +40,33 @@ class StyledButtonUI extends BasicButtonUI {
 public class MainMenu extends JFrame {
     private static int frameWidth = 1366, frameHeight = 768; // Don't Change it.
     protected Stageframe sframe;
-    private JLabel contentPane; //JLabel contentPane = new JLabel;
+    private JLabel contentPane; // JLabel contentPane = new JLabel;
     protected Optionframe oframe;
     protected Tutorialframe tframe;
     protected Creditframe cframe;
-    protected Sound mainmenuSound;
-    protected Sound clickSound;
+    protected ArrayList<Sound> musicSound = new ArrayList<Sound>(), effectSound = new ArrayList<Sound>()    ;
     protected Scoreframe scoreframe;
 
     public MainMenu() {
-        String imagepath = "Project3_xxxxxxx/project3/src/pictures/"; //"project3/Project3_xxxxxxx/project3/src/pictures/"
-        String soundpath = "Project3_xxxxxxx/project3/src/sounds/";
-        
+        String imagepath = "src/pictures/"; // "project3/Project3_xxxxxxx/project3/src/pictures/"
+        String soundpath = "src/sounds/";
+
         // set background music
-        mainmenuSound = new Sound(soundpath + "BossTime.wav");
-        mainmenuSound.playLoop();
-        clickSound = new Sound(soundpath + "click.wav");
-        sframe = new Stageframe(imagepath, clickSound,1); // play for first time stage 1
+        musicSound.add(new Sound(soundpath + "BossTime.wav", "mainmenuBG"));
+        musicSound.add(new Sound(soundpath + "namlie.wav", "gereBG"));
+        for (Sound i : musicSound) {
+            if ("mainmenuBG".equals(i.getName())) {
+                i.playLoop();
+            }
+        }
+        effectSound.add(new Sound(soundpath + "click.wav", "clickEF"));
+        effectSound.add(new Sound(soundpath + "Laser.wav", "robotnormalattackEF"));
+        effectSound.add(new Sound(soundpath + "lightening.wav", "robotskill1EF"));
+        effectSound.add(new Sound(soundpath + "heal_robot.wav", "robotskill2EF"));
+        effectSound.add(new Sound(soundpath + "bombef.wav", "robotskill3EF"));
+        effectSound.add(new Sound(soundpath + "punch.wav", "humannormalattackEF"));
+        //effectSound.add(new Sound(soundpath + "humangunfire.wav", "humanskill1EF"));
+
         setType(Type.POPUP);
         setTitle("Menu");
         setBounds(50, 50, frameWidth, frameHeight);
@@ -64,7 +75,9 @@ public class MainMenu extends JFrame {
 
         // set background gif
         ImageIcon imageIcon = new ImageIcon(imagepath + "roboyscofi.gif");
-        imageIcon.setImage(imageIcon.getImage().getScaledInstance(frameWidth, frameHeight, Image.SCALE_DEFAULT)); // size of background
+        imageIcon.setImage(imageIcon.getImage().getScaledInstance(frameWidth, frameHeight, Image.SCALE_DEFAULT)); // size
+                                                                                                                  // of
+                                                                                                                  // background
         contentPane = new JLabel();
         contentPane.setIcon(imageIcon);
         contentPane.setLayout(null);
@@ -82,13 +95,24 @@ public class MainMenu extends JFrame {
             playButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
-                    clickSound.playOnce();
+                    for (Sound i : effectSound) {
+                        if ("clickEF".equals(i.getName())) {
+                            i.playOnce();
+                        } 
+                    }
+                    for (Sound i : musicSound) {
+                        if ("mainmenuBG".equals(i.getName())) { 
+                            i.stop();
+                        }
+                    }
+                    sframe = new Stageframe(imagepath, musicSound, effectSound, 1); // play for first time stage 1
                     setTitle("Stage");
                     setContentPane(sframe.getContentpane());
+                    sframe.battle();
                     validate();
                 }
-            });
-        }
+            });  
+        } 
         JButton optionButton = new JButton("OPTION");
         {
             optionButton.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
@@ -101,9 +125,13 @@ public class MainMenu extends JFrame {
             optionButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
-                    clickSound.playOnce();
+                    for (Sound i : effectSound) {
+                        if ("clickEF".equals(i.getName())) {
+                            i.playOnce();
+                        } 
+                    }
                     if (oframe == null)
-                        oframe = new Optionframe(mainmenuSound,clickSound, imagepath);
+                        oframe = new Optionframe(musicSound, effectSound, imagepath);
                     else
                         oframe.setVisible(true);
                 }
@@ -121,7 +149,11 @@ public class MainMenu extends JFrame {
             tutorialButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
-                    clickSound.playOnce();
+                    for (Sound i : effectSound) {
+                        if ("clickEF".equals(i.getName())) {
+                            i.playOnce();
+                        } 
+                    }
                     if (tframe == null)
                         tframe = new Tutorialframe();
                     else
@@ -141,12 +173,15 @@ public class MainMenu extends JFrame {
             scoreButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
-                    clickSound.playOnce();
+                    for (Sound i : effectSound) {
+                        if ("clickEF".equals(i.getName())) {
+                            i.playOnce();
+                        } 
+                    }
                     if (scoreframe == null)
                         try {
                             scoreframe = new Scoreframe();
                         } catch (FileNotFoundException e) {
-                            e.printStackTrace();
                         }
                     else
                         scoreframe.setVisible(true);
@@ -165,7 +200,11 @@ public class MainMenu extends JFrame {
             creditButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
-                    clickSound.playOnce();
+                    for (Sound i : effectSound) {
+                        if ("clickEF".equals(i.getName())) {
+                            i.playOnce();
+                        } 
+                    }
                     if (cframe == null)
                         cframe = new Creditframe();
                     else
@@ -186,7 +225,11 @@ public class MainMenu extends JFrame {
             quitButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
-                    clickSound.playOnce();
+                    for (Sound i : effectSound) {
+                        if ("clickEF".equals(i.getName())) {
+                            i.playOnce();
+                        } 
+                    }
                     JButton button = (JButton) event.getSource();
                     JDialog d = new JDialog();
                     d.setTitle("test");
@@ -233,23 +276,26 @@ public class MainMenu extends JFrame {
             J.add(logo);
         }
 
-        
-          /*contentPane.add(playButton);
-          contentPane.add(optionButton);
-          contentPane.add(tutorialButton);
-          contentPane.add(creditButton);
-          contentPane.add(quitButton);*/
-         
-         contentPane.setFocusable(true);
-         validate();
+        /*
+         * contentPane.add(playButton);
+         * contentPane.add(optionButton);
+         * contentPane.add(tutorialButton);
+         * contentPane.add(creditButton);
+         * contentPane.add(quitButton);
+         */
+
+        contentPane.setFocusable(true);
+        validate();
 
     }
-    public JLabel getPane(){
+
+    public JLabel getPane() {
         return contentPane;
-        
+
     }
+
     public static void main(String[] args) {
-        //displayJFrame();
+        // displayJFrame();
         try {
             Introframe introframe = new Introframe();
             introframe.setVisible(true);
@@ -257,7 +303,6 @@ public class MainMenu extends JFrame {
             //frame.setVisible(true);
             // Stageframe stageframe = new Stageframe("src/pictures", "src/sounds",1);
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }

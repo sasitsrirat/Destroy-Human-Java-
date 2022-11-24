@@ -16,6 +16,7 @@ public class Character extends Thread implements Comparable<Character> {
     protected Characterlabel CLabel;
     private Speed speedthread;
     private Stageframe frame;
+    private boolean dead = false;
 
     // protected Speed speedthread;
     public Character() {
@@ -98,6 +99,7 @@ public class Character extends Thread implements Comparable<Character> {
     public void attack(Character enemy) {
         int dmg = ramdomatk();
         dmg = dmg - enemy.getdf();
+        if (dmg < 0) dmg = 0;
         enemy.takedamg(dmg);
     }
 
@@ -156,5 +158,5 @@ public class Character extends Thread implements Comparable<Character> {
 
     public void skill1(Character enemy) {}
     public void skill2(Character ally) {}
-    public void skill3(ArrayList<Character> enemies) {}
+    public void skill3(ArrayList<Human> enemies) {}
 }

@@ -1,7 +1,7 @@
 package project3;
 
 public class Speed extends Thread {
-    protected int maxspeed = 10;
+    protected int maxspeed = 1000000;
     protected int currentspd = 0;
     protected Stageframe frame;
     protected Character owner;

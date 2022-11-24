@@ -33,7 +33,8 @@ class Human extends Character{
 class Human_weak extends Human{
 
     public Human_weak(String n, Stageframe sf){
-        super(n,15,1,1,1,0, "Mutanthuman.png", "Mutanthuman.png", sf);
+        super(n,15,10,1,1,0, "Mutanthuman.png", "Mutanthuman.png", sf);
+        //a
     }
 }
 
