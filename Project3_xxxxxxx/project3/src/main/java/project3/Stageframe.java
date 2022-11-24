@@ -1,12 +1,11 @@
 package project3;
 
 import java.awt.*;
-
 import java.util.*;
+import java.util.concurrent.CyclicBarrier;
+
 import javax.swing.*;
-
 import javax.swing.JFrame;
-
 import javax.swing.event.MouseInputListener;
 import java.awt.event.*;
 
@@ -14,10 +13,11 @@ public class Stageframe extends JFrame {
 
     private int frameHeight = 768;
     private int frameWidth = 1366;
-    private int stagenum, wave;
+    private int stagenum, allwave;
     private int choose = 0;
     private String imagepath; // project3\Project3_xxxxxxx\project3\src\pictures
     // private Character activeCharacter;
+    private Stagewave sw;
     private Humanwave hw; // hw = new humanwave(1,1); // hwArraylist = hw.gethu();
     private Robotwave rw; // rw = new Robotwave(1); // robotArraylist = rw.gethu();
     private ArrayList<Robot> robotArraylist;
@@ -37,37 +37,46 @@ public class Stageframe extends JFrame {
     private final int actiostate = 4;
 
     public Stageframe(String ipath, ArrayList<Sound> mSound, ArrayList<Sound> eSound, int stage) { // อาจจะรับ ArrayList
-                                                                                                   // เข้ามา
-        hw = new Humanwave(stage, 1, this);
-        rw = new Robotwave(stage, this);
-        sethumanArraylist();
-        setrobotArraylist();
         stagenum = stage;
         imagepath = ipath;
         musicSound = mSound;
         effectSound = eSound;
         for (Sound i : musicSound) {
-            if (i.getName() == "gereBG") {
+            if ("gereBG".equals(i.getName())) {
                 i.playLoop();
             }
         }
         contentpane = new JLabel();
-        MyImageIcon background = new MyImageIcon(imagepath + "8-Bit-Backgrounds2.jpg"); // project3\Project3_xxxxxxx\project3\src\pictures\8-Bit-Backgrounds.jpg
-        contentpane.setIcon(background.resize(frameWidth, frameHeight));
-        contentpane.setOpaque(true);
-        contentpane.setLayout(null);
 
-        this.addcomponent();
-        // battle();
-        validate();
-        repaint();
+        while (stage <= 5) {
+            sw = new Stagewave(1, this);
+            allwave = sw.getWave();
+
+            MyImageIcon background = new MyImageIcon(imagepath + "8-Bit-Backgrounds2.jpg"); // project3\Project3_xxxxxxx\project3\src\pictures\8-Bit-Backgrounds.jpg
+            contentpane.setIcon(background.resize(frameWidth, frameHeight));
+            contentpane.setOpaque(true);
+            contentpane.setLayout(null);
+            this.addcomponent();
+            validate();
+            repaint();
+            /*
+             * battle(stage, 1);
+             * stage = 9999;
+             */
+            if (mainbattle(stage)) {
+
+            }
+            stage = 99999;
+        }
 
     }
 
-    public void setcharacterstage(int stage) {
-        hw = new Humanwave(stage, 1, this);
-        rw = new Robotwave(stage, this);
-    }
+    /*
+     * public void setcharacterstage(int stage) {
+     * hw = new Humanwave(stage, 1, this);
+     * rw = new Robotwave(stage, this);
+     * }
+     */
 
     public int getchoose() {
         return choose;
@@ -81,12 +90,12 @@ public class Stageframe extends JFrame {
         targetLabel = tl;
     }
 
-    public void sethumanArraylist() {
-        this.humanArraylist = hw.gethu();
+    public void sethumanArraylist(int wave) {
+        this.humanArraylist = sw.gethu(wave);
     }
 
     public void setrobotArraylist() {
-        this.robotArraylist = rw.getro();
+        this.robotArraylist = sw.getro();
     }
 
     public ArrayList<Human> gethumanArraylist() {
@@ -127,13 +136,16 @@ public class Stageframe extends JFrame {
 
     public void addcomponent() {
         for (Sound i : effectSound) {
-            if (i.getName() == "clickEF") {
+            if ("clickEF".equals(i.getName())) {
                 stat = new StatLabel(imagepath, "StatusBG.png", i, frameWidth, frameHeight - 480, this);
             }
         }
         stat.setMoveConditions(0, 480);
         stat.addlabelcomponent();
+
+        sethumanArraylist(1);
         addallhuman();
+        setrobotArraylist();
         addallrobot();
         contentpane.add(stat);
 
@@ -167,34 +179,103 @@ public class Stageframe extends JFrame {
 
     }
 
-    public void stage2() {
-        ImageIcon temp = new ImageIcon(imagepath + "city.gif");
-        temp.setImage(temp.getImage().getScaledInstance(frameWidth, frameHeight, Image.SCALE_DEFAULT));
-        contentpane.setIcon(temp);
-        validate();
-        repaint();
+    public boolean battle(int stage, int wave) { // stage battle
+        sethumanArraylist(wave);
+        addallhuman();
+
+        Thread bruh = new Thread() {
+            public void run() {
+                for (int i = 0; i < 10 && humanArraylist.size() > 0 && robotArraylist.size() > 0; i++) {
+                    // dialog turn i press enter
+                    //CyclicBarrier finish = new CyclicBarrier(robotArraylist.size()+humanArraylist.size());
+                    /*JDialog dialog = new JDialog();
+                    dialog.setTitle("TURN " + (i + 1));
+                    dialog.setModal(false);
+                    dialog.setBounds(400, 400, 300, 150);
+                    dialog.setVisible(true);
+                    dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+                    try {
+                        wait();
+                        
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
+                    dialog.addWindowListener(new WindowAdapter() {
+                        public void windowClosed(WindowEvent e) {
+                            notify();
+                        }
+
+                        public void windowClosing(WindowEvent e) {
+                            notify();
+                        }
+                    });*/
+                    threadArraylist = new ArrayList<Thread>();
+                    for (Robot ro : robotArraylist) {
+                        threadArraylist.add(ro.getspeedthread());
+                        // ro.getspeedthread().start();
+
+                    }
+                    for (Human hu : humanArraylist) {
+                        threadArraylist.add(hu.getspeedthread());
+                        // hu.getspeedthread().start();
+                    }
+                    for (Thread th : threadArraylist) {
+                        th.start();
+                    }
+                    for (Thread th : threadArraylist) {
+                        try {
+                            th.join();
+                        } catch (InterruptedException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }
+                    
+
+                    for (Robot ro : robotArraylist) {
+                        ro.setnewspeedthread();
+                    }
+                    for (Human hu : humanArraylist) {
+                        hu.setnewspeedthread();
+                    }
+                }
+            }
+        };bruh.run();
+
+        if (humanArraylist.size() == 0)
+            return true; // win
+        else
+            return false; // loose
+
     }
 
-    public void stage1() {
-        ImageIcon temp = new ImageIcon(imagepath + "warzone-scene.png");
-        temp.setImage(temp.getImage().getScaledInstance(frameWidth, frameHeight, Image.SCALE_DEFAULT));
-        contentpane.setIcon(temp);
-        validate();
-        repaint();
-    }
-
-    public void battle() { // stage battle
-        for (int i = 0; i < 10; i++) {
-            threadArraylist = new ArrayList<Thread>();
-        for (Robot ro : robotArraylist) {
-            threadArraylist.add(ro.getspeedthread());
-        }
-        for (Human hu : humanArraylist) {
-            threadArraylist.add(hu.getspeedthread());
-        }
-        for (Thread th : threadArraylist) {
-            th.start();
-        }
+    public boolean mainbattle(int stage) {
+        if (battle(stage, 1)) {
+            if (allwave > 1) {
+                if (battle(stage, 2)) {
+                    if (allwave > 2) {
+                        if (battle(stage, 3)) {
+                            // You WIN
+                            return true;
+                        } else {
+                            // You are VERY DAMN NOOBBBBB
+                            return false;
+                        }
+                    } else {
+                        // You WIN
+                        return true;
+                    }
+                } else {
+                    // You are VERY NOOB
+                    return false;
+                }
+            } else {
+                // You WIN
+                return true;
+            }
+        } else {
+            // You are NOOB
+            return false;
         }
     }
 
