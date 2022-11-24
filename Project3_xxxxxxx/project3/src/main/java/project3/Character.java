@@ -34,6 +34,9 @@ public class Character extends Thread implements Comparable<Character> {
         frame = sf;
         speedthread = new Speed(spd, frame, this);
     }
+    public void setnewspeedthread(){
+        speedthread = new Speed(spd,frame,this);
+    }
     public Speed getspeedthread(){
         return speedthread;
     }
