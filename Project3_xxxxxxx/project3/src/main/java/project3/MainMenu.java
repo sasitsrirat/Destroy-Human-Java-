@@ -46,6 +46,7 @@ public class MainMenu extends JFrame {
     protected Creditframe cframe;
     protected ArrayList<Sound> musicSound = new ArrayList<Sound>(), effectSound = new ArrayList<Sound>();
     protected Scoreframe scoreframe;
+    protected Storyframe strframe;
     public String imagepath,soundpath;
 
     public MainMenu() {
@@ -78,8 +79,8 @@ public class MainMenu extends JFrame {
         // set background gif
         ImageIcon imageIcon = new ImageIcon(imagepath + "roboyscofi.gif");
         imageIcon.setImage(imageIcon.getImage().getScaledInstance(frameWidth, frameHeight, Image.SCALE_DEFAULT)); // size
-                                                                                                                  // of
-                                                                                                                  // background
+        // of
+        // background
         contentPane = new JLabel();
         contentPane.setIcon(imageIcon);
         contentPane.setLayout(null);
@@ -107,9 +108,12 @@ public class MainMenu extends JFrame {
                             i.stop();
                         }
                     }
-                    sframe = new Stageframe(imagepath, musicSound, effectSound, 1); // play for first time stage 1
+                    /*sframe = new Stageframe(imagepath, musicSound, effectSound, 1); // play for first time stage 1
                     setTitle("Stage");
-                    setContentPane(sframe.getContentpane());
+                    setContentPane(sframe.getContentpane());*/
+                    strframe = new Storyframe(1);
+                    setTitle("STORY");
+                    setContentPane(strframe.getContentPane());
                     validate();
                 }
             });
