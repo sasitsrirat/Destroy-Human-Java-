@@ -12,15 +12,19 @@ public class Scoreframe extends JFrame {
     private String pathInput = "Project3_xxxxxxx/project3/src/score.txt";
     protected JPanel ScorePanel;
     protected JLabel contentPanel;
+    protected int frameWidth = 1366;
+    protected int frameHeight = 768;
 
     // JPanel credit = new JPanel();
     // constructor
-    public Scoreframe() throws FileNotFoundException {
+    public Scoreframe() throws FileNotFoundException 
+    {
         String imagepath = "Project3_xxxxxxx/project3/src/pictures/";
         setTitle("Score");
-        setBounds(300, 200, 1366, 768);
+        setBounds(50, 50, frameWidth, frameHeight);
         setVisible(true);
-        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         ScorePanel = new JPanel();
         // JFrame frame = new JFrame();
         ScorePanel.setBounds(50, 100, 1366, 768);
@@ -38,6 +42,21 @@ public class Scoreframe extends JFrame {
         FileReader fr = new FileReader(file);
         String Line;
 
+        JButton backButton = new JButton("Back");
+        {
+            backButton.setBounds(1000, 630, 100, 50);
+            contentPanel.add(backButton);
+            backButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent event) {
+                    String button = event.getActionCommand();
+                    if (button.equals("Back")) {
+                        dispose();
+                        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+                    }
+                }
+            });
+        }
         JPanel panel_2 = new JPanel();
         {
             panel_2.setBounds(230, 100, 900, 600); // Size of JPanel

@@ -8,7 +8,7 @@ import javax.swing.UIManager;
 import javax.swing.text.AbstractDocument.Content;
 
 class Introframe extends JFrame {
-
+    private static int frameWidth = 1366, frameHeight = 768;
     protected JPanel loadingScreen;
     protected MyImageIcon loadingPicture;
     static JProgressBar progressBar;
@@ -19,7 +19,7 @@ class Introframe extends JFrame {
         setContentPane(loadingScreen);
         setTitle("IntroFrame");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setBounds(600, 600, 1366, 768);
+        setBounds(50, 50, frameWidth, frameHeight);
         getContentPane().setLayout(null);
  
         // ProgressBar

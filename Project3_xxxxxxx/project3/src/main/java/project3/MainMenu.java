@@ -46,10 +46,11 @@ public class MainMenu extends JFrame {
     protected Creditframe cframe;
     protected ArrayList<Sound> musicSound = new ArrayList<Sound>(), effectSound = new ArrayList<Sound>();
     protected Scoreframe scoreframe;
+    public String imagepath,soundpath;
 
     public MainMenu() {
-        String imagepath = "project3/Project3_xxxxxxx/project3/src/pictures/";//"src/pictures/"; // "project3/Project3_xxxxxxx/project3/src/pictures/"
-        String soundpath = "project3/Project3_xxxxxxx/project3/src/sounds/";
+        imagepath = "Project3_xxxxxxx/project3/src/pictures/";//"src/pictures/"; // "project3/Project3_xxxxxxx/project3/src/pictures/"
+        soundpath = "Project3_xxxxxxx/project3/src/sounds/";
 
         // set background music
         musicSound.add(new Sound(soundpath + "BossTime.wav", "mainmenuBG"));
@@ -69,6 +70,7 @@ public class MainMenu extends JFrame {
 
         setType(Type.POPUP);
         setTitle("Menu");
+        setResizable(false);
         setBounds(50, 50, frameWidth, frameHeight);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);

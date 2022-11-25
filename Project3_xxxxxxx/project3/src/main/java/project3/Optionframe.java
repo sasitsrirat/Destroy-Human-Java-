@@ -13,6 +13,10 @@ public class Optionframe extends JFrame implements ActionListener {
     protected JPanel effectPanel;
     protected JPanel mpanel;
     protected JPanel musicPanel;
+    protected JPanel cutScenesPanel;
+    protected JPanel AutosavePanel;
+    protected JLabel AutotsaveText;
+    protected JLabel cutscenesText;
     protected JLabel musicText;
     protected JLabel effectText;
     protected JLabel contentpane;
@@ -23,6 +27,7 @@ public class Optionframe extends JFrame implements ActionListener {
     protected ArrayList<Sound> effectSound;
     protected JCheckBox musiccheck;
     protected JCheckBox effectcheck;
+    protected JToggleButton toggleButton, toggleButton_2;
     protected String path;
     protected int frameWidth = 1366;
     protected int frameHeight = 768;
@@ -35,6 +40,7 @@ public class Optionframe extends JFrame implements ActionListener {
         setTitle("Option");
         setBounds(50, 50, frameWidth, frameHeight);
         setVisible(true);
+        setResizable(false);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
         setContentPane(contentpane = new JLabel());
@@ -46,19 +52,29 @@ public class Optionframe extends JFrame implements ActionListener {
         AddComponents();
     }
 
+    public static void main(String[] args) {
+        MainMenu m = new MainMenu();
+        final Optionframe obj = new Optionframe(m.musicSound, m.effectSound, m.imagepath);
+        obj.repaint();
+        obj.setVisible(true);
+
+    }
+
     private void AddComponents() {
         JButton backButton = new JButton("Back");
-        backButton.setBounds(75, 500, 100, 50);
-        contentpane.add(backButton);
-        backButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                String button = event.getActionCommand();
-                if (button.equals("Back")) {
-                    dispose();
+        {
+            backButton.setBounds(75, 500, 100, 50);
+            contentpane.add(backButton);
+            backButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent event) {
+                    String button = event.getActionCommand();
+                    if (button.equals("Back")) {
+                        dispose();
+                    }
                 }
-            }
-        });
+            });
+        }
 
         MyImageIcon music_max = new MyImageIcon(path + "Music_max.png").resize(75, 75);
         MyImageIcon music_min = new MyImageIcon(path + "Music_min.png").resize(75, 75);
@@ -68,18 +84,17 @@ public class Optionframe extends JFrame implements ActionListener {
         {
             musicText = new JLabel();
             {
-                musicText.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 30));
-                musicText.setForeground(Color.blue);
+                musicText.setFont(new Font("Charter", Font.BOLD, 30));
+                musicText.setForeground(Color.white);
                 musicText.setText("MUSIC VOLUME");
                 musicText.setBounds(80, 40, 700, 30);
             }
 
-            musicPanel.setBounds(0, 90, 700, 100);
+            musicPanel.setBounds(0, 90, 800, 100);
             musicPanel.setLayout(null);
-            // musicPanel.setOpaque(true);
+            musicPanel.setOpaque(false);
+            // musicPanel.setBackground(new Color(0,0,0,150));
             musiclabel = new JLabel();
-            musicPanel.setBackground(new Color(138, 43, 226));
-            musiclabel.setBackground(new Color(138, 43, 226));
             musiclabel.setIcon(music_min);
             musiclabel.setHorizontalAlignment(JLabel.CENTER);
             musiclabel.setBounds(70, 0, 75, 75);
@@ -170,15 +185,15 @@ public class Optionframe extends JFrame implements ActionListener {
         {
             effectText = new JLabel();
             {
-                effectText.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 30));
-                effectText.setBackground(null);
-                effectText.setForeground(Color.blue);
+                effectText.setFont(new Font("Charter", Font.BOLD, 30));
+                effectText.setForeground(Color.white);
                 effectText.setText("EFFECT VOLUME");
                 effectText.setBounds(80, 205, 700, 30);
             }
-            effectPanel.setBounds(0, 250, 700, 100);
+            effectPanel.setBounds(0, 250, 800, 100);
             effectPanel.setLayout(null);
-            effectPanel.setOpaque(false);
+            effectPanel.setOpaque(false); // ทำให้ไม่เห็นพื้นหลังสีขาว
+            // effectPanel.setBackground(new Color(0,0,0,150));
             MyImageIcon kawin_max = new MyImageIcon(path + "Kawin_max.png").resize(75, 75);
             MyImageIcon kawin_min = new MyImageIcon(path + "Kawin_min.png").resize(75, 75);
             MyImageIcon kawin_mute = new MyImageIcon(path + "Kawin_mute.png").resize(75, 75);
@@ -273,17 +288,93 @@ public class Optionframe extends JFrame implements ActionListener {
             }
         }
 
+        cutScenesPanel = new JPanel();
+        {
+            cutscenesText = new JLabel();
+            {
+                cutscenesText.setFont(new Font("Charter", Font.BOLD, 30));
+                cutscenesText.setForeground(Color.white);
+                cutscenesText.setText("CUTSCENES");
+                cutscenesText.setBounds(80, 360, 700, 30);
+            }
+            cutScenesPanel.setBounds(0, 355, 700, 100);
+            cutScenesPanel.setOpaque(false); // ทำให้ไม่เห็นพื้นหลังสีขาว
+            // effectPanel.setBackground(new Color(0,0,0,150));
+
+            toggleButton = new JToggleButton("ON/OFF");
+            {
+                toggleButton.setForeground(Color.black);
+                // UIManager.put("toggleButton.selected", Color.ORANGE);
+                ItemListener itemListener = new ItemListener() {
+                    public void itemStateChanged(ItemEvent itemEvent) {
+                        int cutsceneson_off = itemEvent.getStateChange();
+                        if (cutsceneson_off == ItemEvent.SELECTED) {
+                            System.out.println("Selected Cutscenes"); // show your message here
+                        } else {
+                            System.out.println("Deselected Cutscenes"); // remove your message
+                        }
+                    }
+                };
+                toggleButton.addItemListener(itemListener);
+            }
+        }
+
+        AutosavePanel = new JPanel();
+        {
+            AutotsaveText = new JLabel();
+            {
+                AutotsaveText.setFont(new Font("Charter", Font.BOLD, 30));
+                AutotsaveText.setForeground(Color.white);
+                AutotsaveText.setText("AUTO-SAVE");
+                AutotsaveText.setBounds(80, 430, 700, 30);
+            }
+            AutosavePanel.setBounds(0, 425, 700, 100);
+            AutosavePanel.setOpaque(false); // ทำให้ไม่เห็นพื้นหลังสีขาว
+            toggleButton_2 = new JToggleButton("ON/OFF");
+            {
+                toggleButton_2.setForeground(Color.black);
+                // UIManager.put("toggleButton.selected", Color.ORANGE);
+                ItemListener itemListener = new ItemListener() {
+                    public void itemStateChanged(ItemEvent itemEvent) {
+                        int autosaveonn_off = itemEvent.getStateChange();
+                        if (autosaveonn_off == ItemEvent.SELECTED) {
+                            System.out.println("Selected Autosave"); // show your message here
+                        } else {
+                            System.out.println("Deselected Autosave"); // remove your message
+                        }
+                    }
+                };
+                toggleButton_2.addItemListener(itemListener);
+            }
+        }
+        JPanel MainPanel = new JPanel(); // black background
+        {
+            MainPanel.setBounds(0, 0, 800, 768);
+            MainPanel.setBackground(new Color(0, 0, 0, 150));
+        }
+
         mpanel.add(musiccheck);
         epanel.add(effectcheck);
         musicPanel.add(musicSlider);
         effectPanel.add(effectSlider);
 
+        contentpane.add(cutscenesText);
+        cutScenesPanel.add(toggleButton);
+
+        AutosavePanel.add(toggleButton_2);
+
         contentpane.add(musicText);
         contentpane.add(effectText);
+        contentpane.add(AutotsaveText);
+        contentpane.add(AutosavePanel);
+        contentpane.add(cutScenesPanel);
         contentpane.add(mpanel);
         contentpane.add(epanel);
         contentpane.add(musicPanel);
         contentpane.add(effectPanel);
+        contentpane.add(MainPanel);
+        cutScenesPanel.add(toggleButton);
+
         validate();
     }
 
