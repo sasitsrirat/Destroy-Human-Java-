@@ -16,6 +16,7 @@ public class Creditframe extends JFrame
     protected JLabel contentPane;
     protected int frameWidth = 1366;
     protected int frameHeight = 768;
+    protected JPanel MainPanel;
 
     //constructor
     public Creditframe(ArrayList<Sound> mSound, ArrayList<Sound> eSound, String imagepath) {
@@ -29,30 +30,30 @@ public class Creditframe extends JFrame
         setResizable(false);
 	    setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );
 
-        creditPanel = new JPanel();
-        //JFrame frame = new JFrame();
-        creditPanel.setBounds(50,100,1366,768);
-        creditPanel.setLayout(null); //set layout
-        
-        
-        
+        setContentPane(contentPane = new JLabel());
         ImageIcon imageIcon = new ImageIcon(path + "cityrobot.gif");
         imageIcon.setImage(imageIcon.getImage().getScaledInstance(frameWidth, frameHeight, Image.SCALE_DEFAULT));
-        contentPane = new JLabel();
-        setContentPane(contentPane = new JLabel());
         
-        setContentPane(contentPane);
+        creditPanel = new JPanel();
+        //JFrame frame = new JFrame();
         
         JPanel panel = new JPanel();
         {
             JLabel text_1 = new JLabel("Credit");
+            text_1.setText("sasit srirat");
             JLabel text_2 = new JLabel("MR.XXAABB XXAABB 1234556");
             text_2.setFont(new Font("Charter", Font.BOLD, 30));
+            text_2.setBounds(80, 40, 700, 30);
             text_2.setForeground(Color.white);
-            panel.add(text_1);
-            panel.add(text_2);
+            contentPane.add(text_1);
+            contentPane.add(text_2);
             validate();
 
+        }
+        JPanel MainPanel = new JPanel(); // black background
+        {
+            MainPanel.setBounds(0, 0, 800, 768);
+            MainPanel.setBackground(new Color(0, 0, 0, 150));
         }
         JButton backButton = new JButton("Back");
         {
@@ -70,14 +71,7 @@ public class Creditframe extends JFrame
             });
         }
         contentPane.setIcon(imageIcon);
-        contentPane.add(panel);
-        repaint();
-        
-        creditPanel.setVisible(true);
-        panel.setVisible(true);
-        
-        
-         
+        repaint(); 
     }
     
     
