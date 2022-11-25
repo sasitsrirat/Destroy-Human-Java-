@@ -24,5 +24,6 @@ public class Speed extends Thread {
             }
         }
         frame.setactiveLabel(owner);
+        owner.setthreaddead(true);
     }
 }

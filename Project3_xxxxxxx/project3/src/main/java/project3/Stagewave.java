@@ -30,7 +30,7 @@ public class Stagewave {
     public void humanstage1_1() {
         hu1 = new Human_weak("kawin",frame);
         hu2 = new Human_weak("kong",frame);
-        hu3 = new Human_fat("Rangsipan",frame);
+        hu3 = new Human_fat("Eakky",frame);
         hu1.setposition(4);
         hu2.setposition(5);
         hu3.setposition(6);
@@ -42,7 +42,7 @@ public class Stagewave {
     public void humanstage1_2(){
         hu1 = new Human_weak("kawin",frame);
         hu2 = new Human_weak("kong",frame);
-        hu3 = new Human_weak("Rangsipan",frame);
+        hu3 = new Human_weak("Eakky",frame);
         hu1.setposition(4);
         hu2.setposition(5);
         hu3.setposition(6);

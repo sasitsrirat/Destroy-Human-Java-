@@ -18,8 +18,10 @@ public class Stageframe extends JFrame {
     private String imagepath; // project3\Project3_xxxxxxx\project3\src\pictures
     // private Character activeCharacter;
     private Stagewave sw;
-    private Humanwave hw; // hw = new humanwave(1,1); // hwArraylist = hw.gethu();
-    private Robotwave rw; // rw = new Robotwave(1); // robotArraylist = rw.gethu();
+    // private Humanwave hw; // hw = new humanwave(1,1); // hwArraylist =
+    // hw.gethu();
+    // private Robotwave rw; // rw = new Robotwave(1); // robotArraylist =
+    // rw.gethu();
     private ArrayList<Robot> robotArraylist;
     private ArrayList<Human> humanArraylist;
     private ArrayList<Characterlabel> robotLabelArraylist, humanLabelArraylist;
@@ -27,7 +29,10 @@ public class Stageframe extends JFrame {
     private Characterlabel activeLabel, targetLabel;
     private StatLabel stat;
     private JLabel contentpane;
+    private JLabel activepoint = new JLabel();
     private JLabel warn = new JLabel();
+    private JLabel[] RO = { new JLabel(), new JLabel(), new JLabel() };
+    private JLabel[] HU = { new JLabel(), new JLabel(), new JLabel() };
     private int currentstate = 0;
     protected ArrayList<Sound> musicSound = new ArrayList<Sound>(), effectSound = new ArrayList<Sound>();
     private ArrayList<Thread> threadArraylist;
@@ -134,6 +139,38 @@ public class Stageframe extends JFrame {
         return this.currentstate;
     }
 
+    public void settext() {
+        for (int i = 0; i < robotLabelArraylist.size(); i++) {
+            RO[i].setText(robotLabelArraylist.get(i).getOwner().getname() + "  HP  : "
+                    + Integer.toString(robotLabelArraylist.get(i).getOwner().gethp()) + "/ "
+                    + Integer.toString(robotLabelArraylist.get(i).getOwner().getmax_hp()));
+
+        }
+        for (int i = 0; i < humanLabelArraylist.size(); i++) {
+            HU[i].setText(humanLabelArraylist.get(i).getOwner().getname() + "  HP  : "
+                    + Integer.toString(humanLabelArraylist.get(i).getOwner().gethp()) + "/ "
+                    + Integer.toString(humanLabelArraylist.get(i).getOwner().getmax_hp()));
+        }
+        validate();
+        repaint();
+    }
+
+    public void showactive() {
+        MyImageIcon pointer = new MyImageIcon(imagepath + "pointer.png").resize(50, 50);
+        activepoint.setBounds(activeLabel.getcurX() + 65, activeLabel.getcurY() - 55, 50, 50);
+        activepoint.setIcon(pointer);
+        activepoint.setVisible(true);
+        contentpane.add(activepoint);
+        validate();
+        contentpane.repaint();
+    }
+
+    public void hideactive() {
+        activepoint.setVisible(false);
+        validate();
+        repaint();
+    }
+
     public void addcomponent() {
         for (Sound i : effectSound) {
             if ("clickEF".equals(i.getName())) {
@@ -143,8 +180,6 @@ public class Stageframe extends JFrame {
         stat.setMoveConditions(0, 480);
         stat.addlabelcomponent();
 
-        sethumanArraylist(1);
-        addallhuman();
         setrobotArraylist();
         addallrobot();
         contentpane.add(stat);
@@ -159,6 +194,14 @@ public class Stageframe extends JFrame {
             robotLabelArraylist.add(new Characterlabel(imagepath, 180, 180, this, stat, robotArraylist.get(i)));
             robotLabelArraylist.get(i).addMouse();
             contentpane.add(robotLabelArraylist.get(i));
+            RO[i].setBackground(null);
+            RO[i].setForeground(Color.white);
+            RO[i].setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 13));
+            RO[i].setBounds(robotLabelArraylist.get(i).getcurX(), robotLabelArraylist.get(i).getcurY() + 200, 200, 30);
+            RO[i].setText(robotLabelArraylist.get(i).getOwner().getname() + "  HP  : "
+                    + Integer.toString(robotLabelArraylist.get(i).getOwner().gethp()) + "/ "
+                    + Integer.toString(robotLabelArraylist.get(i).getOwner().getmax_hp()));
+            contentpane.add(RO[i]);
         }
     }
 
@@ -167,7 +210,15 @@ public class Stageframe extends JFrame {
         for (int i = 0; i < humanArraylist.size(); i++) {
             humanLabelArraylist.add(new Characterlabel(imagepath, 180, 180, this, stat, humanArraylist.get(i)));
             humanLabelArraylist.get(i).addMouse();
+            HU[i].setBackground(null);
+            HU[i].setForeground(Color.white);
+            HU[i].setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 13));
+            HU[i].setBounds(humanLabelArraylist.get(i).getcurX(), humanLabelArraylist.get(i).getcurY() + 200, 180, 20);
+            HU[i].setText(humanLabelArraylist.get(i).getOwner().getname() + "  HP  : "
+                    + Integer.toString(humanLabelArraylist.get(i).getOwner().gethp()) + "/ "
+                    + Integer.toString(humanLabelArraylist.get(i).getOwner().getmax_hp()));
             contentpane.add(humanLabelArraylist.get(i));
+            contentpane.add(HU[i]);
         }
     }
 
@@ -182,33 +233,42 @@ public class Stageframe extends JFrame {
     public boolean battle(int stage, int wave) { // stage battle
         sethumanArraylist(wave);
         addallhuman();
+        Thread bruh = new Thread(){
+            public boolean a;
 
-        Thread bruh = new Thread() {
+            public boolean geta() {
+                return a;
+            }
+
             public void run() {
-                for (int i = 0; i < 10 && humanArraylist.size() > 0 && robotArraylist.size() > 0; i++) {
+                for (int i = 0; i < 10 && humanArraylist.size() == 0 && robotArraylist.size() == 0; i++) {
                     // dialog turn i press enter
-                    //CyclicBarrier finish = new CyclicBarrier(robotArraylist.size()+humanArraylist.size());
-                    /*JDialog dialog = new JDialog();
+                    // CyclicBarrier finish = new CyclicBarrier(robotArraylist.size() +
+                    // humanArraylist.size());
+
+                    JDialog dialog = new JDialog();
                     dialog.setTitle("TURN " + (i + 1));
                     dialog.setModal(false);
                     dialog.setBounds(400, 400, 300, 150);
                     dialog.setVisible(true);
                     dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-                    try {
-                        wait();
-                        
-                    } catch (InterruptedException e1) {
-                        e1.printStackTrace();
-                    }
-                    dialog.addWindowListener(new WindowAdapter() {
-                        public void windowClosed(WindowEvent e) {
-                            notify();
-                        }
-
-                        public void windowClosing(WindowEvent e) {
-                            notify();
-                        }
-                    });*/
+                    /*
+                     * try {
+                     * wait();
+                     * 
+                     * } catch (InterruptedException e1) {
+                     * e1.printStackTrace();
+                     * }
+                     * dialog.addWindowListener(new WindowAdapter() {
+                     * public void windowClosed(WindowEvent e) {
+                     * notify();
+                     * }
+                     * 
+                     * public void windowClosing(WindowEvent e) {
+                     * notify();
+                     * }
+                     * });
+                     */
                     threadArraylist = new ArrayList<Thread>();
                     for (Robot ro : robotArraylist) {
                         threadArraylist.add(ro.getspeedthread());
@@ -230,8 +290,14 @@ public class Stageframe extends JFrame {
                             e.printStackTrace();
                         }
                     }
-                    
-
+                    /*
+                     * try {
+                     * this.wait();
+                     * } catch (InterruptedException e) {
+                     * // TODO Auto-generated catch block
+                     * e.printStackTrace();
+                     * }
+                     */
                     for (Robot ro : robotArraylist) {
                         ro.setnewspeedthread();
                     }
@@ -239,17 +305,24 @@ public class Stageframe extends JFrame {
                         hu.setnewspeedthread();
                     }
                 }
-            }
-        };bruh.run();
 
-        if (humanArraylist.size() == 0)
-            return true; // win
-        else
-            return false; // loose
+            }
+        };
+        bruh.start();
+        //bruh.geta();
+
+        if (humanArraylist.size() == 0) {
+                    System.out.println("You WIN");
+                    return true; // win
+                } else {
+                    System.out.println("You LOOSE");
+                    return false; // loose
+                }
 
     }
 
     public boolean mainbattle(int stage) {
+
         if (battle(stage, 1)) {
             if (allwave > 1) {
                 if (battle(stage, 2)) {
@@ -281,25 +354,33 @@ public class Stageframe extends JFrame {
 
     public synchronized void setactiveLabel(Character c) {
         activeLabel = c.getLabel();
+        showactive();
         stat.setactiveCharacter(activeLabel.getOwner());
         stat.ShowAction(activeLabel.getOwner());
+
         try {
             Thread.currentThread();
             Thread.sleep(99999999);
         } catch (InterruptedException e) {
         }
+        settext();
+        checkdeath();
+
         try {
             Thread.currentThread();
             Thread.sleep(2500);
         } catch (InterruptedException e) {
 
         }
+        hideactive();
         stat.HideButton();
     }
 
     public void checkdeath() {
         for (int j = 0; j < humanArraylist.size(); j++) { // check death here
             if (humanArraylist.get(j).checkdeath() == 1) {
+                humanArraylist.get(j).getLabel().showdeath();
+                humanArraylist.get(j).getspeedthread().stop(); // kill thread
                 System.out.printf("%s is death\n", humanArraylist.get(j).getname());
                 humanArraylist.remove(j);
                 j = j - 1;
@@ -307,6 +388,8 @@ public class Stageframe extends JFrame {
         }
         for (int j = 0; j < robotArraylist.size(); j++) {
             if (robotArraylist.get(j).checkdeath() == 1) {
+                robotArraylist.get(j).getLabel().showdeath();
+                robotArraylist.get(j).getspeedthread().stop(); // kill thread
                 System.out.printf("%s is death\n", robotArraylist.get(j).getname());
                 robotArraylist.remove(j);
                 j = j - 1;

@@ -46,11 +46,10 @@ public class MainMenu extends JFrame {
     protected Creditframe cframe;
     protected ArrayList<Sound> musicSound = new ArrayList<Sound>(), effectSound = new ArrayList<Sound>();
     protected Scoreframe scoreframe;
-    public String imagepath, soundpath;
+    public String imagepath,soundpath;
 
     public MainMenu() {
-        imagepath = "Project3_xxxxxxx/project3/src/pictures/";// "src/pictures/"; //
-                                                              // "project3/Project3_xxxxxxx/project3/src/pictures/"
+        imagepath = "Project3_xxxxxxx/project3/src/pictures/";//"src/pictures/"; // "project3/Project3_xxxxxxx/project3/src/pictures/"
         soundpath = "Project3_xxxxxxx/project3/src/sounds/";
 
         // set background music
@@ -79,8 +78,8 @@ public class MainMenu extends JFrame {
         // set background gif
         ImageIcon imageIcon = new ImageIcon(imagepath + "roboyscofi.gif");
         imageIcon.setImage(imageIcon.getImage().getScaledInstance(frameWidth, frameHeight, Image.SCALE_DEFAULT)); // size
-                                                                                                                  // of
-                                                                                                                  // background
+        // of
+        // background
         contentPane = new JLabel();
         contentPane.setIcon(imageIcon);
         contentPane.setLayout(null);
@@ -108,9 +107,12 @@ public class MainMenu extends JFrame {
                             i.stop();
                         }
                     }
-                    sframe = new Stageframe(imagepath, musicSound, effectSound, 1); // play for first time stage 1
+                    /*sframe = new Stageframe(imagepath, musicSound, effectSound, 1); // play for first time stage 1
                     setTitle("Stage");
-                    setContentPane(sframe.getContentpane());
+                    setContentPane(sframe.getContentpane());*/
+                    strframe = new Storyframe(1);
+                    setTitle("STORY");
+                    setContentPane(strframe.getContentPane());
                     validate();
                 }
             });
@@ -208,7 +210,7 @@ public class MainMenu extends JFrame {
                         }
                     }
                     if (cframe == null)
-                        cframe = new Creditframe(musicSound, effectSound, imagepath);
+                        cframe = new Creditframe();
                     else
                         cframe.setVisible(true);
                 }

@@ -12,12 +12,13 @@ import java.awt.*;
 
 public class Characterlabel extends JLabel {
 
-    protected MyImageIcon staticon, staticon2, attackicon;
+    protected MyImageIcon staticon, staticon2, attackicon, deathicon;
     protected int curX, curY, width, height, position;
     protected String path;
     protected Stageframe parentFrame;
     protected StatLabel status;
     protected Character owner;
+    protected boolean death;
 
     public Characterlabel(String pathfile, int width, int height, Stageframe pf, StatLabel sl, Character c) {
 
@@ -30,11 +31,12 @@ public class Characterlabel extends JLabel {
         staticon = new MyImageIcon(path + owner.getimage()).resize(width, height);
         staticon2 = new MyImageIcon(path + "robot3.png").resize(width, height);
         attackicon = new MyImageIcon(path + owner.getattackimage()).resize(width, height);
+        deathicon = new MyImageIcon(path + owner.getdeathimage()).resize(width, height);
         setIcon(staticon);
         setHorizontalAlignment(JLabel.CENTER);
         parentFrame = pf;
         position = owner.getposition();
-
+        death = false;
         setposition();
 
         setVisible(true);
@@ -46,7 +48,7 @@ public class Characterlabel extends JLabel {
             public void run() {
                 parentFrame.setstagestate(4);
                 setIcon(attackicon);
-                if(owner instanceof Robot){
+                if (owner instanceof Robot) {
                     setBounds(curX + 50, curY, width, height);
                 } else {
                     setBounds(curX - 50, curY, width, height);
@@ -69,43 +71,60 @@ public class Characterlabel extends JLabel {
     }
 
     public void takedmg_animation(String effect, Sound sound) {
-        sound.playOnce();
-        JLabel effectLabel = new JLabel();
-        ImageIcon imageIcon = new ImageIcon(path + effect);
-        imageIcon.setImage(imageIcon.getImage().getScaledInstance(width-30, height-30, Image.SCALE_DEFAULT));
+        if (death) {
 
-        effectLabel.setIcon(imageIcon);
-        effectLabel.setBounds(15, 15, width-30, height-30);
-        effectLabel.setVisible(true);
-        effectLabel.setHorizontalAlignment(JLabel.CENTER);
-        effectLabel.setLayout(null);
-        Characterlabel temp = this;
-        temp.add(effectLabel);
-        this.validate();
-        repaint();
-        parentFrame.repaint();
-        Thread bruh = new Thread() {
-            public void run() {
-                try {
-                    Thread.currentThread();
-                    Thread.sleep(1500);
-                } catch (InterruptedException ex) {
-                    Thread.currentThread().interrupt();
+        } else {
+            sound.playOnce();
+            JLabel effectLabel = new JLabel();
+            ImageIcon imageIcon = new ImageIcon(path + effect);
+            imageIcon.setImage(imageIcon.getImage().getScaledInstance(width - 30, height - 30, Image.SCALE_DEFAULT));
+
+            effectLabel.setIcon(imageIcon);
+            effectLabel.setBounds(15, 15, width - 30, height - 30);
+            effectLabel.setVisible(true);
+            effectLabel.setHorizontalAlignment(JLabel.CENTER);
+            effectLabel.setLayout(null);
+            Characterlabel temp = this;
+            temp.add(effectLabel);
+            this.validate();
+            repaint();
+            parentFrame.repaint();
+            Thread bruh = new Thread() {
+                public void run() {
+                    try {
+                        Thread.currentThread();
+                        Thread.sleep(1500);
+                    } catch (InterruptedException ex) {
+                        Thread.currentThread().interrupt();
+                    }
+                    effectLabel.setVisible(false);
+                    temp.remove(effectLabel);
+                    temp.revalidate();
+                    temp.repaint();
+                    parentFrame.repaint();
                 }
-                effectLabel.setVisible(false);
-                temp.remove(effectLabel);
-                temp.revalidate();
-                temp.repaint();
-                parentFrame.repaint();
-            }
-        };
-        bruh.start();
+            };
+            bruh.start();
+        }
+    }
+
+    public void showdeath() {
+        death = true;
+        setIcon(deathicon);
     }
 
     public void setMoveConditions(int x, int y) {
         curX = x;
         curY = y;
         setBounds(curX, curY, width, height);
+    }
+
+    public int getcurX() {
+        return curX;
+    }
+
+    public int getcurY() {
+        return curY;
     }
 
     public void setposition() {
@@ -158,16 +177,23 @@ public class Characterlabel extends JLabel {
             }
 
             public void mouseEntered(MouseEvent e) {
-                    setIcon(staticon2);
-                    status.setRtext(owner.getatk(), owner.gethp(), owner.getmax_hp(), owner.getdf(), owner.getname());
-                    parentFrame.repaint();
-                    validate();
+                setIcon(staticon2);
+                status.setRtext(owner.getatk(), owner.gethp(), owner.getmax_hp(), owner.getdf(), owner.getname());
+                parentFrame.repaint();
+                validate();
             }
 
             public void mouseExited(MouseEvent e) {
+                if (death) {
+                    setIcon(deathicon);
+                    parentFrame.repaint();
+                    validate();
+                } else {
                     setIcon(staticon);
                     parentFrame.repaint();
                     validate();
+                }
+
             }
 
             public void mouseMoved(MouseEvent e) {
@@ -175,21 +201,25 @@ public class Characterlabel extends JLabel {
 
             @Override
             public void mouseClicked(MouseEvent e) {
+                if (death) {
 
-                switch (parentFrame.getchoose()) {
-                    case 1:
-                        parentFrame.settargetLabel(temp);
-                        parentFrame.robot_attack();
-                        break;
-                    case 2:
-                        parentFrame.settargetLabel(temp);
-                        parentFrame.action_robot1_skill();
-                        break;
-                    case 3:
-                        parentFrame.settargetLabel(temp);
-                        parentFrame.action_robot2_skill();
-                    default:
-                        break;
+                } else {
+                    switch (parentFrame.getchoose()) {
+                        case 1:
+                            parentFrame.settargetLabel(temp);
+                            parentFrame.robot_attack();
+                            break;
+                        case 2:
+                            parentFrame.settargetLabel(temp);
+                            parentFrame.action_robot1_skill();
+                            break;
+                        case 3:
+                            parentFrame.settargetLabel(temp);
+                            parentFrame.action_robot2_skill();
+                        default:
+
+                            break;
+                    }
                 }
                 /*
                  * if (parentFrame.getstagenum() != 2) {
