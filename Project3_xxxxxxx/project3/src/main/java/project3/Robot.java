@@ -13,8 +13,8 @@ class Robot extends Character {
     public Robot() {
     }
 
-    public Robot(String n, int hp, int atk, int def, int spd, int p, int cs, int cu, String imagefile, String attackimagefile, Stageframe sf) {
-        super(n, hp, atk, def, spd, imagefile, attackimagefile, sf);
+    public Robot(String n, int hp, int atk, int def, int spd, int p, int cs, int cu, String imagefile, String attackimagefile, String deathimagefile, Stageframe sf) {
+        super(n, hp, atk, def, spd, imagefile, attackimagefile, deathimagefile, sf);
         ep = p;
         cd_s = cs;
         cd_u = cu;
@@ -40,7 +40,7 @@ class Robot extends Character {
 class Robot1 extends Robot {
 
     public Robot1(Stageframe sf) {
-        super("Musix-6000", 20, 5, 1, 1, 3, 2, 5, "robot1-normal-01.png", "robot1-attack-01.png", sf);
+        super("Musix-6000", 20, 10, 1, 1, 3, 2, 5, "robot1-normal-01.png", "robot1-alive-01.png", ".png", sf);
     }
 
     @Override
@@ -54,7 +54,7 @@ class Robot1 extends Robot {
 class Robot2 extends Robot {
 
     public Robot2(Stageframe sf) {
-        super("Ba-Be", 50, 3, 3, 1, 3, 2, 5, "robot2-normal-01.png" , "robot2-attack-01.png", sf);
+        super("Ba-Be", 30, 4, 3, 1, 3, 2, 5, "robot2-normal-01.png" , "robot2-attack-01.png", "robot2-alive-01.png", sf);
     }
 
     @Override
@@ -67,7 +67,7 @@ class Robot2 extends Robot {
 class Robot3 extends Robot {
 
     public Robot3(Stageframe sf) {
-        super("N2Y2", 30, 2, 2, 1, 3, 2, 5, "robot3-normal-01.png", "robot3-attack-01.png", sf) ;
+        super("N2Y2", 25, 8, 2, 1, 3, 2, 5, "robot3-normal-01.png", "robot3-attack-01.png", "robot3-alive-01.png", sf) ;
     }
     @Override
     public void skill3(ArrayList<Human> enemies) { //attack all enemy

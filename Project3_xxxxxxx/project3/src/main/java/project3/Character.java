@@ -12,17 +12,18 @@ public class Character extends Thread implements Comparable<Character> {
     protected int spd = 0; // Speed Point
     protected int position; // will be set in another
     protected int maxspeed = 3000;
-    protected String imagefile, attackimagefile;
+    protected String imagefile, attackimagefile, deathimagefile;
     protected Characterlabel CLabel;
     private Speed speedthread;
     private Stageframe frame;
     private boolean dead = false;
+    private boolean threaddead;
 
     // protected Speed speedthread;
     public Character() {
     }
 
-    public Character(String n, int h, int a, int d, int s, String i, String ai, Stageframe sf) {
+    public Character(String n, int h, int a, int d, int s, String i, String ai, String di, Stageframe sf) {
         name = n;
         hp = h;
         max_hp = h;
@@ -31,8 +32,16 @@ public class Character extends Thread implements Comparable<Character> {
         spd = s;
         imagefile = i;
         attackimagefile = ai;
+        deathimagefile = di;
         frame = sf;
         speedthread = new Speed(spd, frame, this);
+        threaddead = false;
+    }
+    public void setthreaddead(boolean n){
+        threaddead = n;
+    }
+    public boolean getthreaddead(){
+        return threaddead;
     }
     public void setnewspeedthread(){
         speedthread = new Speed(spd,frame,this);
@@ -157,6 +166,10 @@ public class Character extends Thread implements Comparable<Character> {
     
     public String getattackimage() {
         return attackimagefile;
+    }
+
+    public String getdeathimage(){
+        return deathimagefile;
     }
 
     public void skill1(Character enemy) {}

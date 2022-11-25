@@ -49,8 +49,8 @@ public class MainMenu extends JFrame {
     public String imagepath,soundpath;
 
     public MainMenu() {
-        imagepath = "Project3_xxxxxxx/project3/src/pictures/";//"src/pictures/"; // "project3/Project3_xxxxxxx/project3/src/pictures/"
-        soundpath = "Project3_xxxxxxx/project3/src/sounds/";
+        imagepath = "project3/Project3_xxxxxxx/project3/src/pictures/";//"src/pictures/"; // "project3/Project3_xxxxxxx/project3/src/pictures/"
+        soundpath = "project3/Project3_xxxxxxx/project3/src/sounds/";
 
         // set background music
         musicSound.add(new Sound(soundpath + "BossTime.wav", "mainmenuBG"));
@@ -206,8 +206,9 @@ public class MainMenu extends JFrame {
                             i.playOnce();
                         }
                     }
-                    if (cframe == null)
-                        cframe = new Creditframe();
+                    if (cframe == null){
+                        //cframe = new Creditframe();
+                    }
                     else
                         cframe.setVisible(true);
                 }
