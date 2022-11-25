@@ -46,10 +46,11 @@ public class MainMenu extends JFrame {
     protected Creditframe cframe;
     protected ArrayList<Sound> musicSound = new ArrayList<Sound>(), effectSound = new ArrayList<Sound>();
     protected Scoreframe scoreframe;
-    public String imagepath,soundpath;
+    public String imagepath, soundpath;
 
     public MainMenu() {
-        imagepath = "Project3_xxxxxxx/project3/src/pictures/";//"src/pictures/"; // "project3/Project3_xxxxxxx/project3/src/pictures/"
+        imagepath = "Project3_xxxxxxx/project3/src/pictures/";// "src/pictures/"; //
+                                                              // "project3/Project3_xxxxxxx/project3/src/pictures/"
         soundpath = "Project3_xxxxxxx/project3/src/sounds/";
 
         // set background music
@@ -207,45 +208,49 @@ public class MainMenu extends JFrame {
                         }
                     }
                     if (cframe == null)
-                        cframe = new Creditframe();
+                        cframe = new Creditframe(musicSound, effectSound, imagepath);
                     else
                         cframe.setVisible(true);
                 }
             });
         }
+
         JButton quitButton = new JButton("QUIT");
         {
             quitButton.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
             quitButton.setBackground(new Color(222, 0, 62));
             quitButton.setForeground(Color.white);
             quitButton.setSize(100, 200);
-            // customize the button with your own look
             quitButton.setUI(new StyledButtonUI());
             quitButton.setForeground(new Color(255, 255, 255));
-            // quitButton.setBounds(608, 400, 150, 50);
             quitButton.addActionListener(new ActionListener() {
-                @Override
+
                 public void actionPerformed(ActionEvent event) {
+                    JDialog d = new JDialog();
+                    {
+                        JButton b1 = new JButton("Yes");
+                        JButton b2 = new JButton("No");
+                        JLabel l1 = new JLabel("Are you sure to exit game ???? ");
+                        //JLabel l2 = new JLabel("Because this game is a fun game. It is also a game that allows\nyou to develop skills such as logic, \nproblem solving and have fun.\n If you quit this game, you'll probably regret it all day.");
+                        d.setTitle("Exit");
+                        d.setBounds(583, 459, 240, 100);
+                        d.setLayout(new FlowLayout());
+                        d.add(l1);
+                        //d.add(l2);
+                        d.add(b1);
+                        d.add(b2);
+
+                        // d.add(b2);
+                        b1.addActionListener(e -> System.exit(0));
+                        b2.addActionListener(e -> d.dispose());
+                        d.getContentPane();
+                        d.setVisible(true);
+                    }
                     for (Sound i : effectSound) {
                         if ("clickEF".equals(i.getName())) {
                             i.playOnce();
                         }
                     }
-                    JButton button = (JButton) event.getSource();
-                    JDialog d = new JDialog();
-                    d.setTitle("test");
-                    d.setBounds(583, 459, 300, 200);
-                    JPanel p = new JPanel();
-                    JLabel l1 = new JLabel("Are you sure to exit game");
-                    JButton b1 = new JButton("Yes");
-                    JButton b2 = new JButton("No");
-                    p.setLayout(new FlowLayout());
-                    p.add(l1);
-                    p.add(b1);
-                    p.add(b2);
-                    d.getContentPane().add(p);
-                    d.setVisible(true);
-                    System.exit(0);
                 }
             });
         }
