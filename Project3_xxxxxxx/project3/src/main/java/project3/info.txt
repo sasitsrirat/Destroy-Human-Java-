@@ -1,0 +1,3 @@
+kawin,stage num,5000,scoreboard true,resume true
+muzix, 2,200,true,false
+babe, 3,1000,true,true

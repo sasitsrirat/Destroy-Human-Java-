@@ -51,3 +51,10 @@ class Human_soldier extends Human{
         super(n,30,2,3,1,2, "sd1.png", "sd1.png","robot4.png", sf);
     }
 }
+
+class Human_super extends Human{
+
+    public Human_super(String n, Stageframe sf){
+        super(n,40,4,3,1,2, "superhuman.png", "superhuman.png","robot4.png", sf);
+    }
+}

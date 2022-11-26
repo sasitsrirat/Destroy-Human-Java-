@@ -40,48 +40,33 @@ public class Stageframe extends JFrame {
     private final int humanstate = 2;
     private final int skillstate = 3;
     private final int actiostate = 4;
+    private MainMenu main;
 
-    public Stageframe(String ipath, ArrayList<Sound> mSound, ArrayList<Sound> eSound, int stage) { // อาจจะรับ ArrayList
+    public Stageframe(String ipath, ArrayList<Sound> mSound, ArrayList<Sound> eSound, MainMenu m, int stage) { // อาจจะรับ
+                                                                                                               // ArrayList
         stagenum = stage;
         imagepath = ipath;
         musicSound = mSound;
         effectSound = eSound;
+        main = m;
         for (Sound i : musicSound) {
             if ("gereBG".equals(i.getName())) {
                 i.playLoop();
             }
         }
         contentpane = new JLabel();
-
-        while (stage <= 5) {
-            sw = new Stagewave(1, this);
-            allwave = sw.getWave();
-
-            MyImageIcon background = new MyImageIcon(imagepath + "8-Bit-Backgrounds2.jpg"); // project3\Project3_xxxxxxx\project3\src\pictures\8-Bit-Backgrounds.jpg
-            contentpane.setIcon(background.resize(frameWidth, frameHeight));
-            contentpane.setOpaque(true);
-            contentpane.setLayout(null);
-            this.addcomponent();
-            validate();
-            repaint();
-            /*
-             * battle(stage, 1);
-             * stage = 9999;
-             */
-            if (mainbattle(stage)) {
-
-            }
-            stage = 99999;
-        }
-
+        System.out.println("Hello");
+        sw = new Stagewave(stage, this);
+        allwave = sw.getWave();
+        MyImageIcon background = new MyImageIcon(imagepath + "8-Bit-Backgrounds2.jpg"); // project3\Project3_xxxxxxx\project3\src\pictures\8-Bit-Backgrounds.jpg
+        contentpane.setIcon(background.resize(frameWidth, frameHeight));
+        contentpane.setOpaque(true);
+        contentpane.setLayout(null);
+        this.addcomponent();
+        validate();
+        repaint();
+        battle(stage, 1);
     }
-
-    /*
-     * public void setcharacterstage(int stage) {
-     * hw = new Humanwave(stage, 1, this);
-     * rw = new Robotwave(stage, this);
-     * }
-     */
 
     public int getchoose() {
         return choose;
@@ -230,10 +215,13 @@ public class Stageframe extends JFrame {
 
     }
 
-    public boolean battle(int stage, int wave) { // stage battle
+    public void battle(int stage, int wave) { // stage battle
         sethumanArraylist(wave);
         addallhuman();
-        Thread bruh = new Thread(){
+        contentpane.repaint();
+        boolean result;
+
+        Thread bruh = new Thread() {
             public boolean a;
 
             public boolean geta() {
@@ -241,36 +229,19 @@ public class Stageframe extends JFrame {
             }
 
             public void run() {
-                for (int i = 0; i < 10 && humanArraylist.size() == 0 && robotArraylist.size() == 0; i++) {
-                    // dialog turn i press enter
-                    // CyclicBarrier finish = new CyclicBarrier(robotArraylist.size() +
-                    // humanArraylist.size());
+
+                for (int i = 0; i < 10 && humanArraylist.size() > 0 && robotArraylist.size() > 0; i++) {
 
                     JDialog dialog = new JDialog();
-                    dialog.setTitle("TURN " + (i + 1));
+                    dialog.setTitle("TURN " + (i + 1) + " STAGE" + stage + " WAVE" + wave);
                     dialog.setModal(false);
                     dialog.setBounds(400, 400, 300, 150);
                     dialog.setVisible(true);
                     dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-                    /*
-                     * try {
-                     * wait();
-                     * 
-                     * } catch (InterruptedException e1) {
-                     * e1.printStackTrace();
-                     * }
-                     * dialog.addWindowListener(new WindowAdapter() {
-                     * public void windowClosed(WindowEvent e) {
-                     * notify();
-                     * }
-                     * 
-                     * public void windowClosing(WindowEvent e) {
-                     * notify();
-                     * }
-                     * });
-                     */
+
                     threadArraylist = new ArrayList<Thread>();
                     for (Robot ro : robotArraylist) {
+
                         threadArraylist.add(ro.getspeedthread());
                         // ro.getspeedthread().start();
 
@@ -290,14 +261,7 @@ public class Stageframe extends JFrame {
                             e.printStackTrace();
                         }
                     }
-                    /*
-                     * try {
-                     * this.wait();
-                     * } catch (InterruptedException e) {
-                     * // TODO Auto-generated catch block
-                     * e.printStackTrace();
-                     * }
-                     */
+
                     for (Robot ro : robotArraylist) {
                         ro.setnewspeedthread();
                     }
@@ -306,74 +270,61 @@ public class Stageframe extends JFrame {
                     }
                 }
 
+                if (humanArraylist.isEmpty()) {
+                    for (Characterlabel h : humanLabelArraylist) {
+                        h.setVisible(false);
+                    }
+                    if (allwave > wave) {
+                        battle(stage, wave + 1);
+                    } else {
+                        if (stage >= 5) {
+                            System.out.println("F");
+                            main.setContentPane(main.getPane());
+                        } else {
+                            System.out.println("YOU WIN STAGE" + stage);
+                            Stageframe sf = new Stageframe(imagepath, musicSound, effectSound, main, stage + 1);
+                            main.setContentPane(sf.getContentpane());
+                            main.validate();
+                            main.repaint();
+                        }
+                    }
+                } else {
+                    System.out.println("YOU LOOSE STAGE" + stage);
+                    System.exit(0);
+                }
+
             }
         };
         bruh.start();
-        //bruh.geta();
-
-        if (humanArraylist.size() == 0) {
-                    System.out.println("You WIN");
-                    return true; // win
-                } else {
-                    System.out.println("You LOOSE");
-                    return false; // loose
-                }
-
-    }
-
-    public boolean mainbattle(int stage) {
-
-        if (battle(stage, 1)) {
-            if (allwave > 1) {
-                if (battle(stage, 2)) {
-                    if (allwave > 2) {
-                        if (battle(stage, 3)) {
-                            // You WIN
-                            return true;
-                        } else {
-                            // You are VERY DAMN NOOBBBBB
-                            return false;
-                        }
-                    } else {
-                        // You WIN
-                        return true;
-                    }
-                } else {
-                    // You are VERY NOOB
-                    return false;
-                }
-            } else {
-                // You WIN
-                return true;
-            }
-        } else {
-            // You are NOOB
-            return false;
-        }
     }
 
     public synchronized void setactiveLabel(Character c) {
-        activeLabel = c.getLabel();
-        showactive();
-        stat.setactiveCharacter(activeLabel.getOwner());
-        stat.ShowAction(activeLabel.getOwner());
+        if (robotArraylist.isEmpty() || humanArraylist.isEmpty()) {
 
-        try {
-            Thread.currentThread();
-            Thread.sleep(99999999);
-        } catch (InterruptedException e) {
+        } else {
+            activeLabel = c.getLabel();
+            showactive();
+            stat.setactiveCharacter(activeLabel.getOwner());
+            // System.out.println(activeLabel.getOwner().getname());
+            stat.ShowAction(activeLabel.getOwner());
+
+            try {
+                Thread.currentThread();
+                Thread.sleep(99999999);
+            } catch (InterruptedException e) {
+            }
+            settext();
+            checkdeath();
+
+            try {
+                Thread.currentThread();
+                Thread.sleep(2500);
+            } catch (InterruptedException e) {
+
+            }
+            hideactive();
+            stat.HideButton();
         }
-        settext();
-        checkdeath();
-
-        try {
-            Thread.currentThread();
-            Thread.sleep(2500);
-        } catch (InterruptedException e) {
-
-        }
-        hideactive();
-        stat.HideButton();
     }
 
     public void checkdeath() {

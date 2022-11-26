@@ -47,7 +47,9 @@ public class MainMenu extends JFrame {
     protected ArrayList<Sound> musicSound = new ArrayList<Sound>(), effectSound = new ArrayList<Sound>();
     protected Scoreframe scoreframe;
     protected Storyframe strframe;
+    protected boolean cutscene;
     public String imagepath,soundpath;
+    protected ArrayList<PlayerInfo> playerArraylist;
 
     public MainMenu() {
         imagepath = "project3/Project3_xxxxxxx/project3/src/pictures/";//"src/pictures/"; // "project3/Project3_xxxxxxx/project3/src/pictures/"
@@ -85,6 +87,7 @@ public class MainMenu extends JFrame {
         contentPane.setIcon(imageIcon);
         contentPane.setLayout(null);
         setContentPane(contentPane);
+        MainMenu main = this;
 
         JButton playButton = new JButton("PLAY");
         {
@@ -108,12 +111,12 @@ public class MainMenu extends JFrame {
                             i.stop();
                         }
                     }
-                    /*sframe = new Stageframe(imagepath, musicSound, effectSound, 1); // play for first time stage 1
+                    sframe = new Stageframe(imagepath, musicSound, effectSound, main, 1); // play for first time stage 1
                     setTitle("Stage");
-                    setContentPane(sframe.getContentpane());*/
-                    strframe = new Storyframe(1);
+                    setContentPane(sframe.getContentpane());
+                    /*strframe = new Storyframe(1);
                     setTitle("STORY");
-                    setContentPane(strframe.getContentPane());
+                    setContentPane(strframe.getContentPane());*/
                     validate();
                 }
             });
@@ -136,7 +139,7 @@ public class MainMenu extends JFrame {
                         }
                     }
                     if (oframe == null)
-                        oframe = new Optionframe(musicSound, effectSound, imagepath);
+                        oframe = new Optionframe(musicSound, effectSound, imagepath, main);
                     else
                         oframe.setVisible(true);
                 }
@@ -288,6 +291,10 @@ public class MainMenu extends JFrame {
 
     public JLabel getPane() {
         return contentPane;
+    }
+
+    public void setcutscene(boolean a) {
+        cutscene = a;
     }
 
     public static void main(String[] args) {
