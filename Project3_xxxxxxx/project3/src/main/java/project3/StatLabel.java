@@ -25,11 +25,13 @@ class StatLabel extends JLabel {
     protected JLabel Ldeftext = new JLabel();
     protected JLabel Lspdtext = new JLabel();
     protected JLabel Lnametext = new JLabel();
+    protected JLabel Leptext = new JLabel();
     protected JLabel Ratktext = new JLabel();
     protected JLabel Rhptext = new JLabel();
     protected JLabel Rdeftext = new JLabel();
     protected JLabel Rspdtext = new JLabel();
     protected JLabel Rnametext = new JLabel();
+    protected JLabel Reptext = new JLabel();
     protected JLabel humanstat = new JLabel();
     protected JLabel humanaction = new JLabel();
     protected JLabel targetstat = new JLabel();
@@ -54,12 +56,25 @@ class StatLabel extends JLabel {
 
     public synchronized void setactiveCharacter(Character ac) {
         activeCharacter = ac;
-        setLtext(activeCharacter.getatk(), activeCharacter.gethp(), activeCharacter.getmax_hp(),
+        if (activeCharacter instanceof Robot){
+            Robot a = (Robot)(activeCharacter);
+            setRoLtext(activeCharacter.getatk(), activeCharacter.gethp(), activeCharacter.getmax_hp(),
+                activeCharacter.getdf(), activeCharacter.getname(), a.getep(), a.getmax_ep());
+        }else {
+            setHuLtext(activeCharacter.getatk(), activeCharacter.gethp(), activeCharacter.getmax_hp(),
                 activeCharacter.getdf(), activeCharacter.getname());
+        }
     }
 
     public synchronized void settargetCharacter(Character tc) {
-        setRtext(tc.getatk(), tc.gethp(), tc.getmax_hp(), tc.getdf(), tc.getname());
+        if (tc instanceof Robot){
+            Robot a = (Robot)(tc);
+            setRoRtext(tc.getatk(), tc.gethp(), tc.getmax_hp(),
+                tc.getdf(), tc.getname(), a.getep(), a.getmax_ep());
+        }else {
+            setHuRtext(tc.getatk(), tc.gethp(), tc.getmax_hp(),
+                tc.getdf(), tc.getname());
+        }
     }
 
     public void setvisiblestatlabel(boolean n) {
@@ -67,22 +82,44 @@ class StatLabel extends JLabel {
         validate();
     }
 
-    public void setLtext(int atk, int hp, int max_hp, int def, String name) {
+    public void setHuLtext(int atk, int hp, int max_hp, int def, String name) {
         Latktext.setText("ATK : " + Integer.toString(atk));
         Lhptext.setText("HP  : " + Integer.toString(hp) + "/ " + Integer.toString(max_hp));
         Ldeftext.setText("DEF : " + Integer.toString(def));
         Lnametext.setText("name : " + name);
-
+        Leptext.setVisible(false);
         repaint();
         parentFrame.repaint();
     }
 
-    public void setRtext(int atk, int hp, int max_hp, int def, String name) {
+    public void setRoLtext(int atk, int hp, int max_hp, int def, String name, int ep, int max_ep) {
+        Latktext.setText("ATK : " + Integer.toString(atk));
+        Lhptext.setText("HP  : " + Integer.toString(hp) + "/ " + Integer.toString(max_hp));
+        Ldeftext.setText("DEF : " + Integer.toString(def));
+        Lnametext.setText("name : " + name);
+        Leptext.setVisible(true);
+        Leptext.setText("ep : " + Integer.toString(ep) + "/ " + Integer.toString(max_ep));
+        repaint();
+        parentFrame.repaint();
+    }
+
+    public void setHuRtext(int atk, int hp, int max_hp, int def, String name) {
         Ratktext.setText("ATK : " + Integer.toString(atk));
         Rhptext.setText("HP  : " + Integer.toString(hp) + "/ " + Integer.toString(max_hp));
         Rdeftext.setText("DEF : " + Integer.toString(def));
         Rnametext.setText("name : " + name);
+        Reptext.setVisible(false);
+        repaint();
+        parentFrame.repaint();
+    }
 
+    public void setRoRtext(int atk, int hp, int max_hp, int def, String name, int ep, int max_ep) {
+        Ratktext.setText("ATK : " + Integer.toString(atk));
+        Rhptext.setText("HP  : " + Integer.toString(hp) + "/ " + Integer.toString(max_hp));
+        Rdeftext.setText("DEF : " + Integer.toString(def));
+        Rnametext.setText("name : " + name);
+        Reptext.setVisible(true);
+        Reptext.setText("ep : " + Integer.toString(ep) + "/ " + Integer.toString(max_ep));
         repaint();
         parentFrame.repaint();
     }
@@ -116,6 +153,11 @@ class StatLabel extends JLabel {
         Lnametext.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
         Lnametext.setBounds(140, 130, 200, 30);
 
+        Leptext.setBackground(null);
+        Leptext.setForeground(Color.white);
+        Leptext.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
+        Leptext.setBounds(140, 160, 200, 30);
+
         Ratktext.setBackground(null);
         Ratktext.setForeground(Color.white);
         Ratktext.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
@@ -136,6 +178,11 @@ class StatLabel extends JLabel {
         Rnametext.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
         Rnametext.setBounds(parentFrame.getWidth() - 340, 130, 200, 30);
 
+        Reptext.setBackground(null);
+        Reptext.setForeground(Color.white);
+        Reptext.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
+        Reptext.setBounds(parentFrame.getWidth() - 340, 160, 200, 30);
+
         attackButton = new JButton(" Attack");
         {
             attackButton.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
@@ -150,7 +197,7 @@ class StatLabel extends JLabel {
             attackButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
-                    clickSound.playOnce(); 
+                    clickSound.playOnce();
                     parentFrame.robot_attack();
                     // activeCharacter.getspeedthread().notify(); // notify thread to run
                 }
@@ -160,8 +207,6 @@ class StatLabel extends JLabel {
         skillButton = new JButton(" Skill ");
         {
             skillButton.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
-            // skillButton.setIcon(new MyImageIcon(imagepath +
-            // "skill_critical.png").resize(40, 40));
             skillButton.setBackground(new Color(222, 0, 62));
             skillButton.setForeground(Color.white);
             skillButton.setSize(100, 200);
@@ -204,7 +249,7 @@ class StatLabel extends JLabel {
                 @Override
                 public void actionPerformed(ActionEvent event) {
                     clickSound.playOnce();
-
+                    parentFrame.action_rest();
                 }
             });
         }
@@ -213,11 +258,12 @@ class StatLabel extends JLabel {
         this.add(Lhptext);
         this.add(Ldeftext);
         this.add(Lnametext);
+        this.add(Leptext);
         this.add(Ratktext);
         this.add(Rhptext);
         this.add(Rdeftext);
         this.add(Rnametext);
-
+        this.add(Reptext);
         validate();
         repaint();
     }
@@ -302,7 +348,5 @@ class StatLabel extends JLabel {
         validate();
         repaint();
     }
-
-    
 
 }

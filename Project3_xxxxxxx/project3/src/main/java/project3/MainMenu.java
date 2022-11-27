@@ -8,6 +8,7 @@ import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.lang.*;
 
 //Class for design Button like CSS
 class StyledButtonUI extends BasicButtonUI {
@@ -47,17 +48,18 @@ public class MainMenu extends JFrame {
     protected ArrayList<Sound> musicSound = new ArrayList<Sound>(), effectSound = new ArrayList<Sound>();
     protected Scoreframe scoreframe;
     protected Storyframe strframe;
-    protected boolean cutscene;
+    protected boolean cutscene = true, save = true, showscore = true;
     public String imagepath,soundpath;
     protected ArrayList<PlayerInfo> playerArraylist;
 
     public MainMenu() {
-        imagepath = "Project3_xxxxxxx/project3/src/pictures/";//"src/pictures/"; // "project3/Project3_xxxxxxx/project3/src/pictures/"
-        soundpath = "Project3_xxxxxxx/project3/src/sounds/";
+        imagepath = "project3/Project3_xxxxxxx/project3/src/pictures/";//"src/pictures/"; // "project3/Project3_xxxxxxx/project3/src/pictures/"
+        soundpath = "project3/Project3_xxxxxxx/project3/src/sounds/";
 
         // set background music
         musicSound.add(new Sound(soundpath + "BossTime.wav", "mainmenuBG"));
         musicSound.add(new Sound(soundpath + "namlie.wav", "gereBG"));
+        musicSound.add(new Sound(soundpath + "Star_Wars.wav", "storyBG"));
         for (Sound i : musicSound) {
             if ("mainmenuBG".equals(i.getName())) {
                 i.playLoop();
@@ -69,6 +71,8 @@ public class MainMenu extends JFrame {
         effectSound.add(new Sound(soundpath + "heal_robot.wav", "robotskill2EF"));
         effectSound.add(new Sound(soundpath + "bombef.wav", "robotskill3EF"));
         effectSound.add(new Sound(soundpath + "punch.wav", "humannormalattackEF"));
+        effectSound.add(new Sound(soundpath + "victoryEF.wav", "victoryEF"));
+        effectSound.add(new Sound(soundpath + "defeatEF.wav", "defeatEF"));
         // effectSound.add(new Sound(soundpath + "humangunfire.wav", "humanskill1EF"));
 
         setType(Type.POPUP);
@@ -111,17 +115,16 @@ public class MainMenu extends JFrame {
                             i.stop();
                         }
                     }
-                    sframe = new Stageframe(imagepath, musicSound, effectSound, main, 1); // play for first time stage 1
+                    /*sframe = new Stageframe(imagepath, musicSound, effectSound, main, 1); // play for first time stage 1
                     setTitle("Stage");
-<<<<<<< HEAD
-                    setContentPane(sframe.getContentpane());
-                    /*strframe = new Storyframe(1);
-=======
+
                     setContentPane(sframe.getContentpane());*/
-                    Storyframe strframe = new Storyframe(1);
->>>>>>> 4d7b9a8831b15c5cdac082563d6e93490e53a1a8
+                    /*strframe = new Storyframe(1);
+                    setContentPane(sframe.getContentpane());*/
+                    Storyframe strframe = new Storyframe(1, soundpath, imagepath, musicSound, effectSound, main);
+
                     setTitle("STORY");
-                    setContentPane(strframe.getContentPane());*/
+                    setContentPane(strframe.getContentPane());
                     validate();
                 }
             });
@@ -305,6 +308,14 @@ public class MainMenu extends JFrame {
         cutscene = a;
     }
 
+    public void setsave(boolean a) {
+        save = a;
+    }
+
+    public void setscore(boolean a) {
+        showscore = a;
+    }
+
     public static void main(String[] args) {
         // displayJFrame();
         try {
@@ -333,3 +344,41 @@ class MyImageIcon extends ImageIcon {
         return new MyImageIcon(newimg);
     }
 };
+
+class Mytextlabel extends JLabel implements KeyListener{
+    String name;
+
+    public Mytextlabel(){
+        setVisible(true);
+        setHorizontalAlignment(CENTER);
+        setVerticalAlignment(CENTER);
+        this.addcomponent();
+    }
+    public void addcomponent(){
+        JTextField tf = new JTextField();
+        tf.setFont(new Font("Comic Sans MS", Font.BOLD+Font.ITALIC, 20));
+
+
+        this.add(tf);
+    }
+    public void keyTyped( KeyEvent e )
+    {
+	System.out.printf("t >>  %c  (%s) \n", e.getKeyChar(), e.getKeyText(e.getKeyCode()) );
+	
+    }
+
+    @Override
+    public void keyPressed( KeyEvent e )
+    { 
+	
+	
+	if ( e.getKeyCode() == KeyEvent.VK_DELETE )
+	{
+            
+	}
+	
+    }
+
+    public void keyReleased( KeyEvent e )	{ }
+    
+}

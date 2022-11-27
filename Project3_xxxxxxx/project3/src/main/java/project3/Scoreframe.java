@@ -9,7 +9,7 @@ import java.util.Scanner;
 import java.io.FileNotFoundException;
 
 public class Scoreframe extends JFrame {
-    private String pathInput = "Project3_xxxxxxx/project3/src/score.txt";
+    private String pathInput = "Project3_xxxxxxx/project3/src/main/java/project3/info.txt";
     protected JPanel ScorePanel;
     protected JLabel contentPanel;
     protected int frameWidth = 1366;
@@ -38,9 +38,11 @@ public class Scoreframe extends JFrame {
         contentPanel.setIcon(imageIcon);
         setContentPane(contentPanel);
 
-        File file = new File(pathInput);
-        FileReader fr = new FileReader(file);
-        String Line;
+        JLabel Bar = new JLabel("No.                 Name                Level                   Point");
+        Bar.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        Bar.setForeground(new Color(255, 255, 255));
+        Bar.setBounds(450, 10, 600, 150);
+        contentPanel.add(Bar);
 
         JButton backButton = new JButton("Back");
         {
@@ -61,28 +63,27 @@ public class Scoreframe extends JFrame {
         {
             panel_2.setBounds(230, 100, 900, 600); // Size of JPanel
             panel_2.setBackground(new Color(100, 100, 10, 150)); // RGBA 255,255,255,255 for check limit of size
-            panel_2.setLayout(new GridLayout(10, 3, 20, 10));
-
-            JLabel Bar = new JLabel("No.\t\t\t Name\t Level");
-            Bar.setFont(new Font("Tahoma", Font.PLAIN, 20));
-            Bar.setForeground(new Color(255, 255, 255));
-
-            panel_2.add(Bar);
+            panel_2.setLayout(new FlowLayout(3,3,3));
             contentPanel.add(panel_2);
 
-            try (BufferedReader br = new BufferedReader(fr)) 
+            File file = new File(pathInput);
+            try (Scanner filescan = new Scanner(file))
             {
-                
-                while ((Line = br.readLine()) != null) {
-                    
+                while (filescan.hasNext()) {
+                    String Line = filescan.nextLine();
+                    String[] buf = Line.split(",");
+                    String name = buf[0].trim();
+                    int stage = Integer.parseInt(buf[1].trim().toString());
+                    int score = Integer.parseInt(buf[2].trim().toString());
+                    Line = " " + name+ " "+ "   " + stage +"   " + score;
                     JLabel lblNewLabel_1 = new JLabel(Line);
                     lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 30));
-                    lblNewLabel_1.setForeground(new Color(255, 255, 255));
-                    //lblNewLabel_1.setLayout(new GridLayout(3, 3, 1, 1));
-                    
+                    lblNewLabel_1.setForeground(new Color(255, 255, 255));   
+                    //lblNewLabel_1.setBounds(400, 300, 100, 100);
                     panel_2.add(lblNewLabel_1);
-                    revalidate();
-                    System.out.println(Line);
+                    validate();
+                    repaint();
+                    System.out.printf("%s \t%d \t%d \n",name,stage,score);
                 }
             } catch (IOException e) {
                 System.out.print(e);
@@ -106,6 +107,7 @@ public class Scoreframe extends JFrame {
 
             panel.add(detail);
             revalidate();
+            repaint();
         }
  
         //contentPanel.setVisible(true);
@@ -122,76 +124,3 @@ public class Scoreframe extends JFrame {
 
     }
 }
-/*
-package project3;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.*;
-import java.util.stream.Stream;
-import java.lang.*;
-
-class mainScore {
-
-    public static void main (String[] args)
-    {
-        ArrayList<ScoreSystem> ScoreList = new ArrayList<>();
-        Stream<ScoreSystem> mystream;
-    
-        final String File = "Project3_xxxxxxx/project3/src/score.txt";
-        
-        while(true)
-        {
-            try{
-                Scanner scanner  = new Scanner(new File(File));
-                while(scanner.hasNext())
-                {
-                    String line = scanner.nextLine();
-                    String buf[] = line.split(" ");
-                    ScoreSystem file = new ScoreSystem(buf[0].trim(),Integer.parseInt(buf[1].trim()));
-                    ScoreList.add(file);
-                }
-            }catch(FileNotFoundException e)
-            {
-                e.printStackTrace();
-                continue;
-            }
-        }
-        System.out.printf(File, args));
-        mystream = ScoreList.stream();
-        mystream.filter(level -> level.getLevel() > 0).sorted(Comparator.comparing(ScoreSystem::getLevel).reversed()).forEach(name->System.out.printf("%s\tLevel: %d\n",name.getName(),name.getLevel()));
-        
-    }
-}
-class ScoreSystem implements Comparable<ScoreSystem>
-{
-    private String name;
-    private int level;
-
-    public ScoreSystem(String n,int l)
-    {
-        name = n;
-        level = l;
-    }
-    public void setName(String n) {
-        name = n;
-    }
-    public void setLevel(int l) {
-        level = l;
-    }
-    public String getName() {
-        return name;
-    }
-    public int getLevel() {
-        return level;
-    }
-
-    @Override
-    public int compareTo(ScoreSystem other) {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-    
-}
-
-*/

@@ -218,26 +218,23 @@ public class Stageframe extends JFrame {
     public void battle(int stage, int wave) { // stage battle
         sethumanArraylist(wave);
         addallhuman();
+        validate();
         contentpane.repaint();
-        boolean result;
 
         Thread bruh = new Thread() {
-            public boolean a;
-
-            public boolean geta() {
-                return a;
-            }
 
             public void run() {
 
-                for (int i = 0; i < 10 && humanArraylist.size() > 0 && robotArraylist.size() > 0; i++) {
+                for (int turn = 0; turn < 10 && humanArraylist.size() > 0 && robotArraylist.size() > 0; turn++) {
 
-                    JDialog dialog = new JDialog();
-                    dialog.setTitle("TURN " + (i + 1) + " STAGE" + stage + " WAVE" + wave);
-                    dialog.setModal(false);
-                    dialog.setBounds(400, 400, 300, 150);
-                    dialog.setVisible(true);
-                    dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+                    JOptionPane.showMessageDialog(null, " WAVE" + wave + " TURN " + (turn + 1), " STAGE" + stage,
+                            JOptionPane.PLAIN_MESSAGE);
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    }
 
                     threadArraylist = new ArrayList<Thread>();
                     for (Robot ro : robotArraylist) {
@@ -277,7 +274,15 @@ public class Stageframe extends JFrame {
                     if (allwave > wave) {
                         battle(stage, wave + 1);
                     } else {
+                        showvictory();
+                        try {
+                                Thread.sleep(3000);
+                            } catch (InterruptedException e1) {
+                                // TODO Auto-generated catch block
+                                e1.printStackTrace();
+                            }
                         if (stage >= 5) {
+                            
                             System.out.println("F");
                             main.setContentPane(main.getPane());
                         } else {
@@ -289,8 +294,15 @@ public class Stageframe extends JFrame {
                         }
                     }
                 } else {
+                    showdefeat();
+                    try {
+                        Thread.sleep(3000);
+                    } catch (InterruptedException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    }
                     System.out.println("YOU LOOSE STAGE" + stage);
-                    System.exit(0);
+                    main.setContentPane(main.getPane());
                 }
 
             }
@@ -369,6 +381,8 @@ public class Stageframe extends JFrame {
                     targetLabel.takedmg_animation("hit.gif", i);
                 }
             }
+            Robot r = (Robot)activeLabel.getOwner();
+            r.gainep(1);
             stat.settargetCharacter(targetLabel.getOwner());
             choose = 0;
             targetLabel = null;
@@ -495,6 +509,16 @@ public class Stageframe extends JFrame {
         activeLabel.getOwner().getspeedthread().interrupt();
     }
 
+    public void action_rest() {
+        Robot r = (Robot)activeLabel.getOwner();
+        r.gainep(2);
+        activeLabel.rest_animation();
+        this.currentstate = 0;
+        contentpane.repaint();
+        validate();
+        activeLabel.getOwner().getspeedthread().interrupt();
+    }
+
     public void action_enemy(Human h) { // Arraylist human,character
         int size = robotArraylist.size();
         if (size == 0) {
@@ -503,5 +527,75 @@ public class Stageframe extends JFrame {
             int a = rand.nextInt(size);
             h.attack(robotArraylist.get(a));
         }
+    }
+
+    public void showvictory() {
+        for (Sound i : effectSound) {
+            if ("victoryEF".equals(i.getName())) {
+                i.playOnce();
+            }
+        }
+        JLabel effectLabel = new JLabel();
+        ImageIcon imageIcon = new ImageIcon(imagepath + "victory.gif");
+        imageIcon.setImage(imageIcon.getImage().getScaledInstance(600, 600, Image.SCALE_DEFAULT));
+
+        effectLabel.setIcon(imageIcon);
+        effectLabel.setBounds(383, 83, 600, 600);
+        effectLabel.setVisible(true);
+        effectLabel.setHorizontalAlignment(JLabel.CENTER);
+        effectLabel.setLayout(null);
+        contentpane.add(effectLabel);
+        validate();
+        contentpane.repaint();
+        Thread bruh = new Thread() {
+            public void run() {
+                try {
+                    Thread.currentThread();
+                    Thread.sleep(3000);
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
+                effectLabel.setVisible(false);
+                contentpane.remove(effectLabel);
+                revalidate();
+                contentpane.repaint();
+            }
+        };
+        bruh.start();
+    }
+
+    public void showdefeat() {
+        for (Sound i : effectSound) {
+            if ("defeatEF".equals(i.getName())) {
+                i.playOnce();
+            }
+        }
+        JLabel effectLabel = new JLabel();
+        ImageIcon imageIcon = new ImageIcon(imagepath + "defeat.gif");
+        imageIcon.setImage(imageIcon.getImage().getScaledInstance(400, 400, Image.SCALE_DEFAULT));
+
+        effectLabel.setIcon(imageIcon);
+        effectLabel.setBounds(383, 83, 400, 400);
+        effectLabel.setVisible(true);
+        effectLabel.setHorizontalAlignment(JLabel.CENTER);
+        effectLabel.setLayout(null);
+        contentpane.add(effectLabel);
+        validate();
+        contentpane.repaint();
+        Thread bruh = new Thread() {
+            public void run() {
+                try {
+                    Thread.currentThread();
+                    Thread.sleep(3000);
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
+                effectLabel.setVisible(false);
+                contentpane.remove(effectLabel);
+                revalidate();
+                contentpane.repaint();
+            }
+        };
+        bruh.start();
     }
 }

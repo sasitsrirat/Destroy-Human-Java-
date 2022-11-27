@@ -6,7 +6,7 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.*;
 
-public class Filemanage extends Thread {
+public class Filemanage {
     private PrintWriter output;
 
     public void filescan(ArrayList<PlayerInfo> playerArraylist,String path,String filename) {
