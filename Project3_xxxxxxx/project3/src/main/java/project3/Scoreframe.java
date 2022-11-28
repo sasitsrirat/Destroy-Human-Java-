@@ -72,10 +72,11 @@ public class Scoreframe extends JFrame {
                 while (filescan.hasNext()) {
                     String Line = filescan.nextLine();
                     String[] buf = Line.split(",");
-                    String name = buf[0].trim();
-                    int stage = Integer.parseInt(buf[1].trim().toString());
-                    int score = Integer.parseInt(buf[2].trim().toString());
-                    Line = " " + name+ " "+ "   " + stage +"   " + score;
+                    int number = Integer.parseInt(buf[0].trim().toString());
+                    String name = buf[1].trim();
+                    int stage = Integer.parseInt(buf[2].trim().toString());
+                    int score = Integer.parseInt(buf[3].trim().toString());
+                    Line = " " + number + " " + name+ " "+ "   " + stage +"   " + score;
                     JLabel lblNewLabel_1 = new JLabel(Line);
                     lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 30));
                     lblNewLabel_1.setForeground(new Color(255, 255, 255));   
