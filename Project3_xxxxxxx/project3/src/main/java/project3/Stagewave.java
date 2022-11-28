@@ -255,14 +255,14 @@ public class Stagewave {
     }
 
     public void robotstage3() {
-       // ro1 = new Robot1(frame);
-        //ro2 = new Robot2(frame);
+        // ro1 = new Robot1(frame);
+        // ro2 = new Robot2(frame);
         ro3 = new Robot3(frame);
-        //ro.add(ro1);
-        //ro.add(ro2);
+        // ro.add(ro1);
+        // ro.add(ro2);
         ro.add(ro3);
-        //ro1.setposition(3);
-       // ro2.setposition(2);
+        // ro1.setposition(3);
+        // ro2.setposition(2);
         ro3.setposition(1);
     }
 
@@ -280,13 +280,13 @@ public class Stagewave {
 
     public void robotstage5() {
         ro1 = new Robot1(frame);
-        //ro2 = new Robot2(frame);
+        // ro2 = new Robot2(frame);
         ro3 = new Robot3(frame);
         ro.add(ro1);
-       // ro.add(ro2);
+        // ro.add(ro2);
         ro.add(ro3);
         ro1.setposition(3);
-       // ro2.setposition(2);
+        // ro2.setposition(2);
         ro3.setposition(1);
     }
 
@@ -311,5 +311,30 @@ public class Stagewave {
                 break;
         }
         return ro;
+    }
+
+    public String getpath() {
+        String p = "8-Bit-Backgrounds2.jpg";
+        switch (stage) {
+            case 1:
+                p = "stage1.jpg";
+                break;
+            case 2:
+                p = "8-Bit-Backgrounds2.jpg";
+                break;
+            case 3:
+                p = "stage3.jpg";
+                break;
+            case 4:
+                p = "stage4.jpg";
+                break;
+            case 5:
+                p = "stage5.jpg";
+                break;
+            default:
+
+                break;
+        }
+        return p;
     }
 }

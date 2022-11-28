@@ -6,9 +6,10 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.*;
 
-public class Storyframe extends JFrame {
-    private int frameHeight = 768;
-    private int frameWidth = 1366;
+public class Storyframe extends JFrame{
+    private int frameHeight;
+    private int frameWidth;
+    private int stage;
     private Font storyFont = new Font("Times New Roman", Font.PLAIN, 52);
     private JLabel story1, story2, story3, story4, story5;
     private JLabel contentpane;
@@ -23,40 +24,62 @@ public class Storyframe extends JFrame {
     private String imagepath;
     protected ArrayList<Sound> musicSound, effectSound;
 
-    public Storyframe(int stagenum, String ipath, ArrayList<Sound> mSound, ArrayList<Sound> eSound,
-            MainMenu m) {
+    public Storyframe(int n, String ipath, ArrayList<Sound> mSound, ArrayList<Sound> eSound, MainMenu m, int fw, int fh){
         mainMenu = m;
         imagepath = ipath;
         musicSound = mSound;
         effectSound = eSound;
+        frameWidth = fw;
+        frameHeight = fh;
+        stage = n;
         contentpane = new JLabel();
-        // MyImageIcon background = new MyImageIcon(imagepath + "space-background.png");
+        MyImageIcon background = new MyImageIcon(imagepath + "space-background.jpg").resize(frameWidth, frameHeight);
         contentpane.setBackground(Color.black);
-        // contentpane.setIcon(background.resize(frameWidth, frameHeight));
+        contentpane.setIcon(background);
         contentpane.setOpaque(true);
         contentpane.setLayout(null);
         setContentPane(contentpane);
-        for (Sound i : musicSound) {
-            if ("storyBG".equals(i.getName())) {
-                i.playLoop();
-            }
-        }
         setNextButtonPanel();
 
-        switch (stagenum) {
+        switch (stage) {
             case 1:
+                for (Sound i : musicSound) {
+                    if ("story1BG".equals(i.getName())) {
+                        i.playLoop();
+                    }
+                }
                 story1();
                 break;
             case 2:
+                for (Sound i : musicSound) {
+                    if ("story2BG".equals(i.getName())) {
+                        i.playLoop();
+                    }
+                }
                 story2();
                 break;
             case 3:
+                for (Sound i : musicSound) {
+                    if ("story3BG".equals(i.getName())) {
+                        i.playLoop();
+                    }
+                }
                 story3();
                 break;
             case 4:
+                for (Sound i : musicSound) {
+                    if ("story4BG".equals(i.getName())) {
+                        i.playLoop();
+                    }
+                }
                 story4();
                 break;
             case 5:
+                for (Sound i : musicSound) {
+                    if ("story5BG".equals(i.getName())) {
+                        i.playLoop();
+                    }
+                }
                 story5();
                 break;
             default:
@@ -69,14 +92,12 @@ public class Storyframe extends JFrame {
 
     public int setNextButtonPanel() {
         nextframeHandler nfHandler = new nextframeHandler();
-  
         nextButtonPanel = new JPanel();
         nextButtonPanel.setBounds(1100, 600, 150, 100);
         nextButtonPanel.setOpaque(false);
         nextButton = new JButton("NEXT >>");
-        nextButton.setBackground(Color.yellow);
-        nextButton.setForeground(Color.black);
-        nextButton.setUI(new StyledButtonUI());
+        nextButton.setBackground(Color.black);
+        nextButton.setForeground(Color.white);
         nextButtonPanel.add(nextButton);
         contentpane.add(nextButtonPanel);
         nextButton.addActionListener(nfHandler);
@@ -87,15 +108,13 @@ public class Storyframe extends JFrame {
         return 0;
     }
 
-    public class nextframeHandler implements ActionListener {
+     public class nextframeHandler implements ActionListener {
         public void actionPerformed(ActionEvent event) {
 
             for (Sound i : musicSound) {
-                if ("storyBG".equals(i.getName())) {
                     i.stop();
-                }
             }
-            sframe = new Stageframe(imagepath, musicSound, effectSound, mainMenu, 1);
+            sframe = new Stageframe(imagepath, musicSound, effectSound, mainMenu, stage);
             setTitle("Stage");
             mainMenu.setContentPane(sframe.getContentpane());
             validate();
@@ -139,7 +158,6 @@ public class Storyframe extends JFrame {
             }
         });
         animation.start();
-        
 
         validate();
         repaint();
@@ -297,9 +315,5 @@ public class Storyframe extends JFrame {
 
     public JLabel getContentpane() {
         return contentpane;
-    }
-
-    public static void main(String[] args) { // for test ting frame
-        // new Storyframe(1);
     }
 }

@@ -20,17 +20,25 @@ public class Filemanage {
                     String [] buf = line.split(",");
                     String name = buf[0].trim();
                     int stage = Integer.parseInt(buf[1].trim());
-                    int score = Integer.parseInt(buf[2].trim());
+                    int score1 = Integer.parseInt(buf[2].trim());
+                    int score2 = Integer.parseInt(buf[3].trim());
+                    int score3 = Integer.parseInt(buf[4].trim());
+                    int score4 = Integer.parseInt(buf[5].trim());
+                    int score5 = Integer.parseInt(buf[6].trim());
                     boolean displayscore = false;
-                    boolean resume = false;
-                    if(buf[3].trim().equalsIgnoreCase("true")){
+                    boolean Autosave = false;
+                    boolean showstory = false;
+                    if(buf[7].trim().equalsIgnoreCase("true")){
                         displayscore = true;    
                     }
-                    if(buf[4].trim().equalsIgnoreCase("true")){
-                        resume = true;    
+                    if(buf[8].trim().equalsIgnoreCase("true")){
+                        Autosave = true;    
+                    }
+                    if(buf[9].trim().equalsIgnoreCase("true")){
+                        showstory = true;    
                     }
 
-                    playerArraylist.add(new PlayerInfo(name,stage,score,displayscore,resume));
+                    playerArraylist.add(new PlayerInfo(name,stage,score1,score2,score3,score4,score5,displayscore,Autosave,showstory));
                 }
             } catch (FileNotFoundException e) {
                 System.out.println(e);
@@ -49,14 +57,17 @@ public class Filemanage {
             output = new PrintWriter(fw);
             
             for(PlayerInfo p: playerArraylist){
-                boolean display=false,resume=false;
-                if(p.getresume()){
-                    resume = true;
+                boolean displayscore=false,Autosave=false,showstory = false;;
+                if(p.getAutosave()){
+                    Autosave = true;
                 }
                 if(p.getdisplay()){
-                    display = true;
+                    displayscore = true;
                 }
-                output.printf("%s,%d,%d,%s,%s\n",p.getname(),p.getstage(),p.getscore(),display,resume);
+                if(p.getshowstory()){
+                    showstory = true;
+                }
+                output.printf("%s,%d,%d,%d,%d,%d,%d,%s,%s,%s\n",p.getname(),p.getstage(),p.getscore(1),p.getscore(2),p.getscore(3),p.getscore(4),p.getscore(5),displayscore,Autosave,showstory);
             }
         output.close();
         }catch(Exception e){

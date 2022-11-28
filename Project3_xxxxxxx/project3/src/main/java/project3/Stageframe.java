@@ -15,19 +15,15 @@ public class Stageframe extends JFrame {
     private int frameWidth = 1366;
     private int stagenum, allwave;
     private int choose = 0;
-    private String imagepath; // project3\Project3_xxxxxxx\project3\src\pictures
-    // private Character activeCharacter;
+    private String imagepath;
     private Stagewave sw;
-    // private Humanwave hw; // hw = new humanwave(1,1); // hwArraylist =
-    // hw.gethu();
-    // private Robotwave rw; // rw = new Robotwave(1); // robotArraylist =
-    // rw.gethu();
     private ArrayList<Robot> robotArraylist;
     private ArrayList<Human> humanArraylist;
     private ArrayList<Characterlabel> robotLabelArraylist, humanLabelArraylist;
     private Random rand = new Random();
     private Characterlabel activeLabel, targetLabel;
     private StatLabel stat;
+    private Storyframe storyframe;
     private JLabel contentpane;
     private JLabel activepoint = new JLabel();
     private JLabel warn = new JLabel();
@@ -36,30 +32,23 @@ public class Stageframe extends JFrame {
     private int currentstate = 0;
     protected ArrayList<Sound> musicSound = new ArrayList<Sound>(), effectSound = new ArrayList<Sound>();
     private ArrayList<Thread> threadArraylist;
-    private final int robotstate = 1;
-    private final int humanstate = 2;
-    private final int skillstate = 3;
-    private final int actiostate = 4;
     private MainMenu main;
 
-    public Stageframe(String ipath, ArrayList<Sound> mSound, ArrayList<Sound> eSound, MainMenu m, int stage) { // อาจจะรับ
-                                                                                                               // ArrayList
+    public Stageframe(String ipath, ArrayList<Sound> mSound, ArrayList<Sound> eSound, MainMenu m, int stage) {
         stagenum = stage;
         imagepath = ipath;
         musicSound = mSound;
         effectSound = eSound;
         main = m;
         for (Sound i : musicSound) {
-            if ("gereBG".equals(i.getName())) {
+            if ("stageBG".equals(i.getName())) {
                 i.playLoop();
             }
         }
         contentpane = new JLabel();
-        
-        System.out.println("Hello");
         sw = new Stagewave(stage, this);
         allwave = sw.getWave();
-        MyImageIcon background = new MyImageIcon(imagepath + "8-Bit-Backgrounds2.jpg"); // project3\Project3_xxxxxxx\project3\src\pictures\8-Bit-Backgrounds.jpg
+        MyImageIcon background = new MyImageIcon(imagepath + sw.getpath());
         contentpane.setIcon(background.resize(frameWidth, frameHeight));
 
         activepoint.setIcon(background);
@@ -70,7 +59,7 @@ public class Stageframe extends JFrame {
         
         ImageIcon cloud = new ImageIcon(imagepath + "HSxPUMA_Clouds.gif");
         {
-            cloud.setImage(cloud.getImage().getScaledInstance(frameWidth, 200, Image.SCALE_REPLICATE)); // size
+            cloud.setImage(cloud.getImage().getScaledInstance(frameWidth, 200, Image.SCALE_REPLICATE)); //size
             JLabel CloudPanel = new JLabel(cloud);
             CloudPanel.setBounds(0, 0, frameWidth, 200);
             CloudPanel.setVisible(true);
@@ -301,8 +290,14 @@ public class Stageframe extends JFrame {
                             main.setContentPane(main.getPane());
                         } else {
                             System.out.println("YOU WIN STAGE" + stage);
-                            Stageframe sf = new Stageframe(imagepath, musicSound, effectSound, main, stage + 1);
-                            main.setContentPane(sf.getContentpane());
+                            //Stageframe sf = new Stageframe(imagepath, musicSound, effectSound, main, stage + 1);
+                            storyframe = new Storyframe(stage, imagepath, musicSound, effectSound, main, frameWidth,frameHeight);
+                            for (Sound i : musicSound) {
+                                if ("gereBG".equals(i.getName())) {
+                                    i.stop();
+                                }
+                            }
+                            main.setContentPane(storyframe.getContentpane());
                             main.validate();
                             main.repaint();
                         }
@@ -448,7 +443,6 @@ public class Stageframe extends JFrame {
             contentpane.repaint();
             validate();
         } else if (targetLabel.getOwner() instanceof Human) {
-            // this.currentstate = 4;
             stat.HideButton();
             activeLabel.getOwner().skill1(targetLabel.getOwner());
             activeLabel.attack_animation();
@@ -492,7 +486,7 @@ public class Stageframe extends JFrame {
         } else if (targetLabel.getOwner() instanceof Robot) {
             stat.HideButton();
             activeLabel.getOwner().skill2(targetLabel.getOwner());
-            activeLabel.attack_animation();
+            activeLabel.robotheal_animation();
             for (Sound i : effectSound) {
                 if ("robotskill2EF".equals(i.getName())) {
                     targetLabel.takedmg_animation("healing.gif", i);
@@ -522,6 +516,7 @@ public class Stageframe extends JFrame {
             stat.settargetCharacter(hu);
         }
         this.currentstate = 0;
+        contentpane.remove(warn);
         contentpane.repaint();
         validate();
         activeLabel.getOwner().getspeedthread().interrupt();
@@ -531,8 +526,13 @@ public class Stageframe extends JFrame {
         stat.HideButton();
         Robot r = (Robot)activeLabel.getOwner();
         r.gainep(2);
-        activeLabel.rest_animation();
+        for (Sound i : effectSound) {
+                if ("restEF".equals(i.getName())) {
+                    activeLabel.rest_animation( i);
+                }
+            }
         this.currentstate = 0;
+        contentpane.remove(warn);
         contentpane.repaint();
         validate();
         activeLabel.getOwner().getspeedthread().interrupt();
@@ -549,16 +549,6 @@ public class Stageframe extends JFrame {
             contentpane.repaint();
             validate();
     }
-
-    /*public void action_enemy(Human h) { // Arraylist human,character
-        int size = robotArraylist.size();
-        if (size == 0) {
-            System.out.printf("Human action\n");
-
-            int a = rand.nextInt(size);
-            h.attack(robotArraylist.get(a));
-        }
-    }*/
 
     public void showvictory() {
         for (Sound i : effectSound) {
