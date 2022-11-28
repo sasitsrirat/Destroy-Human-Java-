@@ -35,6 +35,9 @@ class StatLabel extends JLabel {
     protected JLabel humanstat = new JLabel();
     protected JLabel humanaction = new JLabel();
     protected JLabel targetstat = new JLabel();
+    protected JLabel attackinfo = new JLabel();
+    protected JLabel skillinfo = new JLabel();
+    protected JLabel restinfo = new JLabel();
     protected JButton attackButton, skillButton, restButton;
     protected JLabel panelpane;
 
@@ -183,9 +186,30 @@ class StatLabel extends JLabel {
         Reptext.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
         Reptext.setBounds(parentFrame.getWidth() - 340, 160, 200, 30);
 
+        attackinfo.setBackground(null);
+        attackinfo.setForeground(Color.pink);
+        attackinfo.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
+        attackinfo.setBounds(660, 50, 300, 50);
+        attackinfo.setText("--- gain 1 EP ---\nAttack to an enemy with (atk) damage");
+        attackinfo.setVisible(true);
+
+        skillinfo.setBackground(null);
+        skillinfo.setForeground(Color.pink);
+        skillinfo.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
+        skillinfo.setBounds(660, 110, 300, 50);
+        skillinfo.setVisible(true);
+
+        restinfo.setBackground(null);
+        restinfo.setForeground(Color.pink);
+        restinfo.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
+        restinfo.setBounds(660, 170, 300, 50);
+        restinfo.setText("--- gain 2 EP ---\nSkip this turn");
+        restinfo.setVisible(true);
+
         attackButton = new JButton(" Attack");
         {
             attackButton.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
+            attackButton.setIcon(new MyImageIcon(imagepath + "normalattack.png").resize(40, 40));
             attackButton.setBackground(new Color(222, 0, 62));
             attackButton.setForeground(Color.white);
             attackButton.setSize(100, 200);
@@ -193,13 +217,12 @@ class StatLabel extends JLabel {
             attackButton.setForeground(new Color(255, 255, 255));
             attackButton.setBounds(500, 50, 150, 50);
             attackButton.setLayout(null);
-            attackButton.setVisible(false);
+            attackButton.setVisible(true);
             attackButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
                     clickSound.playOnce();
                     parentFrame.robot_attack();
-                    // activeCharacter.getspeedthread().notify(); // notify thread to run
                 }
             });
         }
@@ -214,18 +237,21 @@ class StatLabel extends JLabel {
             skillButton.setForeground(new Color(255, 255, 255));
             skillButton.setBounds(500, 110, 150, 50);
             skillButton.setLayout(null);
-            skillButton.setVisible(false);
+            skillButton.setVisible(true);
             skillButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
+                    clickSound.playOnce();
+                    Robot r = (Robot)activeCharacter;
+                    if(r.getep() < 3){
+                        parentFrame.warnskill();
+                    }
+
                     if (activeCharacter instanceof Robot1) {
-                        clickSound.playOnce();
                         parentFrame.action_robot1_skill();
                     } else if (activeCharacter instanceof Robot2) {
-                        clickSound.playOnce();
                         parentFrame.action_robot2_skill();
                     } else if (activeCharacter instanceof Robot3) {
-                        clickSound.playOnce();
                         parentFrame.action_robot3_skill();
                     }
 
@@ -244,7 +270,7 @@ class StatLabel extends JLabel {
             restButton.setForeground(new Color(255, 255, 255));
             restButton.setBounds(500, 170, 150, 50);
             restButton.setLayout(null);
-            restButton.setVisible(false);
+            restButton.setVisible(true);
             restButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
@@ -270,32 +296,32 @@ class StatLabel extends JLabel {
 
     public synchronized void ShowAction(Character ch) {
         if (ch instanceof Robot1) {
-            attackButton.setIcon(new MyImageIcon(imagepath + "normalattack.png").resize(40, 40));
-            attackButton.setVisible(true);
-            skillButton.setVisible(true);
             skillButton.setIcon(new MyImageIcon(imagepath + "skill_critical.png").resize(40, 40));
-            restButton.setVisible(true);
+            skillinfo.setText("--- use 3 EP ---\nAttack an enemy with (atk * 2) damage\nThis skill ignores enemy def");
             this.add(attackButton);
+            this.add(attackinfo);
             this.add(skillButton);
+            this.add(skillinfo);
             this.add(restButton);
+            this.add(restinfo);
         } else if (ch instanceof Robot2) {
-            attackButton.setIcon(new MyImageIcon(imagepath + "normalattack.png").resize(40, 40));
-            attackButton.setVisible(true);
-            skillButton.setVisible(true);
             skillButton.setIcon(new MyImageIcon(imagepath + "skill_heal.png").resize(40, 40));
-            restButton.setVisible(true);
+            skillinfo.setText("--- use 3 EP ---\nRecovery an Ally with (atk * 2) HP\nThis skill can be used on itself");
             this.add(attackButton);
+            this.add(attackinfo);
             this.add(skillButton);
+            this.add(skillinfo);
             this.add(restButton);
+            this.add(restinfo);
         } else if (ch instanceof Robot3) {
-            attackButton.setIcon(new MyImageIcon(imagepath + "normalattack.png").resize(40, 40));
-            attackButton.setVisible(true);
-            skillButton.setVisible(true);
             skillButton.setIcon(new MyImageIcon(imagepath + "skill_bomb.png").resize(40, 40));
-            restButton.setVisible(true);
+            skillinfo.setText("--- use 3 EP ---\nAttack all enemies with (atk) damage\nThis skill cannot be cancelled");
             this.add(attackButton);
+            this.add(attackinfo);
             this.add(skillButton);
+            this.add(skillinfo);
             this.add(restButton);
+            this.add(restinfo);
         } else {
             parentFrame.randomRobot();
             this.humanaction(parentFrame.getTargetLabel());
@@ -337,8 +363,11 @@ class StatLabel extends JLabel {
 
     public void HideButton() {
         if (activeCharacter instanceof Robot) {
+            remove(attackinfo);
             remove(attackButton);
+            remove(skillinfo);
             remove(skillButton);
+            remove(restinfo);
             remove(restButton);
         } else {
             remove(humanstat);

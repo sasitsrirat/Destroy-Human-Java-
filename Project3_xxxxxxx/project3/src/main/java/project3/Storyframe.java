@@ -9,7 +9,6 @@ import javax.swing.*;
 public class Storyframe extends JFrame {
     private int frameHeight = 768;
     private int frameWidth = 1366;
-    private String path = "Project3_xxxxxxx/project3/src/pictures/";
     private Font storyFont = new Font("Times New Roman", Font.PLAIN, 52);
     private JLabel story1, story2, story3, story4, story5;
     private JLabel contentpane;
@@ -22,13 +21,11 @@ public class Storyframe extends JFrame {
     private int scurX = 50;
     private int scurY = 700;
     private String imagepath;
-    private String soundpath;
     protected ArrayList<Sound> musicSound, effectSound;
 
-    public Storyframe(int stagenum, String spath, String ipath, ArrayList<Sound> mSound, ArrayList<Sound> eSound,
+    public Storyframe(int stagenum, String ipath, ArrayList<Sound> mSound, ArrayList<Sound> eSound,
             MainMenu m) {
         mainMenu = m;
-        soundpath = spath;
         imagepath = ipath;
         musicSound = mSound;
         effectSound = eSound;

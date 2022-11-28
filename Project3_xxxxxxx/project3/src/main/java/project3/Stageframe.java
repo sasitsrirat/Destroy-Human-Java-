@@ -374,6 +374,7 @@ public class Stageframe extends JFrame {
             validate();
         } else if (targetLabel.getOwner() instanceof Human) {
             this.currentstate = 4;
+            stat.HideButton();
             activeLabel.getOwner().attack(targetLabel.getOwner());
             activeLabel.attack_animation();
             for (Sound i : effectSound) {
@@ -434,6 +435,7 @@ public class Stageframe extends JFrame {
             validate();
         } else if (targetLabel.getOwner() instanceof Human) {
             // this.currentstate = 4;
+            stat.HideButton();
             activeLabel.getOwner().skill1(targetLabel.getOwner());
             activeLabel.attack_animation();
             for (Sound i : effectSound) {
@@ -474,6 +476,7 @@ public class Stageframe extends JFrame {
             contentpane.repaint();
             validate();
         } else if (targetLabel.getOwner() instanceof Robot) {
+            stat.HideButton();
             activeLabel.getOwner().skill2(targetLabel.getOwner());
             activeLabel.attack_animation();
             for (Sound i : effectSound) {
@@ -493,6 +496,7 @@ public class Stageframe extends JFrame {
     }
 
     public void action_robot3_skill() {
+        stat.HideButton();
         activeLabel.getOwner().skill3(humanArraylist);
         activeLabel.attack_animation();
         for (Human hu : humanArraylist) {
@@ -510,6 +514,7 @@ public class Stageframe extends JFrame {
     }
 
     public void action_rest() {
+        stat.HideButton();
         Robot r = (Robot)activeLabel.getOwner();
         r.gainep(2);
         activeLabel.rest_animation();
@@ -519,7 +524,19 @@ public class Stageframe extends JFrame {
         activeLabel.getOwner().getspeedthread().interrupt();
     }
 
-    public void action_enemy(Human h) { // Arraylist human,character
+    public void warnskill() {
+            warn.setText("   Your EP is not enough");
+            warn.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 50));
+            warn.setBackground(new Color(222, 0, 62));
+            warn.setOpaque(true);
+            warn.setForeground(Color.white);
+            warn.setBounds(423, 150, 520, 70);
+            contentpane.add(warn);
+            contentpane.repaint();
+            validate();
+    }
+
+    /*public void action_enemy(Human h) { // Arraylist human,character
         int size = robotArraylist.size();
         if (size == 0) {
             System.out.printf("Human action\n");
@@ -527,7 +544,7 @@ public class Stageframe extends JFrame {
             int a = rand.nextInt(size);
             h.attack(robotArraylist.get(a));
         }
-    }
+    }*/
 
     public void showvictory() {
         for (Sound i : effectSound) {

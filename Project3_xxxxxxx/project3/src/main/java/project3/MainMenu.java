@@ -39,7 +39,7 @@ class StyledButtonUI extends BasicButtonUI {
 }
 
 public class MainMenu extends JFrame {
-    private static int frameWidth = 1366, frameHeight = 768; // Don't Change it.
+    private final int frameWidth = 1366, frameHeight = 768; // Don't Change it.
     protected Stageframe sframe;
     private JLabel contentPane; // JLabel contentPane = new JLabel;
     protected Optionframe oframe;
@@ -121,7 +121,7 @@ public class MainMenu extends JFrame {
                     setContentPane(sframe.getContentpane());*/
                     /*strframe = new Storyframe(1);
                     setContentPane(sframe.getContentpane());*/
-                    Storyframe strframe = new Storyframe(1, soundpath, imagepath, musicSound, effectSound, main);
+                    Storyframe strframe = new Storyframe(1, imagepath, musicSound, effectSound, main);
 
                     setTitle("STORY");
                     setContentPane(strframe.getContentPane());
@@ -345,40 +345,93 @@ class MyImageIcon extends ImageIcon {
     }
 };
 
-class Mytextlabel extends JLabel implements KeyListener{
+class Mytextlabel extends JLabel {
     String name;
+    MainMenu main;
 
-    public Mytextlabel(){
+    public Mytextlabel(MainMenu main,ArrayList<PlayerInfo> player ){
+        this.main = main;
+
         setVisible(true);
         setHorizontalAlignment(CENTER);
         setVerticalAlignment(CENTER);
         this.addcomponent();
+        
     }
     public void addcomponent(){
         JTextField tf = new JTextField();
         tf.setFont(new Font("Comic Sans MS", Font.BOLD+Font.ITALIC, 20));
 
+        JDialog d = new JDialog(main, "User"); // this refer to frame
 
-        this.add(tf);
-    }
-    public void keyTyped( KeyEvent e )
-    {
-	System.out.printf("t >>  %c  (%s) \n", e.getKeyChar(), e.getKeyText(e.getKeyCode()) );
-	
-    }
+        //Radiobutton
+        // maybe arraylist
+        JRadioButton r1=new JRadioButton("Stage 1");    
+        JRadioButton r2=new JRadioButton("Stage 2");
+        JRadioButton r3=new JRadioButton("Stage 3");    
+        JRadioButton r4=new JRadioButton("Stage 4"); 
+        JRadioButton r5=new JRadioButton("Stage 4");   
 
-    @Override
-    public void keyPressed( KeyEvent e )
-    { 
-	
-	
-	if ( e.getKeyCode() == KeyEvent.VK_DELETE )
-	{
-            
-	}
-	
-    }
+        ButtonGroup bg=new ButtonGroup();
 
-    public void keyReleased( KeyEvent e )	{ }
-    
+        bg.add(r1); bg.add(r2); bg.add(r3); bg.add(r4); bg.add(r5);
+        
+       //d.add(tl);
+        //d.add(bg);
+        d.setSize(500, 300);
+        d.setBounds(250,250,500,200);
+        d.setVisible(true);
+        d.addKeyListener(new KeyListener() {
+            public void keyTyped(KeyEvent e) {
+                System.out.printf("t >>  %c  (%s) \n", e.getKeyChar(), e.getKeyText(e.getKeyCode()));
+                //String current = tf.getText();
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+                if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+                    //tf.setText("");
+                    //tf.setText("");
+                }
+
+            }
+
+            public void keyReleased(KeyEvent e) {
+            }
+
+        });
+        JButton summitButton = new JButton("submit");
+        {
+            summitButton.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
+            summitButton.setBackground(new Color(222, 0, 62));
+            summitButton.setForeground(Color.white);
+            // customize the button with your own look
+            summitButton.setUI(new StyledButtonUI());
+            summitButton.setForeground(new Color(255, 255, 255));
+            // playButton.setBounds(100, 100, 200, 50);
+            summitButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent event) {
+                    /*for (Sound i : effectSound) {
+                        if ("clickEF".equals(i.getName())) {
+                            i.playOnce();
+                        }
+                    }
+                    for (Sound i : musicSound) {
+                        if ("mainmenuBG".equals(i.getName())) {
+                            i.stop();
+                        }
+                    }
+                    */
+
+                    // submit name and process to check that player have ever play
+
+                    
+                }
+            });
+        }
+        
+    }
 }
+

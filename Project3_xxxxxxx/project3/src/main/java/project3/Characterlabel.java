@@ -153,6 +153,8 @@ public class Characterlabel extends JLabel {
     public void showdeath() {
         death = true;
         setIcon(deathicon);
+        curY = curY + 40;
+        setBounds(curX, curY, width, height);
     }
 
     public void setMoveConditions(int x, int y) {
@@ -219,7 +221,7 @@ public class Characterlabel extends JLabel {
             }
 
             public void mouseEntered(MouseEvent e) {
-                //setIcon(staticon2);
+                setBounds(curX, curY - 30, WIDTH, HEIGHT);
                 if (owner instanceof Robot) {
                     Robot a = (Robot) (owner);
                     stat.setRoRtext(owner.getatk(), owner.gethp(), owner.getmax_hp(),
@@ -233,16 +235,7 @@ public class Characterlabel extends JLabel {
             }
 
             public void mouseExited(MouseEvent e) {
-                if (death) {
-                    setIcon(deathicon);
-                    parentFrame.repaint();
-                    validate();
-                } else {
-                    setIcon(staticon);
-                    parentFrame.repaint();
-                    validate();
-                }
-
+                setBounds(curX, curY - 30, WIDTH, HEIGHT);
             }
 
             public void mouseMoved(MouseEvent e) {
@@ -270,16 +263,6 @@ public class Characterlabel extends JLabel {
                             break;
                     }
                 }
-                /*
-                 * if (parentFrame.getstagenum() != 2) {
-                 * parentFrame.stage2();
-                 * parentFrame.setstagenum(2);
-                 * } else {
-                 * parentFrame.stage1();
-                 * parentFrame.setstagenum(1);
-                 * }
-                 */
-
             }
 
             @Override

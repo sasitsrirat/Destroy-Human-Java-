@@ -1,6 +1,6 @@
 package project3;
 
-public class PlayerInfo {
+public class PlayerInfo implements Comparable<PlayerInfo>{
     private String name;
     private int score;
     private int stage;
@@ -29,5 +29,8 @@ public class PlayerInfo {
     }
     public int getstage(){
         return stage;
+    }
+    public int compareTo(PlayerInfo other){
+        return 1;
     }
 }
