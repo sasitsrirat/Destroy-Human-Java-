@@ -4,21 +4,16 @@ import java.util.ArrayList;
 
 class Robot extends Character {
 
-    protected int ep = 1; //Energy Point
+    protected int ep = 2; //Energy Point
     protected int max_ep = 5;
-    protected int cd_s = 0; //Cooldown Special Skill
-    protected int cd_u = 0; //Cooldown Ultimate Skill
     protected Characterlabel robotlabel;
     protected String idle;
 
     public Robot() {
     }
 
-    public Robot(String n, int hp, int atk, int def, int spd, int p, int cs, int cu, String imagefile, String attackimagefile, String deathimagefile, String id, Stageframe sf) {
+    public Robot(String n, int hp, int atk, int def, int spd, String imagefile, String attackimagefile, String deathimagefile, String id, Stageframe sf) {
         super(n, hp, atk, def, spd, imagefile, attackimagefile, deathimagefile, sf);
-        ep = p;
-        cd_s = cs;
-        cd_u = cu;
         idle = id;
     }
 
@@ -54,7 +49,7 @@ class Robot extends Character {
 class Robot1 extends Robot {
 
     public Robot1(Stageframe sf) {
-        super("Musix-6000", 20, 5, 1, 1, 3, 2, 5, "robot1-normal-01.png", "robot1-attack-01.png", "robot1-alive-01.png", "robot1-shake-01.png", sf);
+        super("Musix-6000", 20, 5, 1, 1, "robot1-normal-01.png", "robot1-attack-01.png", "robot1-alive-01.png", "robot1-shake-01.png", sf);
     }
 
     @Override
@@ -68,7 +63,7 @@ class Robot1 extends Robot {
 class Robot2 extends Robot {
 
     public Robot2(Stageframe sf) {
-        super("Ba-Be", 30, 3, 3, 1, 3, 2, 5, "robot2-normal-01.png" , "robot2-attack-01.png", "robot2-alive-01.png", "robot2-shake-01.png", sf);
+        super("Ba-Be", 30, 3, 3, 1,"robot2-normal-01.png" , "robot2-attack-01.png", "robot2-alive-01.png", "robot2-shake-01.png", sf);
     }
 
     @Override
@@ -81,7 +76,7 @@ class Robot2 extends Robot {
 class Robot3 extends Robot {
 
     public Robot3(Stageframe sf) {
-        super("N2Y2", 25, 4000, 2, 1, 3, 2, 5, "robot3-normal-01.png", "robot3-attack-01.png", "robot3-alive-01.png", "robot3-shake-01.png", sf) ;
+        super("N2Y2", 25, 4000, 2, 1, "robot3-normal-01.png", "robot3-attack-01.png", "robot3-alive-01.png", "robot3-shake-01.png", sf) ;
     }
     @Override
     public void skill3(ArrayList<Human> enemies) { //attack all enemy

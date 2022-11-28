@@ -367,7 +367,7 @@ public class Stageframe extends JFrame {
             warn.setBackground(new Color(222, 0, 62));
             warn.setOpaque(true);
             warn.setForeground(Color.white);
-            warn.setBounds(423, 150, 520, 70);
+            warn.setBounds(423, 50, 520, 70);
             contentpane.add(warn);
             choose = 1;
             contentpane.repaint();
@@ -428,7 +428,7 @@ public class Stageframe extends JFrame {
             warn.setBackground(new Color(222, 0, 62));
             warn.setOpaque(true);
             warn.setForeground(Color.white);
-            warn.setBounds(423, 150, 520, 70);
+            warn.setBounds(423, 50, 520, 70);
             contentpane.add(warn);
             choose = 2;
             contentpane.repaint();
@@ -466,7 +466,7 @@ public class Stageframe extends JFrame {
             warn.setBackground(new Color(222, 0, 62));
             warn.setOpaque(true);
             warn.setForeground(Color.white);
-            warn.setBounds(423, 150, 520, 70);
+            warn.setBounds(423, 50, 520, 70);
             contentpane.add(warn);
             choose = 3;
             contentpane.repaint();
@@ -525,12 +525,12 @@ public class Stageframe extends JFrame {
     }
 
     public void warnskill() {
-            warn.setText("   Your EP is not enough");
+            warn.setText("      not enough EP ");
             warn.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 50));
             warn.setBackground(new Color(222, 0, 62));
             warn.setOpaque(true);
             warn.setForeground(Color.white);
-            warn.setBounds(423, 150, 520, 70);
+            warn.setBounds(423, 50, 520, 70);
             contentpane.add(warn);
             contentpane.repaint();
             validate();

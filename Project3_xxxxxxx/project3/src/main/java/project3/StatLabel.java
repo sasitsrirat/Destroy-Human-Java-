@@ -59,24 +59,24 @@ class StatLabel extends JLabel {
 
     public synchronized void setactiveCharacter(Character ac) {
         activeCharacter = ac;
-        if (activeCharacter instanceof Robot){
-            Robot a = (Robot)(activeCharacter);
+        if (activeCharacter instanceof Robot) {
+            Robot a = (Robot) (activeCharacter);
             setRoLtext(activeCharacter.getatk(), activeCharacter.gethp(), activeCharacter.getmax_hp(),
-                activeCharacter.getdf(), activeCharacter.getname(), a.getep(), a.getmax_ep());
-        }else {
+                    activeCharacter.getdf(), activeCharacter.getname(), a.getep(), a.getmax_ep());
+        } else {
             setHuLtext(activeCharacter.getatk(), activeCharacter.gethp(), activeCharacter.getmax_hp(),
-                activeCharacter.getdf(), activeCharacter.getname());
+                    activeCharacter.getdf(), activeCharacter.getname());
         }
     }
 
     public synchronized void settargetCharacter(Character tc) {
-        if (tc instanceof Robot){
-            Robot a = (Robot)(tc);
+        if (tc instanceof Robot) {
+            Robot a = (Robot) (tc);
             setRoRtext(tc.getatk(), tc.gethp(), tc.getmax_hp(),
-                tc.getdf(), tc.getname(), a.getep(), a.getmax_ep());
-        }else {
+                    tc.getdf(), tc.getname(), a.getep(), a.getmax_ep());
+        } else {
             setHuRtext(tc.getatk(), tc.gethp(), tc.getmax_hp(),
-                tc.getdf(), tc.getname());
+                    tc.getdf(), tc.getname());
         }
     }
 
@@ -164,46 +164,46 @@ class StatLabel extends JLabel {
         Ratktext.setBackground(null);
         Ratktext.setForeground(Color.white);
         Ratktext.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
-        Ratktext.setBounds(parentFrame.getWidth() - 340, 40, 200, 30);
+        Ratktext.setBounds(parentFrame.getWidth() - 240, 40, 200, 30);
 
         Rhptext.setBackground(null);
         Rhptext.setForeground(Color.white);
         Rhptext.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
-        Rhptext.setBounds(parentFrame.getWidth() - 340, 70, 200, 30);
+        Rhptext.setBounds(parentFrame.getWidth() - 240, 70, 200, 30);
 
         Rdeftext.setBackground(null);
         Rdeftext.setForeground(Color.white);
         Rdeftext.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
-        Rdeftext.setBounds(parentFrame.getWidth() - 340, 100, 200, 30);
+        Rdeftext.setBounds(parentFrame.getWidth() - 240, 100, 200, 30);
 
         Rnametext.setBackground(null);
         Rnametext.setForeground(Color.white);
         Rnametext.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
-        Rnametext.setBounds(parentFrame.getWidth() - 340, 130, 200, 30);
+        Rnametext.setBounds(parentFrame.getWidth() - 240, 130, 200, 30);
 
         Reptext.setBackground(null);
         Reptext.setForeground(Color.white);
         Reptext.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
-        Reptext.setBounds(parentFrame.getWidth() - 340, 160, 200, 30);
+        Reptext.setBounds(parentFrame.getWidth() - 240, 160, 200, 30);
 
         attackinfo.setBackground(null);
         attackinfo.setForeground(Color.pink);
-        attackinfo.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
-        attackinfo.setBounds(660, 50, 300, 50);
-        attackinfo.setText("--- gain 1 EP ---\nAttack to an enemy with (atk) damage");
+        attackinfo.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 17));
+        attackinfo.setBounds(540, 50, 570, 50);
+        attackinfo.setText("gain 1 EP --- Attack to an enemy with (atk) damage");
         attackinfo.setVisible(true);
 
         skillinfo.setBackground(null);
         skillinfo.setForeground(Color.pink);
-        skillinfo.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
-        skillinfo.setBounds(660, 110, 300, 50);
+        skillinfo.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 17));
+        skillinfo.setBounds(540, 110, 570, 50);
         skillinfo.setVisible(true);
 
         restinfo.setBackground(null);
         restinfo.setForeground(Color.pink);
-        restinfo.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
-        restinfo.setBounds(660, 170, 300, 50);
-        restinfo.setText("--- gain 2 EP ---\nSkip this turn");
+        restinfo.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 17));
+        restinfo.setBounds(540, 170, 570, 50);
+        restinfo.setText("gain 2 EP --- Skip this turn");
         restinfo.setVisible(true);
 
         attackButton = new JButton(" Attack");
@@ -215,7 +215,7 @@ class StatLabel extends JLabel {
             attackButton.setSize(100, 200);
             attackButton.setUI(new StyledButtonUI());
             attackButton.setForeground(new Color(255, 255, 255));
-            attackButton.setBounds(500, 50, 150, 50);
+            attackButton.setBounds(380, 50, 150, 50);
             attackButton.setLayout(null);
             attackButton.setVisible(true);
             attackButton.addActionListener(new ActionListener() {
@@ -235,26 +235,25 @@ class StatLabel extends JLabel {
             skillButton.setSize(100, 200);
             skillButton.setUI(new StyledButtonUI());
             skillButton.setForeground(new Color(255, 255, 255));
-            skillButton.setBounds(500, 110, 150, 50);
+            skillButton.setBounds(380, 110, 150, 50);
             skillButton.setLayout(null);
             skillButton.setVisible(true);
             skillButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
                     clickSound.playOnce();
-                    Robot r = (Robot)activeCharacter;
-                    if(r.getep() < 3){
+                    Robot r = (Robot) activeCharacter;
+                    if (r.getep() < 3) {
                         parentFrame.warnskill();
+                    } else {
+                        if (activeCharacter instanceof Robot1) {
+                            parentFrame.action_robot1_skill();
+                        } else if (activeCharacter instanceof Robot2) {
+                            parentFrame.action_robot2_skill();
+                        } else if (activeCharacter instanceof Robot3) {
+                            parentFrame.action_robot3_skill();
+                        }
                     }
-
-                    if (activeCharacter instanceof Robot1) {
-                        parentFrame.action_robot1_skill();
-                    } else if (activeCharacter instanceof Robot2) {
-                        parentFrame.action_robot2_skill();
-                    } else if (activeCharacter instanceof Robot3) {
-                        parentFrame.action_robot3_skill();
-                    }
-
                 }
             });
         }
@@ -268,7 +267,7 @@ class StatLabel extends JLabel {
             restButton.setSize(100, 200);
             restButton.setUI(new StyledButtonUI());
             restButton.setForeground(new Color(255, 255, 255));
-            restButton.setBounds(500, 170, 150, 50);
+            restButton.setBounds(380, 170, 150, 50);
             restButton.setLayout(null);
             restButton.setVisible(true);
             restButton.addActionListener(new ActionListener() {
@@ -297,7 +296,8 @@ class StatLabel extends JLabel {
     public synchronized void ShowAction(Character ch) {
         if (ch instanceof Robot1) {
             skillButton.setIcon(new MyImageIcon(imagepath + "skill_critical.png").resize(40, 40));
-            skillinfo.setText("--- use 3 EP ---\nAttack an enemy with (atk * 2) damage\nThis skill ignores enemy def");
+            //skillinfo.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 14));
+            skillinfo.setText("use  3 EP --- Attack an enemy with (atk * 2) damage and ignores enemy def");
             this.add(attackButton);
             this.add(attackinfo);
             this.add(skillButton);
@@ -306,7 +306,7 @@ class StatLabel extends JLabel {
             this.add(restinfo);
         } else if (ch instanceof Robot2) {
             skillButton.setIcon(new MyImageIcon(imagepath + "skill_heal.png").resize(40, 40));
-            skillinfo.setText("--- use 3 EP ---\nRecovery an Ally with (atk * 2) HP\nThis skill can be used on itself");
+            skillinfo.setText("use  3 EP --- Recovery an Ally with (atk * 2) HP");
             this.add(attackButton);
             this.add(attackinfo);
             this.add(skillButton);
@@ -315,7 +315,8 @@ class StatLabel extends JLabel {
             this.add(restinfo);
         } else if (ch instanceof Robot3) {
             skillButton.setIcon(new MyImageIcon(imagepath + "skill_bomb.png").resize(40, 40));
-            skillinfo.setText("--- use 3 EP ---\nAttack all enemies with (atk) damage\nThis skill cannot be cancelled");
+            //skillinfo.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 17));
+            skillinfo.setText("use  3 EP --- Attack all enemies with (atk) damage");
             this.add(attackButton);
             this.add(attackinfo);
             this.add(skillButton);

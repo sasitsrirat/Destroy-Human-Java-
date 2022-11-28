@@ -53,8 +53,8 @@ public class MainMenu extends JFrame {
     protected ArrayList<PlayerInfo> playerArraylist;
 
     public MainMenu() {
-        imagepath = "project3/Project3_xxxxxxx/project3/src/pictures/";//"src/pictures/"; // "project3/Project3_xxxxxxx/project3/src/pictures/"
-        soundpath = "project3/Project3_xxxxxxx/project3/src/sounds/";
+        imagepath = "src/pictures/";//"src/pictures/"; // "project3/Project3_xxxxxxx/project3/src/pictures/"
+        soundpath = "src/sounds/";
 
         // set background music
         musicSound.add(new Sound(soundpath + "BossTime.wav", "mainmenuBG"));

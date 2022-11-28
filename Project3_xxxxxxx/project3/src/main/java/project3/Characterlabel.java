@@ -153,7 +153,7 @@ public class Characterlabel extends JLabel {
     public void showdeath() {
         death = true;
         setIcon(deathicon);
-        curY = curY + 40;
+        curY = curY + 25;
         setBounds(curX, curY, width, height);
     }
 
@@ -221,7 +221,7 @@ public class Characterlabel extends JLabel {
             }
 
             public void mouseEntered(MouseEvent e) {
-                setBounds(curX, curY - 30, WIDTH, HEIGHT);
+                temp.setBounds(curX, curY - 20, width, height);
                 if (owner instanceof Robot) {
                     Robot a = (Robot) (owner);
                     stat.setRoRtext(owner.getatk(), owner.gethp(), owner.getmax_hp(),
@@ -235,7 +235,9 @@ public class Characterlabel extends JLabel {
             }
 
             public void mouseExited(MouseEvent e) {
-                setBounds(curX, curY - 30, WIDTH, HEIGHT);
+                temp.setBounds(curX, curY, width, height);
+                parentFrame.repaint();
+                validate();
             }
 
             public void mouseMoved(MouseEvent e) {
