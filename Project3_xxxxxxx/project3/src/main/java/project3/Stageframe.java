@@ -3,7 +3,7 @@ package project3;
 import java.awt.*;
 import java.util.*;
 import java.util.concurrent.CyclicBarrier;
-
+import javax.imageio.ImageIO.*;
 import javax.swing.*;
 import javax.swing.JFrame;
 import javax.swing.event.MouseInputListener;
@@ -55,14 +55,28 @@ public class Stageframe extends JFrame {
             }
         }
         contentpane = new JLabel();
+        
         System.out.println("Hello");
         sw = new Stagewave(stage, this);
         allwave = sw.getWave();
         MyImageIcon background = new MyImageIcon(imagepath + "8-Bit-Backgrounds2.jpg"); // project3\Project3_xxxxxxx\project3\src\pictures\8-Bit-Backgrounds.jpg
         contentpane.setIcon(background.resize(frameWidth, frameHeight));
-        contentpane.setOpaque(true);
+
+        activepoint.setIcon(background);
+        
+        contentpane.setOpaque(false);
         contentpane.setLayout(null);
         this.addcomponent();
+        
+        ImageIcon cloud = new ImageIcon(imagepath + "HSxPUMA_Clouds.gif");
+        {
+            cloud.setImage(cloud.getImage().getScaledInstance(frameWidth, 200, Image.SCALE_REPLICATE)); // size
+            JLabel CloudPanel = new JLabel(cloud);
+            CloudPanel.setBounds(0, 0, frameWidth, 200);
+            CloudPanel.setVisible(true);
+            contentpane.add(CloudPanel);
+        }
+
         validate();
         repaint();
         battle(stage, 1);
