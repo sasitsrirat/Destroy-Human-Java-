@@ -71,6 +71,10 @@ class Robot2 extends Robot {
         ally.takeheal(ramdomatk() * 2);  // random atk คืออะไร
         ep = ep - 3;
     }
+
+    public String gethealimage() {
+        return "robot2-heal-01";
+    }
 }
 
 class Robot3 extends Robot {

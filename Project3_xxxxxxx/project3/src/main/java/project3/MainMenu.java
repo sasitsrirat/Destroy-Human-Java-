@@ -48,17 +48,28 @@ public class MainMenu extends JFrame {
     protected ArrayList<Sound> musicSound = new ArrayList<Sound>(), effectSound = new ArrayList<Sound>();
     protected Scoreframe scoreframe;
     protected Storyframe strframe;
-    public String imagepath,soundpath;
-    protected ArrayList<PlayerInfo> playerArraylist;
+    protected boolean cutscene = true, save = true, showscore = true;
+    public String imagepath, soundpath, path;
+    protected ArrayList<PlayerInfo> playerArraylist = new ArrayList<PlayerInfo>();
+    protected PlayerInfo currentplayer;
+
+    protected MainMenu main = this;
 
     public MainMenu() {
-        imagepath = "project3/Project3_xxxxxxx/project3/src/pictures/";//"src/pictures/"; // "project3/Project3_xxxxxxx/project3/src/pictures/"
+        imagepath = "project3/Project3_xxxxxxx/project3/src/pictures/";// "src/pictures/"; //
+                                                                       // "project3/Project3_xxxxxxx/project3/src/pictures/"
         soundpath = "project3/Project3_xxxxxxx/project3/src/sounds/";
+        path = "project3/Project3_xxxxxxx/project3/src/main/java/project3/"; // project3\Project3_xxxxxxx\project3\src\main\java\project3\info.txt
 
         // set background music
         musicSound.add(new Sound(soundpath + "BossTime.wav", "mainmenuBG"));
+        musicSound.add(new Sound(soundpath + "stageBG.wav", "stageBG"));
         musicSound.add(new Sound(soundpath + "namlie.wav", "gereBG"));
-        musicSound.add(new Sound(soundpath + "Star_Wars.wav", "storyBG"));
+        musicSound.add(new Sound(soundpath + "Star_Wars.wav", "story1BG"));
+        musicSound.add(new Sound(soundpath + "story-2.wav", "story2BG"));
+        musicSound.add(new Sound(soundpath + "story-3.wav", "story3BG"));
+        musicSound.add(new Sound(soundpath + "story-4.wav", "story4BG"));
+        musicSound.add(new Sound(soundpath + "story-5.wav", "story5BG"));
         for (Sound i : musicSound) {
             if ("mainmenuBG".equals(i.getName())) {
                 i.playLoop();
@@ -72,7 +83,7 @@ public class MainMenu extends JFrame {
         effectSound.add(new Sound(soundpath + "punch.wav", "humannormalattackEF"));
         effectSound.add(new Sound(soundpath + "victoryEF.wav", "victoryEF"));
         effectSound.add(new Sound(soundpath + "defeatEF.wav", "defeatEF"));
-        // effectSound.add(new Sound(soundpath + "humangunfire.wav", "humanskill1EF"));
+        effectSound.add(new Sound(soundpath + "restEF.wav", "restEF"));
 
         setType(Type.POPUP);
         setTitle("Menu");
@@ -91,6 +102,10 @@ public class MainMenu extends JFrame {
         contentPane.setLayout(null);
         setContentPane(contentPane);
         MainMenu main = this;
+
+        // add playerinfo to arryaylist
+        Filemanage scan = new Filemanage();
+        scan.filescan(playerArraylist, path, "info.txt");
 
         JButton playButton = new JButton("PLAY");
         {
@@ -114,16 +129,52 @@ public class MainMenu extends JFrame {
                             i.stop();
                         }
                     }
-                    /*sframe = new Stageframe(imagepath, musicSound, effectSound, main, 1); // play for first time stage 1
-                    setTitle("Stage");
+                    /*
+                     * sframe = new Stageframe(imagepath, musicSound, effectSound, main, 1); // play
+                     * for first time stage 1
+                     * setTitle("Stage");
+                     * 
+                     * setContentPane(sframe.getContentpane());
+                     */
+                    /*
+                     * strframe = new Storyframe(1);
+                     * setContentPane(sframe.getContentpane());
+                     */
+                    // -------------------------------------------------- //ask for name
+                    JDialog d = new JDialog(main, "User");
+                    d.setSize(500, 300);
+                    d.setBounds(250, 250, 500, 200);
+                    d.addKeyListener(new KeyListener() {
+                        public void keyTyped(KeyEvent e) {
+                            System.out.printf("t >>  %c  (%s) \n", e.getKeyChar(), e.getKeyText(e.getKeyCode()));
+                        }
 
-                    setContentPane(sframe.getContentpane());*/
-                    /*strframe = new Storyframe(1);
-                    setContentPane(sframe.getContentpane());*/
-                    Storyframe strframe = new Storyframe(1, imagepath, musicSound, effectSound, main);
+                        @Override
+                        public void keyPressed(KeyEvent e) {
 
-                    setTitle("STORY");
-                    setContentPane(strframe.getContentPane());
+                            if (e.getKeyCode() == 10) {
+                                // tf.setText("");
+                                d.dispose();
+                            }
+
+                        }
+
+                        public void keyReleased(KeyEvent e) {
+                        }
+
+                    });
+                    Mytextpanel tl = new Mytextpanel(d, main, currentplayer, playerArraylist);
+                    d.add(tl);
+                    d.setVisible(true);
+                    // --------------------------------------------------
+
+                    /*
+                     * Storyframe strframe = new Storyframe(1, imagepath, musicSound, effectSound,
+                     * main, frameWidth,
+                     * frameHeight);
+                     * setTitle("STORY");
+                     * setContentPane(strframe.getContentPane());
+                     */
                     validate();
                 }
             });
@@ -220,47 +271,52 @@ public class MainMenu extends JFrame {
                             i.playOnce();
                         }
                     }
-                    if (cframe == null){
-                        //cframe = new Creditframe();
-                    }
+                    if (cframe == null)
+                        cframe = new Creditframe(effectSound, effectSound, imagepath);
                     else
                         cframe.setVisible(true);
                 }
             });
         }
+
         JButton quitButton = new JButton("QUIT");
         {
             quitButton.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
             quitButton.setBackground(new Color(222, 0, 62));
             quitButton.setForeground(Color.white);
             quitButton.setSize(100, 200);
-            // customize the button with your own look
             quitButton.setUI(new StyledButtonUI());
             quitButton.setForeground(new Color(255, 255, 255));
-            // quitButton.setBounds(608, 400, 150, 50);
             quitButton.addActionListener(new ActionListener() {
-                @Override
+
                 public void actionPerformed(ActionEvent event) {
+                    JDialog d = new JDialog();
+                    {
+                        JButton b1 = new JButton("Yes");
+                        JButton b2 = new JButton("No");
+                        JLabel l1 = new JLabel("Are you sure to exit game ???? ");
+                        // JLabel l2 = new JLabel("Because this game is a fun game. It is also a game
+                        // that allows\nyou to develop skills such as logic, \nproblem solving and have
+                        // fun.\n If you quit this game, you'll probably regret it all day.");
+                        d.setTitle("Exit");
+                        d.setBounds(583, 459, 240, 100);
+                        d.setLayout(new FlowLayout());
+                        d.add(l1);
+                        // d.add(l2);
+                        d.add(b1);
+                        d.add(b2);
+
+                        // d.add(b2);
+                        b1.addActionListener(e -> System.exit(0));
+                        b2.addActionListener(e -> d.dispose());
+                        d.getContentPane();
+                        d.setVisible(true);
+                    }
                     for (Sound i : effectSound) {
                         if ("clickEF".equals(i.getName())) {
                             i.playOnce();
                         }
                     }
-                    JButton button = (JButton) event.getSource();
-                    JDialog d = new JDialog();
-                    d.setTitle("test");
-                    d.setBounds(583, 459, 300, 200);
-                    JPanel p = new JPanel();
-                    JLabel l1 = new JLabel("Are you sure to exit game");
-                    JButton b1 = new JButton("Yes");
-                    JButton b2 = new JButton("No");
-                    p.setLayout(new FlowLayout());
-                    p.add(l1);
-                    p.add(b1);
-                    p.add(b2);
-                    d.getContentPane().add(p);
-                    d.setVisible(true);
-                    System.exit(0);
                 }
             });
         }
@@ -312,6 +368,26 @@ public class MainMenu extends JFrame {
         showscore = a;
     }
 
+    public void startstory(int a) {
+        for (Sound i : musicSound) {
+            if ("mainmenuBG".equals(i.getName())) {
+                i.stop();
+            }
+        }
+        strframe = new Storyframe(a, imagepath, musicSound, effectSound, main, frameWidth, frameHeight);
+        setContentPane(strframe.getContentpane());
+    }
+
+    public void startstage(int a) {
+        for (Sound i : musicSound) {
+            if ("mainmenuBG".equals(i.getName())) {
+                i.stop();
+            }
+        }
+        sframe = new Stageframe(imagepath, musicSound, effectSound, main, a);
+        setContentPane(sframe.getContentpane());
+    }
+
     public static void main(String[] args) {
         // displayJFrame();
         try {
@@ -341,54 +417,59 @@ class MyImageIcon extends ImageIcon {
     }
 };
 
-class Mytextlabel extends JLabel {
+class Mytextpanel extends JPanel {
+
     String name;
+    JTextField tf;
+    JLabel contentpane;
+    JDialog temp;
     MainMenu main;
+    PlayerInfo player;
+    ArrayList<PlayerInfo> playerarraylist;
 
-    public Mytextlabel(MainMenu main,ArrayList<PlayerInfo> player ){
-        this.main = main;
-
+    public Mytextpanel(JDialog t, MainMenu nu, PlayerInfo p, ArrayList<PlayerInfo> playerarraylist) {
+        temp = t;
+        main = nu;
+        player = p;
+        this.playerarraylist = playerarraylist;
         setVisible(true);
-        setHorizontalAlignment(CENTER);
-        setVerticalAlignment(CENTER);
+        setBackground(new Color(64, 64, 196));
+        setSize(300, 300);
+        setLayout(null);
+
         this.addcomponent();
-        
+
+        validate();
+        repaint();
     }
-    public void addcomponent(){
-        JTextField tf = new JTextField();
-        tf.setFont(new Font("Comic Sans MS", Font.BOLD+Font.ITALIC, 20));
 
-        JDialog d = new JDialog(main, "User"); // this refer to frame
-
-        //Radiobutton
-        // maybe arraylist
-        JRadioButton r1=new JRadioButton("Stage 1");    
-        JRadioButton r2=new JRadioButton("Stage 2");
-        JRadioButton r3=new JRadioButton("Stage 3");    
-        JRadioButton r4=new JRadioButton("Stage 4"); 
-        JRadioButton r5=new JRadioButton("Stage 4");   
-
-        ButtonGroup bg=new ButtonGroup();
-
-        bg.add(r1); bg.add(r2); bg.add(r3); bg.add(r4); bg.add(r5);
-        
-       //d.add(tl);
-        //d.add(bg);
-        d.setSize(500, 300);
-        d.setBounds(250,250,500,200);
-        d.setVisible(true);
-        d.addKeyListener(new KeyListener() {
+    public void addcomponent() {
+        tf = new JTextField(20);
+        tf.setFont(new Font("Comic Sans MS", Font.BOLD + Font.ITALIC, 20));
+        tf.setText("In put username");
+        tf.setBounds(25, 25, 300, 50);
+        tf.addKeyListener(new KeyListener() {
             public void keyTyped(KeyEvent e) {
                 System.out.printf("t >>  %c  (%s) \n", e.getKeyChar(), e.getKeyText(e.getKeyCode()));
-                //String current = tf.getText();
+                // String current = tf.getText();
             }
 
             @Override
             public void keyPressed(KeyEvent e) {
 
-                if (e.getKeyCode() == KeyEvent.VK_DELETE) {
-                    //tf.setText("");
-                    //tf.setText("");
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    String nametext = tf.getText();
+                    System.out.println(nametext);
+                    temp.dispose();
+
+                    JDialog d2;
+                    d2 = new JDialog(main, "Choose stage");
+
+                    d2.setSize(500, 300);
+                    d2.setBounds(250, 250, 500, 200);
+                    Mytextpanel2 t2 = new Mytextpanel2(d2, player, main);
+                    d2.add(t2);
+                    d2.setVisible(true);
                 }
 
             }
@@ -396,38 +477,369 @@ class Mytextlabel extends JLabel {
             public void keyReleased(KeyEvent e) {
             }
 
-        });
+        }); // summit button
         JButton summitButton = new JButton("submit");
         {
-            summitButton.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
+            summitButton.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 16));
             summitButton.setBackground(new Color(222, 0, 62));
             summitButton.setForeground(Color.white);
             // customize the button with your own look
-            summitButton.setUI(new StyledButtonUI());
+
             summitButton.setForeground(new Color(255, 255, 255));
+            summitButton.setBounds(350, 25, 100, 50);
             // playButton.setBounds(100, 100, 200, 50);
             summitButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
-                    /*for (Sound i : effectSound) {
-                        if ("clickEF".equals(i.getName())) {
-                            i.playOnce();
+                    /*
+                     * for (Sound i : effectSound) {
+                     * if ("clickEF".equals(i.getName())) {
+                     * i.playOnce();
+                     * }
+                     * }
+                     * for (Sound i : musicSound) {
+                     * if ("mainmenuBG".equals(i.getName())) {
+                     * i.stop();
+                     * }
+                     * }
+                     */
+                    String nametext = tf.getText();
+                    player = checkplayer(playerarraylist, nametext);
+                    // System.out.println(nametext);
+                    temp.dispose();
+
+                    JDialog d2;
+                    d2 = new JDialog(main, "Choose stage");
+
+                    d2.setSize(500, 300);
+                    d2.setBounds(250, 250, 500, 200);
+                    Mytextpanel2 t2 = new Mytextpanel2(d2, player, main);
+                    d2.add(t2);
+                    d2.setVisible(true);
+                    d2.addKeyListener(new KeyListener() {
+                        public void keyTyped(KeyEvent e) {}
+
+                        public void keyPressed(KeyEvent e) {
+
+                            if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+                                temp.dispose();
+                            }
+
                         }
-                    }
-                    for (Sound i : musicSound) {
-                        if ("mainmenuBG".equals(i.getName())) {
-                            i.stop();
-                        }
-                    }
-                    */
+
+                        public void keyReleased(KeyEvent e) {}
+
+                    });
 
                     // submit name and process to check that player have ever play
+                }
+            });
+        }
+        this.add(tf);
+        this.add(summitButton);
+    }
 
+    public PlayerInfo checkplayer(ArrayList<PlayerInfo> playerarr, String name) {
+        for (PlayerInfo p : playerarr) {
+            if (name.equalsIgnoreCase(p.getname())) {
+                return p;
+            }
+        }
+        PlayerInfo temp = new PlayerInfo(name, 1, 0, 0, 0, 0, 0, true, true, true);
+        return temp;
+
+    }
+}
+
+class Mytextpanel2 extends JPanel {
+    protected JCheckBox musiccheck, effectcheck, cutScenecheck, savecheck, scorecheck;
+    protected JPanel epanel, mpanel, cpanel, spanel, scpanel;
+    protected JPanel AutosavePanel;
+    protected JPanel ScorePanel;
+    protected JLabel AutotsaveText;
+    protected JLabel cutscenesText;
+    protected JLabel ScoreText;
+    protected JPanel cutScenesPanel;
+    protected JDialog temp;
+    protected PlayerInfo player;
+    protected MainMenu main;
+    protected int stage = 0;
+
+    public Mytextpanel2(JDialog t, PlayerInfo p, MainMenu m) {
+        temp = t;
+        player = p;
+        main = m;
+        
+        setVisible(true);
+        setBackground(new Color(64, 64, 196));
+        // setBounds(50,50,200,500);
+        setSize(300, 300);
+        // setHorizontalAlignment(CENTER);
+        // setVerticalAlignment(CENTER);
+        setLayout(null);
+
+        this.addcomponent();
+
+        validate();
+        repaint();
+    }
+
+    public void addcomponent() {
+
+        ButtonGroup bg = new ButtonGroup();
+        // button
+        System.out.println(player.getstage());
+        if(player.getstage()>=1){
+        JRadioButton r1 = new JRadioButton("Stage 1");
+        r1.setBounds(25, 120, 75, 20);
+        r1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                stage = 1;
+    
+            }
+        });
+        bg.add(r1);
+        this.add(r1);
+        }
+        if(player.getstage()>=2){
+        JRadioButton r2 = new JRadioButton("Stage 2");
+        r2.setBounds(100, 120, 75, 20);
+        r2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                stage = 2;
+    
+            }
+        });
+        bg.add(r2);
+        this.add(r2);
+        }
+        if(player.getstage()>=3){
+        JRadioButton r3 = new JRadioButton("Stage 3");
+        r3.setBounds(175, 120, 75, 20);
+        r3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                stage = 3;
+    
+            }
+        });
+        bg.add(r3);
+        this.add(r3);
+        }
+        if(player.getstage()>=4){
+        JRadioButton r4 = new JRadioButton("Stage 4");
+        r4.setBounds(250, 120, 75, 20);
+        r4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                stage = 4;
+    
+            }
+        });
+        bg.add(r4);
+        this.add(r4);
+        }
+        if(player.getstage()>=5){
+        JRadioButton r5 = new JRadioButton("Stage 4");
+        r5.setBounds(325, 120, 75, 20);
+        r5.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                stage = 5;
+    
+            }
+        });
+        bg.add(r5);
+        this.add(r5);
+        }
+        
+
+        
+
+        // summit button
+        JButton summitButton = new JButton("submit");
+        {
+            summitButton.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 16));
+            summitButton.setBackground(new Color(222, 0, 62));
+            summitButton.setForeground(Color.white);
+            // customize the button with your own look
+
+            summitButton.setForeground(new Color(255, 255, 255));
+            summitButton.setBounds(350, 25, 100, 50);
+            summitButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent event) {
+                    temp.dispose();
+                    System.out.println(stage);
+                    if(player.getshowstory()){
+                        main.startstory(stage);
+                    }else {
+                        main.startstage(stage);
+                    }
                     
                 }
             });
         }
-        
-    }
-}
+        cutScenesPanel = new JPanel();
+        {
+            cutscenesText = new JLabel();
+            {
+                cutscenesText.setFont(new Font("Charter", Font.BOLD, 16));
+                cutscenesText.setForeground(Color.white);
+                cutscenesText.setText("NOT SHOW STORY");
+                cutscenesText.setBounds(25, 75, 150, 30);
+            }
+            cutScenesPanel.setBounds(25, 75, 150, 100);
+            cutScenesPanel.setOpaque(false);
+        }
+        cpanel = new JPanel();
+        {
+            cpanel.setBounds(200, 75, 100, 25);
+            cpanel.setOpaque(false);
+            cutScenecheck = new JCheckBox(" no story ");
+            cutScenecheck.setForeground(Color.white);
+            cutScenecheck.setOpaque(false);
+            if (player.getshowstory()) {
+                cutScenecheck.setSelected(false);
+            } else {
+                cutScenecheck.setSelected(true);
+            }
+            cutScenecheck.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent event) {
+                    JCheckBox cb = (JCheckBox) event.getSource();
+                    if (cb.isSelected()) {
+                        player.setshowstory(false);
+                    } else {
+                        player.setshowstory(true);
+                    }
+                }
+            });
+        }
 
+        AutosavePanel = new JPanel();
+        {
+            AutotsaveText = new JLabel();
+            {
+                AutotsaveText.setFont(new Font("Charter", Font.BOLD, 16));
+                AutotsaveText.setForeground(Color.white);
+                AutotsaveText.setText("NO AUTO-SAVE");
+                AutotsaveText.setBounds(25, 50, 150, 30);
+            }
+            AutosavePanel.setBounds(50, 100, 100, 100);
+            AutosavePanel.setOpaque(false);
+        }
+        spanel = new JPanel();
+        {
+            spanel.setBounds(200, 50, 100, 25);
+            spanel.setOpaque(false);
+            savecheck = new JCheckBox(" no save ");
+            savecheck.setForeground(Color.white);
+            savecheck.setOpaque(false);
+            if (player.getAutosave()) {
+                savecheck.setSelected(false);
+            } else {
+                savecheck.setSelected(true);
+            }
+            savecheck.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent event) {
+                    JCheckBox cb = (JCheckBox) event.getSource();
+                    if (cb.isSelected()) {
+                        // main.setsave(false);
+                        player.setAutosave(false);
+                    } else {
+                        // main.setsave(true);
+                        player.setAutosave(true);
+                    }
+                }
+            });
+        }
+
+        ScorePanel = new JPanel();
+        {
+            ScoreText = new JLabel();
+            {
+                ScoreText.setFont(new Font("Charter", Font.BOLD, 16));
+                ScoreText.setForeground(Color.white);
+                ScoreText.setText("NOT SHOW SCORE");
+                ScoreText.setBounds(25, 25, 150, 30);
+            }
+            ScorePanel.setBounds(150, 50, 100, 100);
+            ScorePanel.setOpaque(false);
+        }
+        scpanel = new JPanel();
+        {
+            scpanel.setBounds(200, 25, 100, 25);
+            scpanel.setOpaque(false);
+            scorecheck = new JCheckBox(" no score ");
+            scorecheck.setForeground(Color.white);
+            scorecheck.setOpaque(false);
+            if (player.getdisplay()) {
+                scorecheck.setSelected(false);
+            } else {
+                scorecheck.setSelected(true);
+            }
+
+            scorecheck.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent event) {
+                    JCheckBox cb = (JCheckBox) event.getSource();
+                    if (cb.isSelected()) {
+                        // main.setscore(false);
+                        player.setshowstory(false);
+                    } else {
+                        // main.setscore(true);
+                        player.setshowstory(true);
+
+                    }
+                }
+            });
+        }
+
+        /*bg.add(r1);
+        bg.add(r2);
+        bg.add(r3);
+        bg.add(r4);
+        bg.add(r5);
+
+        // this.add(tf);
+        // add
+        this.add(r1);
+        this.add(r2);
+        this.add(r3);
+        this.add(r4);
+        this.add(r5);*/
+        this.add(summitButton);
+        cpanel.add(cutScenecheck);
+        spanel.add(savecheck);
+        scpanel.add(scorecheck);
+        this.add(AutotsaveText);
+        this.add(cutscenesText);
+        this.add(cutScenesPanel);
+        this.add(ScorePanel);
+        this.add(ScoreText);
+        this.add(AutosavePanel);
+        this.add(cutScenesPanel);
+        this.add(cpanel);
+        this.add(spanel);
+        this.add(scpanel);
+
+        validate();
+        repaint();
+    }
+
+    public void keyTyped(KeyEvent e) {}
+
+    public void keyPressed(KeyEvent e) {
+
+        if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+            temp.dispose();
+        }
+    }
+
+    public void keyReleased(KeyEvent e) {}
+
+}

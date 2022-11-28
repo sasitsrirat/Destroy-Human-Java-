@@ -1,2 +1,2 @@
-muzix, 2,200,true,false
-babe, 3,1000,true,true
+muzix, 2,200,200,200,200,200,true,false,true
+babe, 3,150,150,100,105,150,true,true,true

@@ -45,6 +45,35 @@ public class Characterlabel extends JLabel {
         setVisible(true);
     }
 
+    public void robotheal_animation() {
+        Robot2 r = (Robot2)owner;
+        Icon healicon = new MyImageIcon(path + r.gethealimage()).resize(width, height);
+        Thread th = new Thread() {
+            public void run() {
+                parentFrame.setstagestate(4);
+                setIcon(healicon);
+                if (owner instanceof Robot) {
+                    setBounds(curX + 50, curY, width, height);
+                } else {
+                    setBounds(curX - 50, curY, width, height);
+                }
+                parentFrame.repaint();
+                validate();
+                try {
+                    Thread.currentThread();
+                    Thread.sleep(650);
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+                setIcon(staticon);
+                setBounds(curX, curY, width, height);
+                parentFrame.repaint();
+                validate();
+            }
+        };
+        th.start();
+    }
+
     public void attack_animation() {
 
         Thread th = new Thread() {
@@ -73,7 +102,8 @@ public class Characterlabel extends JLabel {
         th.start();
     }
 
-    public void rest_animation() {
+    public void rest_animation(Sound sound) {
+        sound.playOnce();
         Thread th = new Thread() {
             public void run() {
                 parentFrame.setstagestate(4);
