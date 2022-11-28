@@ -9,36 +9,38 @@ import javax.swing.event.ChangeListener;
 
 public class Optionframe extends JFrame implements ActionListener {
 
-    protected JPanel epanel;
+    protected MainMenu main;
+    protected JPanel epanel, mpanel, cpanel, spanel, scpanel;
     protected JPanel effectPanel;
-    protected JPanel mpanel;
     protected JPanel musicPanel;
     protected JPanel cutScenesPanel;
     protected JPanel AutosavePanel;
+    protected JPanel ScorePanel;
     protected JLabel AutotsaveText;
     protected JLabel cutscenesText;
     protected JLabel musicText;
     protected JLabel effectText;
+    protected JLabel ScoreText;
     protected JLabel contentpane;
     protected JLabel musiclabel;
     protected JSlider musicSlider;
     protected JSlider effectSlider;
     protected ArrayList<Sound> musicSound;
     protected ArrayList<Sound> effectSound;
-    protected JCheckBox musiccheck;
-    protected JCheckBox effectcheck;
+    protected JCheckBox musiccheck, effectcheck, cutScenecheck, savecheck, scorecheck;
     protected JToggleButton toggleButton, toggleButton_2;
     protected String path;
-    protected int frameWidth = 1366;
-    protected int frameHeight = 768;
+    protected int frameWidth = 1024;
+    protected int frameHeight = 600;
 
-    public Optionframe(ArrayList<Sound> mSound, ArrayList<Sound> eSound, String imagepath) {
+    public Optionframe(ArrayList<Sound> mSound, ArrayList<Sound> eSound, String imagepath, MainMenu m) {
         musicSound = mSound;
         effectSound = eSound;
         path = imagepath;
+        main = m;
 
         setTitle("Option");
-        setBounds(50, 50, frameWidth, frameHeight);
+        setBounds(221, 134, frameWidth, frameHeight);
         setVisible(true);
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -50,14 +52,6 @@ public class Optionframe extends JFrame implements ActionListener {
         contentpane.setLayout(null);
 
         AddComponents();
-    }
-
-    public static void main(String[] args) {
-        MainMenu m = new MainMenu();
-        final Optionframe obj = new Optionframe(m.musicSound, m.effectSound, m.imagepath);
-        obj.repaint();
-        obj.setVisible(true);
-
     }
 
     private void AddComponents() {
@@ -90,7 +84,7 @@ public class Optionframe extends JFrame implements ActionListener {
                 musicText.setBounds(80, 40, 700, 30);
             }
 
-            musicPanel.setBounds(0, 90, 800, 100);
+            musicPanel.setBounds(0, 90, 900, 100);
             musicPanel.setLayout(null);
             musicPanel.setOpaque(false);
             // musicPanel.setBackground(new Color(0,0,0,150));
@@ -101,7 +95,7 @@ public class Optionframe extends JFrame implements ActionListener {
             musicPanel.add(musiclabel);
 
             musicSlider = new JSlider(1, 10, 5);
-            musicSlider.setBounds(150, 0, 400, 75);
+            musicSlider.setBounds(150, 0, 700, 75);
             musicSlider.setOpaque(false);
             musicSlider.addChangeListener(new ChangeListener() {
                 @Override
@@ -152,9 +146,10 @@ public class Optionframe extends JFrame implements ActionListener {
 
         mpanel = new JPanel();
         {
-            mpanel.setBounds(535, 110, 100, 25);
+            mpanel.setBounds(850, 110, 100, 25);
             mpanel.setOpaque(false);
             musiccheck = new JCheckBox(" mute ");
+            musiccheck.setForeground(Color.white);
             musiccheck.setOpaque(false);
             musiccheck.addActionListener(new ActionListener() {
                 @Override
@@ -188,9 +183,9 @@ public class Optionframe extends JFrame implements ActionListener {
                 effectText.setFont(new Font("Charter", Font.BOLD, 30));
                 effectText.setForeground(Color.white);
                 effectText.setText("EFFECT VOLUME");
-                effectText.setBounds(80, 205, 700, 30);
+                effectText.setBounds(80, 185, 700, 30);
             }
-            effectPanel.setBounds(0, 250, 800, 100);
+            effectPanel.setBounds(0, 230, 900, 100);
             effectPanel.setLayout(null);
             effectPanel.setOpaque(false); // ทำให้ไม่เห็นพื้นหลังสีขาว
             // effectPanel.setBackground(new Color(0,0,0,150));
@@ -203,7 +198,7 @@ public class Optionframe extends JFrame implements ActionListener {
             effectlabel.setBounds(70, 0, 75, 75);
             effectPanel.add(effectlabel);
             effectSlider = new JSlider(1, 10, 5);
-            effectSlider.setBounds(150, 0, 400, 75);
+            effectSlider.setBounds(150, 0, 700, 75);
             effectSlider.setOpaque(false);
             effectSlider.addChangeListener(new ChangeListener() {
                 @Override
@@ -258,9 +253,10 @@ public class Optionframe extends JFrame implements ActionListener {
 
             epanel = new JPanel();
             {
-                epanel.setBounds(535, 270, 100, 25);
+                epanel.setBounds(850, 250, 100, 25);
                 epanel.setOpaque(false);
                 effectcheck = new JCheckBox(" mute ");
+                effectcheck.setForeground(Color.white);
                 effectcheck.setOpaque(false);
                 effectcheck.addActionListener(new ActionListener() {
                     @Override
@@ -294,30 +290,32 @@ public class Optionframe extends JFrame implements ActionListener {
             {
                 cutscenesText.setFont(new Font("Charter", Font.BOLD, 30));
                 cutscenesText.setForeground(Color.white);
-                cutscenesText.setText("CUTSCENES");
-                cutscenesText.setBounds(80, 360, 700, 30);
+                cutscenesText.setText("NOT SHOW STORY");
+                cutscenesText.setBounds(80, 340, 700, 30);
             }
-            cutScenesPanel.setBounds(0, 355, 700, 100);
-            cutScenesPanel.setOpaque(false); // ทำให้ไม่เห็นพื้นหลังสีขาว
-            // effectPanel.setBackground(new Color(0,0,0,150));
-
-            toggleButton = new JToggleButton("ON/OFF");
+            cutScenesPanel.setBounds(0, 335, 900, 100);
+            cutScenesPanel.setOpaque(false);
+        }
+        
+        cpanel = new JPanel();
             {
-                toggleButton.setForeground(Color.black);
-                // UIManager.put("toggleButton.selected", Color.ORANGE);
-                ItemListener itemListener = new ItemListener() {
-                    public void itemStateChanged(ItemEvent itemEvent) {
-                        int cutsceneson_off = itemEvent.getStateChange();
-                        if (cutsceneson_off == ItemEvent.SELECTED) {
-                            System.out.println("Selected Cutscenes"); // show your message here
+                cpanel.setBounds(850, 335, 100, 25);
+                cpanel.setOpaque(false);
+                cutScenecheck = new JCheckBox(" no story ");
+                cutScenecheck.setForeground(Color.white);
+                cutScenecheck.setOpaque(false);
+                cutScenecheck.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent event) {
+                        JCheckBox cb = (JCheckBox) event.getSource();
+                        if (cb.isSelected()) {
+                            main.setcutscene(false);
                         } else {
-                            System.out.println("Deselected Cutscenes"); // remove your message
+                            main.setcutscene(true);
                         }
                     }
-                };
-                toggleButton.addItemListener(itemListener);
+                });
             }
-        }
 
         AutosavePanel = new JPanel();
         {
@@ -325,55 +323,86 @@ public class Optionframe extends JFrame implements ActionListener {
             {
                 AutotsaveText.setFont(new Font("Charter", Font.BOLD, 30));
                 AutotsaveText.setForeground(Color.white);
-                AutotsaveText.setText("AUTO-SAVE");
-                AutotsaveText.setBounds(80, 430, 700, 30);
+                AutotsaveText.setText("NO AUTO-SAVE");
+                AutotsaveText.setBounds(80, 390, 700, 30);
             }
-            AutosavePanel.setBounds(0, 425, 700, 100);
-            AutosavePanel.setOpaque(false); // ทำให้ไม่เห็นพื้นหลังสีขาว
-            toggleButton_2 = new JToggleButton("ON/OFF");
+            AutosavePanel.setBounds(0, 385, 700, 100);
+            AutosavePanel.setOpaque(false);
+        }
+        spanel = new JPanel();
             {
-                toggleButton_2.setForeground(Color.black);
-                // UIManager.put("toggleButton.selected", Color.ORANGE);
-                ItemListener itemListener = new ItemListener() {
-                    public void itemStateChanged(ItemEvent itemEvent) {
-                        int autosaveonn_off = itemEvent.getStateChange();
-                        if (autosaveonn_off == ItemEvent.SELECTED) {
-                            System.out.println("Selected Autosave"); // show your message here
+                spanel.setBounds(850, 385, 100, 25);
+                spanel.setOpaque(false);
+                savecheck = new JCheckBox(" no save ");
+                savecheck.setForeground(Color.white);
+                savecheck.setOpaque(false);
+                savecheck.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent event) {
+                        JCheckBox cb = (JCheckBox) event.getSource();
+                        if (cb.isSelected()) {
+                            main.setsave(false);
                         } else {
-                            System.out.println("Deselected Autosave"); // remove your message
+                            main.setsave(true);
                         }
                     }
-                };
-                toggleButton_2.addItemListener(itemListener);
+                });
             }
-        }
-        JPanel MainPanel = new JPanel(); // black background
-        {
-            MainPanel.setBounds(0, 0, 800, 768);
-            MainPanel.setBackground(new Color(0, 0, 0, 150));
-        }
 
+        ScorePanel = new JPanel();
+        {
+            ScoreText = new JLabel();
+            {
+                ScoreText.setFont(new Font("Charter", Font.BOLD, 30));
+                ScoreText.setForeground(Color.white);
+                ScoreText.setText("NOT SHOW SCORE");
+                ScoreText.setBounds(80, 440, 700, 30);
+            }
+            ScorePanel.setBounds(0, 435, 700, 100);
+            ScorePanel.setOpaque(false);
+        }
+        scpanel = new JPanel();
+            {
+                scpanel.setBounds(850, 435, 100, 25);
+                scpanel.setOpaque(false);
+                scorecheck = new JCheckBox(" no score ");
+                scorecheck.setForeground(Color.white);
+                scorecheck.setOpaque(false);
+                scorecheck.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent event) {
+                        JCheckBox cb = (JCheckBox) event.getSource();
+                        if (cb.isSelected()) {
+                            main.setscore(false);
+                        } else {
+                            main.setscore(true);
+                        }
+                    }
+                });
+            }
+            
         mpanel.add(musiccheck);
         epanel.add(effectcheck);
+        cpanel.add(cutScenecheck);
+        spanel.add(savecheck);
+        scpanel.add(scorecheck);
         musicPanel.add(musicSlider);
         effectPanel.add(effectSlider);
-
-        contentpane.add(cutscenesText);
-        cutScenesPanel.add(toggleButton);
-
-        AutosavePanel.add(toggleButton_2);
-
         contentpane.add(musicText);
         contentpane.add(effectText);
         contentpane.add(AutotsaveText);
+        contentpane.add(cutscenesText);
+        contentpane.add(ScorePanel);
+        contentpane.add(ScoreText);
         contentpane.add(AutosavePanel);
         contentpane.add(cutScenesPanel);
         contentpane.add(mpanel);
         contentpane.add(epanel);
+        contentpane.add(cpanel);
+        contentpane.add(spanel);
+        contentpane.add(scpanel);
         contentpane.add(musicPanel);
         contentpane.add(effectPanel);
-        contentpane.add(MainPanel);
-        cutScenesPanel.add(toggleButton);
 
         validate();
     }
@@ -417,5 +446,4 @@ public class Optionframe extends JFrame implements ActionListener {
         // TODO Auto-generated method stub
 
     }
-
 }
