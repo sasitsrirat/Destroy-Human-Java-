@@ -69,12 +69,14 @@ public class Storyframe extends JFrame {
 
     public int setNextButtonPanel() {
         nextframeHandler nfHandler = new nextframeHandler();
+  
         nextButtonPanel = new JPanel();
         nextButtonPanel.setBounds(1100, 600, 150, 100);
         nextButtonPanel.setOpaque(false);
         nextButton = new JButton("NEXT >>");
-        nextButton.setBackground(Color.black);
-        nextButton.setForeground(Color.white);
+        nextButton.setBackground(Color.yellow);
+        nextButton.setForeground(Color.black);
+        nextButton.setUI(new StyledButtonUI());
         nextButtonPanel.add(nextButton);
         contentpane.add(nextButtonPanel);
         nextButton.addActionListener(nfHandler);
