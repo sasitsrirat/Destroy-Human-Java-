@@ -52,20 +52,20 @@ public class Stageframe extends JFrame {
         contentpane.setIcon(background.resize(frameWidth, frameHeight));
 
         activepoint.setIcon(background);
-        
+
         contentpane.setOpaque(false);
         contentpane.setLayout(null);
         this.addcomponent();
-        
-        ImageIcon cloud = new ImageIcon(imagepath + "HSxPUMA_Clouds.gif");
-        {
-            cloud.setImage(cloud.getImage().getScaledInstance(frameWidth, 200, Image.SCALE_REPLICATE)); //size
-            JLabel CloudPanel = new JLabel(cloud);
-            CloudPanel.setBounds(0, 0, frameWidth, 200);
-            CloudPanel.setVisible(true);
-            contentpane.add(CloudPanel);
+        if (stage != 5) {
+            ImageIcon cloud = new ImageIcon(imagepath + "HSxPUMA_Clouds.gif");
+            {
+                cloud.setImage(cloud.getImage().getScaledInstance(frameWidth, 200, Image.SCALE_REPLICATE)); // size
+                JLabel CloudPanel = new JLabel(cloud);
+                CloudPanel.setBounds(0, 0, frameWidth, 200);
+                CloudPanel.setVisible(true);
+                contentpane.add(CloudPanel);
+            }
         }
-
         validate();
         repaint();
         battle(stage, 1);
@@ -257,7 +257,6 @@ public class Stageframe extends JFrame {
                         try {
                             th.join();
                         } catch (InterruptedException e) {
-                            // TODO Auto-generated catch block
                             e.printStackTrace();
                         }
                     }
@@ -279,24 +278,23 @@ public class Stageframe extends JFrame {
                     } else {
                         showvictory();
                         try {
-                                Thread.sleep(3000);
-                            } catch (InterruptedException e1) {
-                                // TODO Auto-generated catch block
-                                e1.printStackTrace();
-                            }
+                            Thread.sleep(3000);
+                        } catch (InterruptedException e1) {
+                            e1.printStackTrace();
+                        }
                         if (stage >= 5) {
-                            
+
                             System.out.println("F");
                             main.setContentPane(main.getPane());
                         } else {
                             System.out.println("YOU WIN STAGE" + stage);
-                            //Stageframe sf = new Stageframe(imagepath, musicSound, effectSound, main, stage + 1);
-                            storyframe = new Storyframe(stage, imagepath, musicSound, effectSound, main, frameWidth,frameHeight);
                             for (Sound i : musicSound) {
-                                if ("gereBG".equals(i.getName())) {
-                                    i.stop();
-                                }
+                                i.stop();
                             }
+                            // Stageframe sf = new Stageframe(imagepath, musicSound, effectSound, main,
+                            // stage + 1);
+                            storyframe = new Storyframe(stage + 1, imagepath, musicSound, effectSound, main, frameWidth,
+                                    frameHeight);
                             main.setContentPane(storyframe.getContentpane());
                             main.validate();
                             main.repaint();
@@ -307,13 +305,11 @@ public class Stageframe extends JFrame {
                     try {
                         Thread.sleep(3000);
                     } catch (InterruptedException e1) {
-                        // TODO Auto-generated catch block
                         e1.printStackTrace();
                     }
                     System.out.println("YOU LOOSE STAGE" + stage);
                     main.setContentPane(main.getPane());
                 }
-
             }
         };
         bruh.start();
@@ -326,7 +322,6 @@ public class Stageframe extends JFrame {
             activeLabel = c.getLabel();
             showactive();
             stat.setactiveCharacter(activeLabel.getOwner());
-            // System.out.println(activeLabel.getOwner().getname());
             stat.ShowAction(activeLabel.getOwner());
 
             try {
@@ -334,6 +329,7 @@ public class Stageframe extends JFrame {
                 Thread.sleep(99999999);
             } catch (InterruptedException e) {
             }
+            stat.setactiveCharacter(activeLabel.getOwner());
             settext();
             checkdeath();
 
@@ -353,7 +349,6 @@ public class Stageframe extends JFrame {
             if (humanArraylist.get(j).checkdeath() == 1) {
                 humanArraylist.get(j).getLabel().showdeath();
                 humanArraylist.get(j).getspeedthread().stop(); // kill thread
-                System.out.printf("%s is death\n", humanArraylist.get(j).getname());
                 humanArraylist.remove(j);
                 j = j - 1;
             }
@@ -362,7 +357,6 @@ public class Stageframe extends JFrame {
             if (robotArraylist.get(j).checkdeath() == 1) {
                 robotArraylist.get(j).getLabel().showdeath();
                 robotArraylist.get(j).getspeedthread().stop(); // kill thread
-                System.out.printf("%s is death\n", robotArraylist.get(j).getname());
                 robotArraylist.remove(j);
                 j = j - 1;
             }
@@ -391,7 +385,7 @@ public class Stageframe extends JFrame {
                     targetLabel.takedmg_animation("hit.gif", i);
                 }
             }
-            Robot r = (Robot)activeLabel.getOwner();
+            Robot r = (Robot) activeLabel.getOwner();
             r.gainep(1);
             stat.settargetCharacter(targetLabel.getOwner());
             choose = 0;
@@ -524,13 +518,13 @@ public class Stageframe extends JFrame {
 
     public void action_rest() {
         stat.HideButton();
-        Robot r = (Robot)activeLabel.getOwner();
+        Robot r = (Robot) activeLabel.getOwner();
         r.gainep(2);
         for (Sound i : effectSound) {
-                if ("restEF".equals(i.getName())) {
-                    activeLabel.rest_animation( i);
-                }
+            if ("restEF".equals(i.getName())) {
+                activeLabel.rest_animation(i);
             }
+        }
         this.currentstate = 0;
         contentpane.remove(warn);
         contentpane.repaint();
@@ -539,15 +533,15 @@ public class Stageframe extends JFrame {
     }
 
     public void warnskill() {
-            warn.setText("      not enough EP ");
-            warn.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 50));
-            warn.setBackground(new Color(222, 0, 62));
-            warn.setOpaque(true);
-            warn.setForeground(Color.white);
-            warn.setBounds(423, 50, 520, 70);
-            contentpane.add(warn);
-            contentpane.repaint();
-            validate();
+        warn.setText("      not enough EP ");
+        warn.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 50));
+        warn.setBackground(new Color(222, 0, 62));
+        warn.setOpaque(true);
+        warn.setForeground(Color.white);
+        warn.setBounds(423, 50, 520, 70);
+        contentpane.add(warn);
+        contentpane.repaint();
+        validate();
     }
 
     public void showvictory() {

@@ -86,43 +86,43 @@ class StatLabel extends JLabel {
     }
 
     public void setHuLtext(int atk, int hp, int max_hp, int def, String name) {
-        Latktext.setText("ATK : " + Integer.toString(atk));
+        Latktext.setText("ATK : " + Integer.toString(atk-1) + " - " + Integer.toString(atk+1));
         Lhptext.setText("HP  : " + Integer.toString(hp) + "/ " + Integer.toString(max_hp));
         Ldeftext.setText("DEF : " + Integer.toString(def));
-        Lnametext.setText("name : " + name);
+        Lnametext.setText("NAME : " + name);
         Leptext.setVisible(false);
         repaint();
         parentFrame.repaint();
     }
 
     public void setRoLtext(int atk, int hp, int max_hp, int def, String name, int ep, int max_ep) {
-        Latktext.setText("ATK : " + Integer.toString(atk));
+        Latktext.setText("ATK : " + Integer.toString(atk-1) + " - " + Integer.toString(atk+1));
         Lhptext.setText("HP  : " + Integer.toString(hp) + "/ " + Integer.toString(max_hp));
         Ldeftext.setText("DEF : " + Integer.toString(def));
-        Lnametext.setText("name : " + name);
+        Lnametext.setText("NAME : " + name);
         Leptext.setVisible(true);
-        Leptext.setText("ep : " + Integer.toString(ep) + "/ " + Integer.toString(max_ep));
+        Leptext.setText("EP : " + Integer.toString(ep) + "/ " + Integer.toString(max_ep));
         repaint();
         parentFrame.repaint();
     }
 
     public void setHuRtext(int atk, int hp, int max_hp, int def, String name) {
-        Ratktext.setText("ATK : " + Integer.toString(atk));
+        Ratktext.setText("ATK : " + Integer.toString(atk-1) + " - " + Integer.toString(atk+1));
         Rhptext.setText("HP  : " + Integer.toString(hp) + "/ " + Integer.toString(max_hp));
         Rdeftext.setText("DEF : " + Integer.toString(def));
-        Rnametext.setText("name : " + name);
+        Rnametext.setText("NAME : " + name);
         Reptext.setVisible(false);
         repaint();
         parentFrame.repaint();
     }
 
     public void setRoRtext(int atk, int hp, int max_hp, int def, String name, int ep, int max_ep) {
-        Ratktext.setText("ATK : " + Integer.toString(atk));
+        Ratktext.setText("ATK : " + Integer.toString(atk-1) + " - " + Integer.toString(atk+1));
         Rhptext.setText("HP  : " + Integer.toString(hp) + "/ " + Integer.toString(max_hp));
         Rdeftext.setText("DEF : " + Integer.toString(def));
-        Rnametext.setText("name : " + name);
+        Rnametext.setText("NAME : " + name);
         Reptext.setVisible(true);
-        Reptext.setText("ep : " + Integer.toString(ep) + "/ " + Integer.toString(max_ep));
+        Reptext.setText("EP : " + Integer.toString(ep) + "/ " + Integer.toString(max_ep));
         repaint();
         parentFrame.repaint();
     }

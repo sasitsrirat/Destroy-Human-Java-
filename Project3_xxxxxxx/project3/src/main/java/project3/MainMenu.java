@@ -56,10 +56,10 @@ public class MainMenu extends JFrame {
     protected MainMenu main = this;
 
     public MainMenu() {
-        imagepath = "project3/Project3_xxxxxxx/project3/src/pictures/";// "src/pictures/"; //
+        imagepath = "src/pictures/";// "src/pictures/"; //
                                                                        // "project3/Project3_xxxxxxx/project3/src/pictures/"
-        soundpath = "project3/Project3_xxxxxxx/project3/src/sounds/";
-        path = "project3/Project3_xxxxxxx/project3/src/main/java/project3/"; // project3\Project3_xxxxxxx\project3\src\main\java\project3\info.txt
+        soundpath = "src/sounds/";
+        path = "src/main/java/project3/"; // project3\Project3_xxxxxxx\project3\src\main\java\project3\info.txt
 
         // set background music
         musicSound.add(new Sound(soundpath + "BossTime.wav", "mainmenuBG"));
@@ -94,16 +94,12 @@ public class MainMenu extends JFrame {
 
         // set background gif
         ImageIcon imageIcon = new ImageIcon(imagepath + "roboyscofi.gif");
-        imageIcon.setImage(imageIcon.getImage().getScaledInstance(frameWidth, frameHeight, Image.SCALE_DEFAULT)); // size
-        // of
-        // background
+        imageIcon.setImage(imageIcon.getImage().getScaledInstance(frameWidth, frameHeight, Image.SCALE_DEFAULT));
         contentPane = new JLabel();
         contentPane.setIcon(imageIcon);
         contentPane.setLayout(null);
         setContentPane(contentPane);
         MainMenu main = this;
-
-        // add playerinfo to arryaylist
         Filemanage scan = new Filemanage();
         scan.filescan(playerArraylist, path, "info.txt");
 
@@ -112,10 +108,8 @@ public class MainMenu extends JFrame {
             playButton.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
             playButton.setBackground(new Color(222, 0, 62));
             playButton.setForeground(Color.white);
-            // customize the button with your own look
             playButton.setUI(new StyledButtonUI());
             playButton.setForeground(new Color(255, 255, 255));
-            // playButton.setBounds(100, 100, 200, 50);
             playButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
@@ -124,23 +118,6 @@ public class MainMenu extends JFrame {
                             i.playOnce();
                         }
                     }
-                    for (Sound i : musicSound) {
-                        if ("mainmenuBG".equals(i.getName())) {
-                            i.stop();
-                        }
-                    }
-                    /*
-                     * sframe = new Stageframe(imagepath, musicSound, effectSound, main, 1); // play
-                     * for first time stage 1
-                     * setTitle("Stage");
-                     * 
-                     * setContentPane(sframe.getContentpane());
-                     */
-                    /*
-                     * strframe = new Storyframe(1);
-                     * setContentPane(sframe.getContentpane());
-                     */
-                    // -------------------------------------------------- //ask for name
                     JDialog d = new JDialog(main, "User");
                     d.setSize(500, 300);
                     d.setBounds(250, 250, 500, 200);
@@ -153,28 +130,18 @@ public class MainMenu extends JFrame {
                         public void keyPressed(KeyEvent e) {
 
                             if (e.getKeyCode() == 10) {
-                                // tf.setText("");
                                 d.dispose();
                             }
-
                         }
 
                         public void keyReleased(KeyEvent e) {
                         }
 
                     });
+
                     Mytextpanel tl = new Mytextpanel(d, main, currentplayer, playerArraylist);
                     d.add(tl);
                     d.setVisible(true);
-                    // --------------------------------------------------
-
-                    /*
-                     * Storyframe strframe = new Storyframe(1, imagepath, musicSound, effectSound,
-                     * main, frameWidth,
-                     * frameHeight);
-                     * setTitle("STORY");
-                     * setContentPane(strframe.getContentPane());
-                     */
                     validate();
                 }
             });
@@ -450,16 +417,14 @@ class Mytextpanel extends JPanel {
         tf.setBounds(25, 25, 300, 50);
         tf.addKeyListener(new KeyListener() {
             public void keyTyped(KeyEvent e) {
-                System.out.printf("t >>  %c  (%s) \n", e.getKeyChar(), e.getKeyText(e.getKeyCode()));
-                // String current = tf.getText();
             }
 
             @Override
             public void keyPressed(KeyEvent e) {
 
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    String nametext = tf.getText();
-                    System.out.println(nametext);
+                    //String nametext = tf.getText();
+                    //System.out.println(nametext);
                     temp.dispose();
 
                     JDialog d2;
@@ -487,22 +452,9 @@ class Mytextpanel extends JPanel {
 
             summitButton.setForeground(new Color(255, 255, 255));
             summitButton.setBounds(350, 25, 100, 50);
-            // playButton.setBounds(100, 100, 200, 50);
             summitButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
-                    /*
-                     * for (Sound i : effectSound) {
-                     * if ("clickEF".equals(i.getName())) {
-                     * i.playOnce();
-                     * }
-                     * }
-                     * for (Sound i : musicSound) {
-                     * if ("mainmenuBG".equals(i.getName())) {
-                     * i.stop();
-                     * }
-                     * }
-                     */
                     String nametext = tf.getText();
                     player = checkplayer(playerarraylist, nametext);
                     // System.out.println(nametext);

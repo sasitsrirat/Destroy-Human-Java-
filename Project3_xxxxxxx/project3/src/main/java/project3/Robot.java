@@ -73,7 +73,7 @@ class Robot2 extends Robot {
     }
 
     public String gethealimage() {
-        return "robot2-heal-01";
+        return "robot2-heal-01.png";
     }
 }
 
