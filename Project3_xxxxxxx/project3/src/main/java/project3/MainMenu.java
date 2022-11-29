@@ -57,7 +57,7 @@ public class MainMenu extends JFrame {
 
     public MainMenu() {
         imagepath = "src/pictures/";// "src/pictures/"; //
-                                                                       // "project3/Project3_xxxxxxx/project3/src/pictures/"
+                                    // "project3/Project3_xxxxxxx/project3/src/pictures/"
         soundpath = "src/sounds/";
         path = "src/main/java/project3/"; // project3\Project3_xxxxxxx\project3\src\main\java\project3\info.txt
 
@@ -81,6 +81,7 @@ public class MainMenu extends JFrame {
         effectSound.add(new Sound(soundpath + "heal_robot.wav", "robotskill2EF"));
         effectSound.add(new Sound(soundpath + "bombef.wav", "robotskill3EF"));
         effectSound.add(new Sound(soundpath + "punch.wav", "humannormalattackEF"));
+        effectSound.add(new Sound(soundpath + "gunEF.wav", "humangunEF"));
         effectSound.add(new Sound(soundpath + "victoryEF.wav", "victoryEF"));
         effectSound.add(new Sound(soundpath + "defeatEF.wav", "defeatEF"));
         effectSound.add(new Sound(soundpath + "restEF.wav", "restEF"));
@@ -352,7 +353,9 @@ public class MainMenu extends JFrame {
             }
         }
         sframe = new Stageframe(imagepath, musicSound, effectSound, main, a);
+        setTitle("Stage");
         setContentPane(sframe.getContentpane());
+        validate();
     }
 
     public static void main(String[] args) {
@@ -423,8 +426,8 @@ class Mytextpanel extends JPanel {
             public void keyPressed(KeyEvent e) {
 
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    //String nametext = tf.getText();
-                    //System.out.println(nametext);
+                    String nametext = tf.getText();
+                    player = checkplayer(playerarraylist, nametext);
                     temp.dispose();
 
                     JDialog d2;
@@ -469,7 +472,8 @@ class Mytextpanel extends JPanel {
                     d2.add(t2);
                     d2.setVisible(true);
                     d2.addKeyListener(new KeyListener() {
-                        public void keyTyped(KeyEvent e) {}
+                        public void keyTyped(KeyEvent e) {
+                        }
 
                         public void keyPressed(KeyEvent e) {
 
@@ -479,7 +483,8 @@ class Mytextpanel extends JPanel {
 
                         }
 
-                        public void keyReleased(KeyEvent e) {}
+                        public void keyReleased(KeyEvent e) {
+                        }
 
                     });
 
@@ -521,7 +526,7 @@ class Mytextpanel2 extends JPanel {
         temp = t;
         player = p;
         main = m;
-        
+
         setVisible(true);
         setBackground(new Color(64, 64, 196));
         // setBounds(50,50,200,500);
@@ -541,74 +546,71 @@ class Mytextpanel2 extends JPanel {
         ButtonGroup bg = new ButtonGroup();
         // button
         System.out.println(player.getstage());
-        if(player.getstage()>=1){
-        JRadioButton r1 = new JRadioButton("Stage 1");
-        r1.setBounds(25, 120, 75, 20);
-        r1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                stage = 1;
-    
-            }
-        });
-        bg.add(r1);
-        this.add(r1);
-        }
-        if(player.getstage()>=2){
-        JRadioButton r2 = new JRadioButton("Stage 2");
-        r2.setBounds(100, 120, 75, 20);
-        r2.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                stage = 2;
-    
-            }
-        });
-        bg.add(r2);
-        this.add(r2);
-        }
-        if(player.getstage()>=3){
-        JRadioButton r3 = new JRadioButton("Stage 3");
-        r3.setBounds(175, 120, 75, 20);
-        r3.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                stage = 3;
-    
-            }
-        });
-        bg.add(r3);
-        this.add(r3);
-        }
-        if(player.getstage()>=4){
-        JRadioButton r4 = new JRadioButton("Stage 4");
-        r4.setBounds(250, 120, 75, 20);
-        r4.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                stage = 4;
-    
-            }
-        });
-        bg.add(r4);
-        this.add(r4);
-        }
-        if(player.getstage()>=5){
-        JRadioButton r5 = new JRadioButton("Stage 4");
-        r5.setBounds(325, 120, 75, 20);
-        r5.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                stage = 5;
-    
-            }
-        });
-        bg.add(r5);
-        this.add(r5);
-        }
-        
+        if (player.getstage() >= 1) {
+            JRadioButton r1 = new JRadioButton("Stage 1");
+            r1.setBounds(25, 120, 75, 20);
+            r1.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    stage = 1;
 
-        
+                }
+            });
+            bg.add(r1);
+            this.add(r1);
+        }
+        if (player.getstage() >= 2) {
+            JRadioButton r2 = new JRadioButton("Stage 2");
+            r2.setBounds(100, 120, 75, 20);
+            r2.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    stage = 2;
+
+                }
+            });
+            bg.add(r2);
+            this.add(r2);
+        }
+        if (player.getstage() >= 3) {
+            JRadioButton r3 = new JRadioButton("Stage 3");
+            r3.setBounds(175, 120, 75, 20);
+            r3.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    stage = 3;
+
+                }
+            });
+            bg.add(r3);
+            this.add(r3);
+        }
+        if (player.getstage() >= 4) {
+            JRadioButton r4 = new JRadioButton("Stage 4");
+            r4.setBounds(250, 120, 75, 20);
+            r4.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    stage = 4;
+
+                }
+            });
+            bg.add(r4);
+            this.add(r4);
+        }
+        if (player.getstage() >= 5) {
+            JRadioButton r5 = new JRadioButton("Stage 4");
+            r5.setBounds(325, 120, 75, 20);
+            r5.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    stage = 5;
+
+                }
+            });
+            bg.add(r5);
+            this.add(r5);
+        }
 
         // summit button
         JButton summitButton = new JButton("submit");
@@ -625,12 +627,12 @@ class Mytextpanel2 extends JPanel {
                 public void actionPerformed(ActionEvent event) {
                     temp.dispose();
                     System.out.println(stage);
-                    if(player.getshowstory()){
+                    if (player.getshowstory()) {
                         main.startstory(stage);
-                    }else {
+                    } else {
                         main.startstage(stage);
                     }
-                    
+
                 }
             });
         }
@@ -751,19 +753,21 @@ class Mytextpanel2 extends JPanel {
             });
         }
 
-        /*bg.add(r1);
-        bg.add(r2);
-        bg.add(r3);
-        bg.add(r4);
-        bg.add(r5);
-
-        // this.add(tf);
-        // add
-        this.add(r1);
-        this.add(r2);
-        this.add(r3);
-        this.add(r4);
-        this.add(r5);*/
+        /*
+         * bg.add(r1);
+         * bg.add(r2);
+         * bg.add(r3);
+         * bg.add(r4);
+         * bg.add(r5);
+         * 
+         * // this.add(tf);
+         * // add
+         * this.add(r1);
+         * this.add(r2);
+         * this.add(r3);
+         * this.add(r4);
+         * this.add(r5);
+         */
         this.add(summitButton);
         cpanel.add(cutScenecheck);
         spanel.add(savecheck);
@@ -783,7 +787,8 @@ class Mytextpanel2 extends JPanel {
         repaint();
     }
 
-    public void keyTyped(KeyEvent e) {}
+    public void keyTyped(KeyEvent e) {
+    }
 
     public void keyPressed(KeyEvent e) {
 
@@ -792,6 +797,7 @@ class Mytextpanel2 extends JPanel {
         }
     }
 
-    public void keyReleased(KeyEvent e) {}
+    public void keyReleased(KeyEvent e) {
+    }
 
 }

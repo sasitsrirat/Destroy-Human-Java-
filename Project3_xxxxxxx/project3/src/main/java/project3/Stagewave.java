@@ -27,9 +27,9 @@ public class Stagewave {
 
     // Human //////////////////////////
     public void humanstage1_1() {
-        hu1 = new Human_weak("kawin", frame);
-        hu2 = new Human_weak("kong", frame);
-        hu3 = new Human_fat("Eakky", frame);
+        hu1 = new Human_soldier("kawin", frame);
+        hu2 = new Human_soldier("kong", frame);
+        hu3 = new Human_soldier("Eakky", frame);
         hu1.setposition(4);
         hu2.setposition(5);
         hu3.setposition(6);

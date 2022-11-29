@@ -167,7 +167,7 @@ public class Characterlabel extends JLabel {
                 public void run() {
                     try {
                         Thread.currentThread();
-                        Thread.sleep(1500);
+                        Thread.sleep(1750);
                     } catch (InterruptedException ex) {
                         Thread.currentThread().interrupt();
                     }

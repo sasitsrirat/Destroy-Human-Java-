@@ -335,7 +335,7 @@ public class Stageframe extends JFrame {
 
             try {
                 Thread.currentThread();
-                Thread.sleep(2500);
+                Thread.sleep(2250);
             } catch (InterruptedException e) {
 
             }
@@ -410,12 +410,23 @@ public class Stageframe extends JFrame {
     }
 
     public void human_attack() {
-        activeLabel.getOwner().attack(targetLabel.getOwner());
         activeLabel.attack_animation();
+        if(activeLabel.getOwner() instanceof Human_soldier){
+            for (Robot ro : robotArraylist){
+                activeLabel.getOwner().attack(ro);
+                for (Sound i : effectSound) {
+                    if ("humangunEF".equals(i.getName())) {
+                        ro.getLabel().takedmg_animation("gunfire.gif", i);
+                    }
+                }
+            }
+        }else {
+            activeLabel.getOwner().attack(targetLabel.getOwner());
         for (Sound i : effectSound) {
             if ("humannormalattackEF".equals(i.getName())) {
                 targetLabel.takedmg_animation("hit.gif", i);
             }
+        }
         }
         stat.settargetCharacter(targetLabel.getOwner());
         targetLabel = null;
