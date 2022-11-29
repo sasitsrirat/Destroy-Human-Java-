@@ -306,7 +306,7 @@ class StatLabel extends JLabel {
             this.add(restinfo);
         } else if (ch instanceof Robot2) {
             skillButton.setIcon(new MyImageIcon(imagepath + "skill_heal.png").resize(40, 40));
-            skillinfo.setText("use  3 EP --- Recovery an Ally with (atk * 2) HP");
+            skillinfo.setText("use  3 EP --- Recovery an Ally with (atk * 3) HP");
             this.add(attackButton);
             this.add(attackinfo);
             this.add(skillButton);

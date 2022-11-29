@@ -23,13 +23,12 @@ public class Character extends Thread implements Comparable<Character> {
     public Character() {
     }
 
-    public Character(String n, int h, int a, int d, int s, String i, String ai, String di, Stageframe sf) {
+    public Character(String n, int h, int a, int d, String i, String ai, String di, Stageframe sf) {
         name = n;
         hp = h;
         max_hp = h;
         atk = a;
         def = d;
-        spd = s;
         imagefile = i;
         attackimagefile = ai;
         deathimagefile = di;

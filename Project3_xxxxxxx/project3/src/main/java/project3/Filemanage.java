@@ -67,7 +67,7 @@ public class Filemanage {
                 if(p.getshowstory()){
                     showstory = true;
                 }
-                output.printf("%s,%d,%d,%d,%d,%d,%d,%s,%s,%s\n",p.getname(),p.getstage(),p.getscore(1),p.getscore(2),p.getscore(3),p.getscore(4),p.getscore(5),displayscore,Autosave,showstory);
+                output.printf("%s,%d,%d,%d,%d,%d,%d,%s,%s,%s \n",p.getname(),p.getstage(),p.getscore(1),p.getscore(2),p.getscore(3),p.getscore(4),p.getscore(5),displayscore,Autosave,showstory);
             }
         output.close();
         }catch(Exception e){

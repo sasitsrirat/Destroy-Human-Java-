@@ -11,11 +11,11 @@ public class Storyframe extends JFrame{
     private int frameWidth;
     private int stage;
     private Font storyFont = new Font("Times New Roman", Font.PLAIN, 52);
-    private JLabel story1, story2, story3, story4, story5;
+    private JLabel story1, story2, story3, story4, story5, endstory;
     private JLabel contentpane;
     private JPanel nextButtonPanel;
     private JButton nextButton;
-    private JTextArea story1Text, story2Text, story3Text, story4Text, story5Text;
+    private JTextArea story1Text, story2Text, story3Text, story4Text, story5Text, endstoryText;
     protected Stageframe sframe;
     protected Storyframe strframe;
     protected MainMenu mainMenu;
@@ -220,7 +220,7 @@ public class Storyframe extends JFrame{
             @Override
             public void run() {
                 while (true) {
-                    story1.setLocation(scurX, scurY);
+                    story3.setLocation(scurX, scurY);
                     scurY -= 5;
                     if (scurY < 50) {
                         nextButtonPanel.setVisible(true);
@@ -257,7 +257,7 @@ public class Storyframe extends JFrame{
             @Override
             public void run() {
                 while (true) {
-                    story1.setLocation(scurX, scurY);
+                    story4.setLocation(scurX, scurY);
                     scurY -= 5;
                     if (scurY < 50) {
                         nextButtonPanel.setVisible(true);
@@ -292,15 +292,53 @@ public class Storyframe extends JFrame{
 
         Thread animation = new Thread(new Runnable() {
             @Override
-            public void run() {
+            public void run() { 
                 while (true) {
-                    story1.setLocation(scurX, scurY);
+                    story5.setLocation(scurX, scurY);
                     scurY -= 5;
                     if (scurY < 50) {
                         nextButtonPanel.setVisible(true);
                     }
                     try {
                         Thread.sleep(100);
+                    } catch (Exception e) {
+
+                    }
+                }
+            }
+        });
+        animation.start();
+
+        validate();
+        repaint();
+    }
+
+    public void endstory() {
+        endstory = new JLabel();
+        endstory.setBounds(100, 100, 1100, 700);
+        contentpane.add(endstory);
+
+        endstoryText = new JTextArea(
+                 "Finally, robot can take the Robot Factory back. \nFactory produced a large number of robots to do" +
+                 "\nevery human occupation. After the robots wiped off\nall of humanity on Earth, the robot civilization \nbegan to spread throughout the universe.");
+        endstoryText.setBounds(100, 100, frameWidth, frameHeight);
+        endstoryText.setOpaque(false);
+        endstoryText.setForeground(Color.orange);
+        endstoryText.setFont(storyFont);
+        endstoryText.setLineWrap(true);
+        endstory.add(endstoryText);
+
+        Thread animation = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    endstory.setLocation(scurX, scurY);
+                    scurY -= 5;
+                    if (scurY < 25) {
+                        nextButtonPanel.setVisible(true);
+                    }
+                    try {
+                        Thread.sleep(300);
                     } catch (Exception e) {
 
                     }

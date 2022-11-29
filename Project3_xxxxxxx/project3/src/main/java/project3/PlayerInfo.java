@@ -2,7 +2,9 @@ package project3;
 
 public class PlayerInfo implements Comparable<PlayerInfo>{
     private String name;
-    private int score1=0,score2=0,score3=0,score4=0,score5=0;
+    private int[] score = {0,0,0,0,0};
+    //private int score1=0,score2=0,score3=0,score4=0,score5=0;
+    private int totalscore;
     private int stage = 1;
     private boolean scoreboarddisplay = true; //default true
     private boolean Autosave = true; // default true
@@ -13,11 +15,9 @@ public class PlayerInfo implements Comparable<PlayerInfo>{
         this.name = name;
         this.Autosave = save;
         this.stage = stage;
-        this.score1 = score1;
-        this.score2 = score2;
-        this.score3 = score3;
-        this.score4 = score4;
-        this.score5 = score5;
+        for(int i = 0; i < 5; i++){
+            score[i] = score1;
+        }
         this.scoreboarddisplay = display;
         this.watchstory = story;
 
@@ -26,15 +26,7 @@ public class PlayerInfo implements Comparable<PlayerInfo>{
         return name;
     }
     public int getscore(int s){
-        
-        switch(s){
-            case 1: return score1;
-            case 2: return score2;
-            case 3: return score3; 
-            case 4: return score4;
-            case 5: return score5; 
-        }
-        return 0;
+        return this.score[s - 1];
     }
     public boolean getdisplay(){
         return scoreboarddisplay;
@@ -53,13 +45,7 @@ public class PlayerInfo implements Comparable<PlayerInfo>{
         name = n;
     }
     public void setscore(int score,int stage){
-        switch(stage){
-            case 1:  score1=score; break;
-            case 2:  score2=score; break;
-            case 3:  score3=score; break;
-            case 4:  score4=score; break;
-            case 5:  score5=score; break;
-        }
+        this.score[stage - 1 ] = score;
     }
     public void setdisplay(boolean d){
         scoreboarddisplay = d;
@@ -74,6 +60,14 @@ public class PlayerInfo implements Comparable<PlayerInfo>{
         stage = s;
     }
     public int compareTo(PlayerInfo other){
+        if(this.totalscore>other.totalscore){
+            return -1;
+        }else
         return 1;
+    }
+    public void settotalscore(){
+        for(int i =0 ; i<score.length; i++){
+        this.totalscore += score[i];
+        }
     }
 }

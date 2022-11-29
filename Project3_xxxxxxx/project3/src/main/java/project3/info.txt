@@ -1,2 +1,4 @@
-muzix, 2,200,200,200,200,200,true,false,true
-babe, 3,150,150,100,105,150,true,true,true
+muzix,2,200,200,200,200,200,true,false,true 
+kawinz,5,200,200,200,200,200,true,false,true 
+n2y2,2,200,200,200,200,200,true,false,true 
+babe,3,150,150,150,150,150,true,true,true 

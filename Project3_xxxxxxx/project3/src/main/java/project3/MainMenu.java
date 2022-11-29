@@ -8,6 +8,7 @@ import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.lang.*;
 
 //Class for design Button like CSS
@@ -38,7 +39,7 @@ class StyledButtonUI extends BasicButtonUI {
     }
 }
 
-public class MainMenu extends JFrame {
+public class MainMenu extends JFrame implements WindowListener {
     private final int frameWidth = 1366, frameHeight = 768; // Don't Change it.
     protected Stageframe sframe;
     private JLabel contentPane; // JLabel contentPane = new JLabel;
@@ -52,14 +53,16 @@ public class MainMenu extends JFrame {
     public String imagepath, soundpath, path;
     protected ArrayList<PlayerInfo> playerArraylist = new ArrayList<PlayerInfo>();
     protected PlayerInfo currentplayer;
+    protected Filemanage scan = new Filemanage();
 
     protected MainMenu main = this;
 
     public MainMenu() {
-        imagepath = "src/pictures/";// "src/pictures/"; //
-                                    // "project3/Project3_xxxxxxx/project3/src/pictures/"
-        soundpath = "src/sounds/";
-        path = "src/main/java/project3/"; // project3\Project3_xxxxxxx\project3\src\main\java\project3\info.txt
+        imagepath = "project3/Project3_xxxxxxx/project3/src/pictures/";// "src/pictures/"; //
+        // "project3/Project3_xxxxxxx/project3/src/pictures/"
+        soundpath = "project3/Project3_xxxxxxx/project3/src/sounds/";
+        path = "project3/Project3_xxxxxxx/project3/src/main/java/project3/";// "src/main/java/project3/"; //
+                                                                            // project3\Project3_xxxxxxx\project3\src\main\java\project3\info.txt
 
         // set background music
         musicSound.add(new Sound(soundpath + "BossTime.wav", "mainmenuBG"));
@@ -93,6 +96,7 @@ public class MainMenu extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
 
+        addWindowListener(this);
         // set background gif
         ImageIcon imageIcon = new ImageIcon(imagepath + "roboyscofi.gif");
         imageIcon.setImage(imageIcon.getImage().getScaledInstance(frameWidth, frameHeight, Image.SCALE_DEFAULT));
@@ -101,7 +105,7 @@ public class MainMenu extends JFrame {
         contentPane.setLayout(null);
         setContentPane(contentPane);
         MainMenu main = this;
-        Filemanage scan = new Filemanage();
+        //Filemanage scan = new Filemanage();
         scan.filescan(playerArraylist, path, "info.txt");
 
         JButton playButton = new JButton("PLAY");
@@ -140,7 +144,7 @@ public class MainMenu extends JFrame {
 
                     });
 
-                    Mytextpanel tl = new Mytextpanel(d, main, currentplayer, playerArraylist);
+                    Mytextpanel tl = new Mytextpanel(d, main, playerArraylist);
                     d.add(tl);
                     d.setVisible(true);
                     validate();
@@ -179,7 +183,6 @@ public class MainMenu extends JFrame {
             // customize the button with your own look
             tutorialButton.setUI(new StyledButtonUI());
             tutorialButton.setForeground(new Color(255, 255, 255));
-            // tutorialButton.setBounds(608, 250, 150, 50);
             tutorialButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
@@ -203,7 +206,6 @@ public class MainMenu extends JFrame {
             // customize the button with your own look
             scoreButton.setUI(new StyledButtonUI());
             scoreButton.setForeground(new Color(255, 255, 255));
-            // tutorialButton.setBounds(608, 250, 150, 50);
             scoreButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
@@ -212,13 +214,16 @@ public class MainMenu extends JFrame {
                             i.playOnce();
                         }
                     }
-                    if (scoreframe == null)
-                        try {
-                            scoreframe = new Scoreframe();
-                        } catch (FileNotFoundException e) {
-                        }
-                    else
-                        scoreframe.setVisible(true);
+                    openscore();
+                    /*
+                     * if (scoreframe == null)
+                     * try {
+                     * scoreframe = new Scoreframe();
+                     * } catch (FileNotFoundException e) {
+                     * }
+                     * else
+                     * scoreframe.setVisible(true);
+                     */
                 }
             });
         }
@@ -275,6 +280,15 @@ public class MainMenu extends JFrame {
                         d.add(b2);
 
                         // d.add(b2);
+
+                        //save to file when quit
+                        for(PlayerInfo p : playerArraylist){
+                            p.settotalscore();
+                        }
+                        Collections.sort(playerArraylist);
+                        scan.filewrite(playerArraylist,path,"info.txt");
+
+
                         b1.addActionListener(e -> System.exit(0));
                         b2.addActionListener(e -> d.dispose());
                         d.getContentPane();
@@ -320,6 +334,18 @@ public class MainMenu extends JFrame {
 
     }
 
+    public void setCurrentplayer(PlayerInfo p) {
+        currentplayer = p;
+    }
+
+    public PlayerInfo getCurrentplayer() {
+        return currentplayer;
+    }
+
+    public ArrayList<PlayerInfo> getplayerarraylist() {
+        return playerArraylist;
+    }
+
     public JLabel getPane() {
         return contentPane;
     }
@@ -334,6 +360,16 @@ public class MainMenu extends JFrame {
 
     public void setscore(boolean a) {
         showscore = a;
+    }
+
+    public void openscore() {
+        if (scoreframe == null)
+            try {
+                scoreframe = new Scoreframe();
+            } catch (FileNotFoundException e) {
+            }
+        else
+            scoreframe.setVisible(true);
     }
 
     public void startstory(int a) {
@@ -358,8 +394,30 @@ public class MainMenu extends JFrame {
         validate();
     }
 
+    @Override
+    public void windowOpened(WindowEvent e) {}
+        
+
+   
+    @Override
+    public void windowClosing(WindowEvent e) // or used window close // closing
+    {
+        for(PlayerInfo p : playerArraylist){
+            p.settotalscore();
+        }
+        Collections.sort(playerArraylist);
+        /*for(PlayerInfo p : playerArraylist){
+            System.out.println(p);
+        }*/
+        scan.filewrite(playerArraylist,path,"info.txt");
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) // window close
+    {
+    }
+
     public static void main(String[] args) {
-        // displayJFrame();
         try {
             Introframe introframe = new Introframe();
             introframe.setVisible(true);
@@ -368,6 +426,26 @@ public class MainMenu extends JFrame {
             // Stageframe stageframe = new Stageframe("src/pictures", "src/sounds",1);
         } catch (Exception e) {
         }
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+        
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+        
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+       
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+        
     }
 }
 
@@ -397,10 +475,9 @@ class Mytextpanel extends JPanel {
     PlayerInfo player;
     ArrayList<PlayerInfo> playerarraylist;
 
-    public Mytextpanel(JDialog t, MainMenu nu, PlayerInfo p, ArrayList<PlayerInfo> playerarraylist) {
+    public Mytextpanel(JDialog t, MainMenu nu, ArrayList<PlayerInfo> playerarraylist) {
         temp = t;
         main = nu;
-        player = p;
         this.playerarraylist = playerarraylist;
         setVisible(true);
         setBackground(new Color(64, 64, 196));
@@ -435,7 +512,7 @@ class Mytextpanel extends JPanel {
 
                     d2.setSize(500, 300);
                     d2.setBounds(250, 250, 500, 200);
-                    Mytextpanel2 t2 = new Mytextpanel2(d2, player, main);
+                    Mytextpanel2 t2 = new Mytextpanel2(d2, main.getCurrentplayer(), main);
                     d2.add(t2);
                     d2.setVisible(true);
                 }
@@ -459,8 +536,9 @@ class Mytextpanel extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent event) {
                     String nametext = tf.getText();
-                    player = checkplayer(playerarraylist, nametext);
-                    // System.out.println(nametext);
+                    // set current player
+                    main.setCurrentplayer(checkplayer(playerarraylist, nametext)); // = checkplayer(playerarraylist,
+                                                                                   // nametext);
                     temp.dispose();
 
                     JDialog d2;
@@ -468,7 +546,7 @@ class Mytextpanel extends JPanel {
 
                     d2.setSize(500, 300);
                     d2.setBounds(250, 250, 500, 200);
-                    Mytextpanel2 t2 = new Mytextpanel2(d2, player, main);
+                    Mytextpanel2 t2 = new Mytextpanel2(d2, main.getCurrentplayer(), main);
                     d2.add(t2);
                     d2.setVisible(true);
                     d2.addKeyListener(new KeyListener() {
@@ -558,6 +636,9 @@ class Mytextpanel2 extends JPanel {
             });
             bg.add(r1);
             this.add(r1);
+            // default stage
+            r1.setSelected(true);
+            stage = 1;
         }
         if (player.getstage() >= 2) {
             JRadioButton r2 = new JRadioButton("Stage 2");
@@ -599,7 +680,7 @@ class Mytextpanel2 extends JPanel {
             this.add(r4);
         }
         if (player.getstage() >= 5) {
-            JRadioButton r5 = new JRadioButton("Stage 4");
+            JRadioButton r5 = new JRadioButton("Stage 5");
             r5.setBounds(325, 120, 75, 20);
             r5.addActionListener(new ActionListener() {
                 @Override
@@ -611,7 +692,6 @@ class Mytextpanel2 extends JPanel {
             bg.add(r5);
             this.add(r5);
         }
-
         // summit button
         JButton summitButton = new JButton("submit");
         {

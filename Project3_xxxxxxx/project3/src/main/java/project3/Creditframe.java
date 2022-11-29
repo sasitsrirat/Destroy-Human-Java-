@@ -33,13 +33,14 @@ public class Creditframe extends JFrame
         contentPane = new JLabel();
 
         setContentPane(contentPane = new JLabel());
-        ImageIcon imageIcon = new ImageIcon(path + "cityrobot.gif");
+        ImageIcon imageIcon = new ImageIcon(path + "inside.gif");
         imageIcon.setImage(imageIcon.getImage().getScaledInstance(frameWidth, frameHeight, Image.SCALE_DEFAULT));
         contentPane.setIcon(imageIcon);
         
         JButton backButton = new JButton("Back");
         {
-            backButton.setBounds(1000, 630, 100, 25);
+            backButton.setBounds(frameWidth/2, 670, 100, 60);
+            backButton.setUI(new StyledButtonUI());
             contentPane.add(backButton);
             backButton.addActionListener(new ActionListener() {
                 @Override
@@ -55,38 +56,42 @@ public class Creditframe extends JFrame
         subPanel_1 = new JPanel();
         {
             JLabel picLabel = new JLabel();
-            ImageIcon imgThisImg = new ImageIcon(path + "Music_max.png");
-            picLabel.setIcon(imgThisImg);
+            ImageIcon imgThisImg = new ImageIcon(new ImageIcon(path + "user1.png").getImage().getScaledInstance(250, 300, Image.SCALE_DEFAULT));
             picLabel.setSize(300, 400);
-           
-            subPanel_1.setBackground(Color.BLUE);
-            subPanel_1.setBounds(0, 0, frameWidth/4, 600);
-            JLabel text_1 = new JLabel("Mr.Ravipol Chayeraksa");
-            text_1.setFont(new Font("Tahoma", Font.PLAIN, 30));
-            text_1.setForeground(new Color(0,0,0)); 
-            
+            picLabel.setIcon(imgThisImg);
+
+            subPanel_1.setOpaque(false);
+            //subPanel_1.setBackground(new Color(71, 157, 83,40));
+            subPanel_1.setBounds(0, 90, frameWidth/4, 500);
+
+            JLabel text_1 = new JLabel("<html><font size = '6' color=white> Ravipol Chayeraksa</font></html>");
+            JLabel text_1ID = new JLabel ("<html><font size='16' color=white> 6413XXX</font></html>");
+
             subPanel_1.add(picLabel);
             subPanel_1.add(text_1);
+            subPanel_1.add(text_1ID);
             contentPane.add(subPanel_1);
+
             validate();
             repaint();
         }
         subPanel_2 = new JPanel();
         {
             JLabel picLabel = new JLabel();
-            ImageIcon imgThisImg = new ImageIcon(path + "Music_mute.png");
-            picLabel.setIcon(imgThisImg);
+            ImageIcon imgThisImg = new ImageIcon(new ImageIcon(path + "user2.png").getImage().getScaledInstance(250, 300, Image.SCALE_DEFAULT));
             picLabel.setSize(300, 400);
+            picLabel.setIcon(imgThisImg);
 
-            subPanel_2.setBackground(Color.red);
-            subPanel_2.setBounds(333,0 , frameWidth/4, 600);
-            //subPanel_1.setOpaque(false);
-            //subPanel_2.setLayout(new GridLayout(0,0,2,2));
-            JLabel text_2 = new JLabel("Mr.Watcharsak Prommanee");
-            text_2.setFont(new Font("Tahoma", Font.PLAIN, 25));
-            text_2.setForeground(new Color(0,0,0)); 
+            subPanel_2.setOpaque(false);
+            //subPanel_2.setBackground(new Color(165, 157, 83,40));
+            subPanel_2.setBounds(333,90, frameWidth/4, 500);
+ 
+            JLabel text_2 = new JLabel("<html><font size = '6' color=white> Watcharsak Prommanee</font></html>");//Watcharsak Prommanee
+            JLabel text_2ID = new JLabel ("<html><font size='16' color=white> 6413XXX</font> ");
+ 
             subPanel_2.add(picLabel);
             subPanel_2.add(text_2);
+            subPanel_2.add(text_2ID);
             contentPane.add(subPanel_2);
 
             validate();
@@ -95,50 +100,55 @@ public class Creditframe extends JFrame
         subPanel_3 = new JPanel();
         {
             JLabel picLabel = new JLabel();
-            ImageIcon imgThisImg = new ImageIcon(path + "Music_mute.png");
-            picLabel.setIcon(imgThisImg);
+            ImageIcon imgThisImg = new ImageIcon(new ImageIcon(path + "user3.png").getImage().getScaledInstance(250, 300, Image.SCALE_DEFAULT));
             picLabel.setSize(300, 400);
+            picLabel.setIcon(imgThisImg);
 
-            subPanel_3.setBackground(Color.green);
-            subPanel_3.setBounds(666, 0, frameWidth/4, 600);
-            //subPanel_1.setOpaque(false);
-            //subPanel_3.setLayout(new GridLayout(0,4,2,2));
-            JLabel text_3 = new JLabel("Mr.Sasit Srirat");
-            text_3.setFont(new Font("Tahoma", Font.PLAIN, 25));
-            text_3.setForeground(new Color(0,0,0)); 
+            subPanel_3.setOpaque(false);
+            //subPanel_3.setBackground(new Color(165, 157, 208,40));
+            subPanel_3.setBounds(666, 90, frameWidth/4, 500);
+ 
+            JLabel text_3 = new JLabel("<html><font size = '6' color=white>    Sasit Sriratxx        </font></html>");//Sasit Srirat
+            JLabel text_3ID = new JLabel ("<html><font size='16' color=white>   6413XXX </font> ");
+ 
             subPanel_3.add(picLabel);
             subPanel_3.add(text_3);
+            subPanel_3.add(text_3ID);
             contentPane.add(subPanel_3);
+
             validate();
             repaint();
         }
         subPanel_4 = new JPanel();
         {
             JLabel picLabel = new JLabel();
-            ImageIcon imgThisImg = new ImageIcon(path + "Kawin_mute.png");
-            picLabel.setIcon(imgThisImg);
+            ImageIcon imgThisImg = new ImageIcon(new ImageIcon(path + "user4.png").getImage().getScaledInstance(250, 300, Image.SCALE_DEFAULT));
             picLabel.setSize(300, 400);
+            picLabel.setIcon(imgThisImg);
 
-            subPanel_4.setBackground(Color.CYAN);
-            subPanel_4.setBounds(1000, 0, 360, 600);
-            //subPanel_1.setOpaque(false);
-            //subPanel_4.setLayout(new GridLayout(0,4,2,2));
-            JLabel text_4 = new JLabel("Mr.Kawin Kengkate");
-            text_4.setFont(new Font("Tahoma", Font.PLAIN, 25));
-            text_4.setForeground(new Color(0,0,0)); 
+            subPanel_4.setOpaque(false);
+            //subPanel_4.setBackground(new Color(218, 157, 138,40));
+            subPanel_4.setBounds(1000, 90, 360, 500);
+   
+            JLabel text_4 = new JLabel("<html><font size = '6' color=white> Kawin Kengkate      </font></html>");//Kawin Kengkate
+            JLabel text_4ID = new JLabel ("<html><font size='16' color=white> 6413XXX</font> ");
+ 
             subPanel_4.add(picLabel);
             subPanel_4.add(text_4);
+            subPanel_4.add(text_4ID);
             contentPane.add(subPanel_4);
 
             validate();
             repaint();
         }
 
-        MainPanel = new JPanel(); // black background
+        MainPanel = new JPanel(); // black background with transparent
         {
-            MainPanel.setBounds(0, 0, 1333, 768);
+            MainPanel.setBounds(0, 0, 1366,700);
             MainPanel.setBackground(new Color(0, 10, 10, 150));
             contentPane.add(MainPanel);
+            validate();
+ 
         }
 
     }

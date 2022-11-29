@@ -215,13 +215,13 @@ public class Characterlabel extends JLabel {
                 setMoveConditions(450, 240);
                 break;
             case 4:
-                setMoveConditions(parentFrame.getWidth() - 250, 240);
+                setMoveConditions(parentFrame.getWidth() - 650, 240);
                 break;
             case 5:
                 setMoveConditions(parentFrame.getWidth() - 450, 240);
                 break;
             case 6:
-                setMoveConditions(parentFrame.getWidth() - 650, 240);
+                setMoveConditions(parentFrame.getWidth() - 250, 240);
                 break;
             default:
                 break;

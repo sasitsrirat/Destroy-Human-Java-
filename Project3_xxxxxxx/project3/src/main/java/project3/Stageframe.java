@@ -14,6 +14,7 @@ public class Stageframe extends JFrame {
     private int frameHeight = 768;
     private int frameWidth = 1366;
     private int stagenum, allwave;
+    private int allturn;
     private int choose = 0;
     private String imagepath;
     private Stagewave sw;
@@ -33,6 +34,8 @@ public class Stageframe extends JFrame {
     protected ArrayList<Sound> musicSound = new ArrayList<Sound>(), effectSound = new ArrayList<Sound>();
     private ArrayList<Thread> threadArraylist;
     private MainMenu main;
+    private PlayerInfo player;
+    private ArrayList<PlayerInfo> playerArraylsit;
 
     public Stageframe(String ipath, ArrayList<Sound> mSound, ArrayList<Sound> eSound, MainMenu m, int stage) {
         stagenum = stage;
@@ -40,6 +43,9 @@ public class Stageframe extends JFrame {
         musicSound = mSound;
         effectSound = eSound;
         main = m;
+        player = main.getCurrentplayer();
+        playerArraylsit = main.getplayerarraylist();
+        System.out.println(player.getname()+player.getscore(1));
         for (Sound i : musicSound) {
             if ("stageBG".equals(i.getName())) {
                 i.playLoop();
@@ -227,8 +233,8 @@ public class Stageframe extends JFrame {
         Thread bruh = new Thread() {
 
             public void run() {
-
-                for (int turn = 0; turn < 10 && humanArraylist.size() > 0 && robotArraylist.size() > 0; turn++) {
+                int turn;
+                for (turn = 0; humanArraylist.size() > 0 && robotArraylist.size() > 0; turn++) {
 
                     JOptionPane.showMessageDialog(null, " WAVE" + wave + " TURN " + (turn + 1), " STAGE" + stage,
                             JOptionPane.PLAIN_MESSAGE);
@@ -268,7 +274,7 @@ public class Stageframe extends JFrame {
                         hu.setnewspeedthread();
                     }
                 }
-
+                allturn += turn;
                 if (humanArraylist.isEmpty()) {
                     for (Characterlabel h : humanLabelArraylist) {
                         h.setVisible(false);
@@ -276,26 +282,31 @@ public class Stageframe extends JFrame {
                     if (allwave > wave) {
                         battle(stage, wave + 1);
                     } else {
-                        showvictory();
-                        try {
-                            Thread.sleep(3000);
-                        } catch (InterruptedException e1) {
-                            e1.printStackTrace();
-                        }
                         if (stage >= 5) {
-
-                            System.out.println("F");
+                            main.openscore();
                             main.setContentPane(main.getPane());
                         } else {
-                            System.out.println("YOU WIN STAGE" + stage);
+                            player.setstage(stage + 1);
+                            if(stage == 1 && player.getAutosave()){
+                            playerArraylsit.add(player);
+                            }
+                            if (allturn < 10)
+                                player.setscore(100 + (100 - (allturn * 10)), stage);
+                            else
+                                player.setscore(100, stage);
+                            JOptionPane.showMessageDialog(null, "Victory\nScore : " + player.getscore(stage),
+                                    " STAGE" + stage, JOptionPane.PLAIN_MESSAGE);
                             for (Sound i : musicSound) {
                                 i.stop();
                             }
-                            // Stageframe sf = new Stageframe(imagepath, musicSound, effectSound, main,
-                            // stage + 1);
-                            storyframe = new Storyframe(stage + 1, imagepath, musicSound, effectSound, main, frameWidth,
+                            if(player.getshowstory()){
+                                storyframe = new Storyframe(stage + 1, imagepath, musicSound, effectSound, main, frameWidth,
                                     frameHeight);
-                            main.setContentPane(storyframe.getContentpane());
+                                main.setContentPane(storyframe.getContentpane());
+                            }else {
+                                Stageframe sf = new Stageframe(imagepath, musicSound, effectSound, main, stage + 1);
+                                main.setContentPane(sf.getContentpane());
+                            }
                             main.validate();
                             main.repaint();
                         }
@@ -411,8 +422,8 @@ public class Stageframe extends JFrame {
 
     public void human_attack() {
         activeLabel.attack_animation();
-        if(activeLabel.getOwner() instanceof Human_soldier){
-            for (Robot ro : robotArraylist){
+        if (activeLabel.getOwner() instanceof Human_soldier) {
+            for (Robot ro : robotArraylist) {
                 activeLabel.getOwner().attack(ro);
                 for (Sound i : effectSound) {
                     if ("humangunEF".equals(i.getName())) {
@@ -420,13 +431,16 @@ public class Stageframe extends JFrame {
                     }
                 }
             }
-        }else {
+        } else {
             activeLabel.getOwner().attack(targetLabel.getOwner());
-        for (Sound i : effectSound) {
-            if ("humannormalattackEF".equals(i.getName())) {
-                targetLabel.takedmg_animation("hit.gif", i);
+            for (Sound i : effectSound) {
+                if ("humannormalattackEF".equals(i.getName())) {
+                    targetLabel.takedmg_animation("hit.gif", i);
+                }
             }
         }
+        if (activeLabel.getOwner() instanceof Human_super){
+            activeLabel.getOwner().takeheal(3);
         }
         stat.settargetCharacter(targetLabel.getOwner());
         targetLabel = null;
