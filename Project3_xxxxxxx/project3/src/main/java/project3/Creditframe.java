@@ -3,7 +3,6 @@ package project3;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-
 import javax.swing.*;
 
 public class Creditframe extends JFrame 
@@ -15,7 +14,7 @@ public class Creditframe extends JFrame
     protected JLabel contentPane;
     protected int frameWidth = 1366;
     protected int frameHeight = 768;
-    protected JPanel MainPanel,subPanel_1,subPanel_2,subPanel_3,subPanel_4;
+    protected JPanel MainPanel,subPanel_1,subPanel_2,subPanel_3,subPanel_4,subPanel_5;
 
     //constructor
     public Creditframe(ArrayList<Sound> mSound, ArrayList<Sound> eSound, String imagepath )//ArrayList<Sound> mSound, ArrayList<Sound> eSound, String imagepath 
@@ -57,11 +56,9 @@ public class Creditframe extends JFrame
             });
         }
        //header
-       JLabel Credit = new JLabel("<html><font size = '20' color = white> Development by </font></html>");
-       Credit.setForeground(Color.white);
-       Credit.setLocation(40, 40);
-       validate();
-       repaint();
+       JLabel Credit = new JLabel("<html><font size = '20' color = white> DEVELOPER TEAM </font></html>");
+       Credit.setFont(new Font("Tahoma", Font.PLAIN,20));
+       Credit.setBounds(520, 20, 750, 100);
        contentPane.add(Credit);
        
 
@@ -76,7 +73,7 @@ public class Creditframe extends JFrame
             //subPanel_1.setBackground(new Color(71, 157, 83,40));
             subPanel_1.setBounds(0, 120, frameWidth/4, 500);
 
-            JLabel text_1 = new JLabel("<html><font size = '6' color=white> Ravipol Chayeraksa</font></html>");
+            JLabel text_1 = new JLabel("<html><font size = '6' color=white font = Skia> Ravipol Chayeraksa</font></html>");
             JLabel text_1ID = new JLabel ("<html><font size='16' color=white> 6413XXX</font></html>");
 
             subPanel_1.add(picLabel);
@@ -151,6 +148,28 @@ public class Creditframe extends JFrame
             subPanel_4.add(text_4);
             subPanel_4.add(text_4ID);
             contentPane.add(subPanel_4);
+
+            validate();
+            repaint();
+        }
+        subPanel_5 = new JPanel();
+        {
+            subPanel_5.setLayout(new GridLayout(1,3,0,2));
+            JLabel picLabel = new JLabel();
+            ImageIcon imgThisImg = new ImageIcon(new ImageIcon(path + "Mahidol_U8bit.png").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
+            picLabel.setSize(290, 300);
+            picLabel.setIcon(imgThisImg);
+
+            subPanel_5.setOpaque(false);
+            //subPanel_4.setBackground(new Color(218, 157, 138,40));
+            subPanel_5.setBounds(520, 470, 290, 300);
+   
+            JLabel text_5 = new JLabel ("<html><font size='5' color=white>COMPUTER ENGINEERING (2565-THAI) </font> ");
+            
+ 
+            subPanel_5.add(picLabel);
+            subPanel_5.add(text_5);
+            contentPane.add(subPanel_5);
 
             validate();
             repaint();

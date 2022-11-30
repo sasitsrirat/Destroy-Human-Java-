@@ -56,13 +56,14 @@ public class MainMenu extends JFrame implements WindowListener {
     protected PlayerInfo currentplayer;
     protected Filemanage scan;
     protected String fileinfo = "info.txt";
+    private Timer timer3,timer1,timer2;
 
     protected MainMenu main = this;
 
     public MainMenu() {
-        imagepath = "project3/Project3_xxxxxxx/project3/src/pictures/";//"project3/Project3_xxxxxxx/project3/src/pictures/"
-        soundpath = "project3/Project3_xxxxxxx/project3/src/sounds/"; // src/sounds/
-        path = "project3/Project3_xxxxxxx/project3/src/main/java/project3/";// "src/main/java/project3/";
+        imagepath = "Project3_xxxxxxx/project3/src/pictures/";//"project3/Project3_xxxxxxx/project3/src/pictures/"
+        soundpath = "Project3_xxxxxxx/project3/src/sounds/"; // src/sounds/
+        path = "Project3_xxxxxxx/project3/src/main/java/project3/";// "src/main/java/project3/";
                                                                             
 
         // set background music
@@ -101,14 +102,54 @@ public class MainMenu extends JFrame implements WindowListener {
         ImageIcon img = new ImageIcon(imagepath + "robot.png");
         setIconImage(img.getImage());
         addWindowListener(this);
-        // set background gif
-        ImageIcon imageIcon = new ImageIcon(imagepath + "roboyscofi.gif");
+        //-------------------------------------> set background gif
+        ImageIcon imageIcon = new ImageIcon(imagepath + "roboyscofi1.gif");
         imageIcon.setImage(imageIcon.getImage().getScaledInstance(frameWidth, frameHeight, Image.SCALE_DEFAULT));
         contentPane = new JLabel();
         contentPane.setIcon(imageIcon);
         contentPane.setLayout(null);
         setContentPane(contentPane);
+ 
+        timer1 = new Timer(4000, new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                ImageIcon imageIcon = new ImageIcon(imagepath + "roboyscofi2.gif");
+                imageIcon.setImage(imageIcon.getImage().getScaledInstance(frameWidth, frameHeight, Image.SCALE_DEFAULT));
+                contentPane.setIcon(imageIcon);
+                
+            }
+        });
+        
+        timer2 = new Timer(6000, new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                ImageIcon imageIcon = new ImageIcon(imagepath + "roboyscofi1.gif");
+                imageIcon.setImage(imageIcon.getImage().getScaledInstance(frameWidth, frameHeight, Image.SCALE_DEFAULT));
+                contentPane.setIcon(imageIcon);
+                
+            }
+        });
+        
+        /*timer3 = new Timer(8000, new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                ImageIcon imageIcon = new ImageIcon(imagepath + "roboyscofi1.gif");
+                imageIcon.setImage(imageIcon.getImage().getScaledInstance(frameWidth, frameHeight, Image.SCALE_DEFAULT));
+                contentPane.setIcon(imageIcon);
+                timer1.notify();
+                
+            }
+            
+        });*/
+        timer1.start();
+        timer2.start();
+        //timer3.start();
+    
         MainMenu main = this;
+        //---------------------------------------> File management
         scan = new Filemanage(path, fileinfo);
         scan.filescan(playerArraylist);
 
@@ -219,15 +260,6 @@ public class MainMenu extends JFrame implements WindowListener {
                         }
                     }
                     openscore();
-                    /*
-                     * if (scoreframe == null)
-                     * try {
-                     * scoreframe = new Scoreframe();
-                     * } catch (FileNotFoundException e) {
-                     * }
-                     * else
-                     * scoreframe.setVisible(true);
-                     */
                 }
             });
         }
@@ -373,7 +405,7 @@ public class MainMenu extends JFrame implements WindowListener {
     public void openscore() {
         if (scoreframe == null)
             try {
-                scoreframe = new Scoreframe(main);
+                scoreframe = new Scoreframe(main,imagepath,path);
             } catch (FileNotFoundException e) {
             }
         else
