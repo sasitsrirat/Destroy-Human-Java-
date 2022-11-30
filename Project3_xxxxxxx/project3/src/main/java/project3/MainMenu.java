@@ -632,7 +632,8 @@ class Mytextpanel2 extends JPanel {
         // button
         System.out.println(player.getstage());
         ArrayList<String> st = new ArrayList<String>();
-        switch (player.getstage()) {
+        switch (player.getstage()) 
+        {
             case 1:
                 st.add("Stage1");
                 break;

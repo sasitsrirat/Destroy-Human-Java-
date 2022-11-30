@@ -45,7 +45,7 @@ public class Stageframe extends JFrame {
         main = m;
         player = main.getCurrentplayer();
         playerArraylsit = main.getplayerarraylist();
-        System.out.println(player.getname()+player.getscore(1));
+        System.out.println(player.getname() + player.getscore(1));
         for (Sound i : musicSound) {
             if ("stageBG".equals(i.getName())) {
                 i.playLoop();
@@ -146,7 +146,7 @@ public class Stageframe extends JFrame {
                     + Integer.toString(humanLabelArraylist.get(i).getOwner().getmax_hp()));
         }
         validate();
-        repaint();
+        contentpane.repaint();
     }
 
     public void showactive() {
@@ -241,7 +241,6 @@ public class Stageframe extends JFrame {
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e1) {
-                        // TODO Auto-generated catch block
                         e1.printStackTrace();
                     }
 
@@ -249,12 +248,9 @@ public class Stageframe extends JFrame {
                     for (Robot ro : robotArraylist) {
 
                         threadArraylist.add(ro.getspeedthread());
-                        // ro.getspeedthread().start();
-
                     }
                     for (Human hu : humanArraylist) {
                         threadArraylist.add(hu.getspeedthread());
-                        // hu.getspeedthread().start();
                     }
                     for (Thread th : threadArraylist) {
                         th.start();
@@ -282,33 +278,60 @@ public class Stageframe extends JFrame {
                     if (allwave > wave) {
                         battle(stage, wave + 1);
                     } else {
-                        if (stage >= 5) {
-                            main.openscore();
-                            main.setContentPane(main.getPane());
-                        } else {
+                        if (stage >= 5) { // Win all stage
+                            for (Sound i : musicSound) {
+                                i.stop();
+                            }
+                            if (player.getshowstory()) {
+                                storyframe = new Storyframe(6, imagepath, musicSound, effectSound, main, frameWidth,
+                                        frameHeight);
+                                main.setContentPane(storyframe.getContentpane());
+                            } else {
+                                for (Sound i : musicSound) {
+                                    if ("mainmenuBG".equals(i.getName())) {
+                                        i.playLoop();
+                                    }
+                                }
+                                main.openscore();
+                                main.setContentPane(main.getPane());
+                            }
+
+                        } else { // Win this stage
                             player.setstage(stage + 1);
-                            if(stage == 1 && player.getAutosave()){
-                            playerArraylsit.add(player);
+                            if (stage == 1 && player.getAutosave()) {
+                                playerArraylsit.add(player);
                             }
                             if (allturn < 10)
                                 player.setscore(100 + (100 - (allturn * 10)), stage);
                             else
                                 player.setscore(100, stage);
-                            JOptionPane.showMessageDialog(null, "Victory\nScore : " + player.getscore(stage),
-                                    " STAGE" + stage, JOptionPane.PLAIN_MESSAGE);
+                            main.getfilemanage().filewrite(playerArraylsit);
+                            int result = JOptionPane.showConfirmDialog(main,
+                                    "Victory\nScore : " + player.getscore(stage) + "\nGo to next stage ?",
+                                    " STAGE" + stage,
+                                    JOptionPane.YES_NO_OPTION,
+                                    JOptionPane.QUESTION_MESSAGE);
                             for (Sound i : musicSound) {
-                                i.stop();
+                                if ("stageBG".equals(i.getName())) {
+                                        i.stop();
+                                    }
                             }
-                            if(player.getshowstory()){
-                                storyframe = new Storyframe(stage + 1, imagepath, musicSound, effectSound, main, frameWidth,
-                                    frameHeight);
-                                main.setContentPane(storyframe.getContentpane());
-                            }else {
-                                Stageframe sf = new Stageframe(imagepath, musicSound, effectSound, main, stage + 1);
-                                main.setContentPane(sf.getContentpane());
+                            if (result == JOptionPane.YES_OPTION) {
+                                if (player.getshowstory()) {
+                                    main.startstory(stage + 1);
+                                } else {
+                                    main.startstage(stage + 1);
+                                }
+                                main.validate();
+                                main.repaint();
+                            } else {
+                                for (Sound i : musicSound) {
+                                    if ("mainmenuBG".equals(i.getName())) {
+                                        i.playLoop();
+                                    }
+                                }
+                                main.setContentPane(main.getPane());
                             }
-                            main.validate();
-                            main.repaint();
                         }
                     }
                 } else {
@@ -319,6 +342,14 @@ public class Stageframe extends JFrame {
                         e1.printStackTrace();
                     }
                     System.out.println("YOU LOOSE STAGE" + stage);
+                    for (Sound i : musicSound) {
+                        i.stop();
+                    }
+                    for (Sound i : musicSound) {
+                        if ("mainmenuBG".equals(i.getName())) {
+                            i.playLoop();
+                        }
+                    }
                     main.setContentPane(main.getPane());
                 }
             }
@@ -334,16 +365,15 @@ public class Stageframe extends JFrame {
             showactive();
             stat.setactiveCharacter(activeLabel.getOwner());
             stat.ShowAction(activeLabel.getOwner());
-
             try {
                 Thread.currentThread();
-                Thread.sleep(99999999);
+                Thread.sleep(5000);
+                action_rest();
             } catch (InterruptedException e) {
             }
             stat.setactiveCharacter(activeLabel.getOwner());
-            settext();
             checkdeath();
-
+            settext();
             try {
                 Thread.currentThread();
                 Thread.sleep(2250);
@@ -439,8 +469,13 @@ public class Stageframe extends JFrame {
                 }
             }
         }
-        if (activeLabel.getOwner() instanceof Human_super){
+        if (activeLabel.getOwner() instanceof Human_super) {
             activeLabel.getOwner().takeheal(3);
+            for (Sound i : effectSound) {
+                if ("robotskill2EF".equals(i.getName())) {
+                    activeLabel.takedmg_animation("humanheal.gif", i);
+                }
+            }
         }
         stat.settargetCharacter(targetLabel.getOwner());
         targetLabel = null;

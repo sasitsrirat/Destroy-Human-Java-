@@ -82,7 +82,15 @@ public class Storyframe extends JFrame{
                 }
                 story5();
                 break;
+            case 6:
+                for (Sound i : musicSound) {
+                    if ("endBG".equals(i.getName())) {
+                        i.playLoop();
+                    }
+                }
+                endstory();
             default:
+                
         }
 
         validate();
@@ -114,9 +122,14 @@ public class Storyframe extends JFrame{
             for (Sound i : musicSound) {
                     i.stop();
             }
-            sframe = new Stageframe(imagepath, musicSound, effectSound, mainMenu, stage);
-            setTitle("Stage");
-            mainMenu.setContentPane(sframe.getContentpane());
+            if(stage > 5){
+                mainMenu.openscore();
+                mainMenu.setContentPane(mainMenu.getPane());
+            }else {
+                sframe = new Stageframe(imagepath, musicSound, effectSound, mainMenu, stage);
+                setTitle("Stage");
+                mainMenu.setContentPane(sframe.getContentpane());
+            }
             validate();
             mainMenu.validate();
             repaint();
@@ -130,7 +143,7 @@ public class Storyframe extends JFrame{
         contentpane.add(story1);
 
         story1Text = new JTextArea(
-                "When the future world is destroyed by human.\nThe robot C3P0 must travel back in time to \nstop the humans before they destroy everything.\n"
+                "When the future world is destroyed by human.\nThe robot MUSIX-6000 and friends\n must travel back in time to \nstop the humans before they destroy everything.\n"
                         +
                         "\nIn 2099 , After successfully turning back time,\nthe first robot began surveying the area and\nkilling humans in order to prevent the planet\nfrom collapsing.");
         story1Text.setBounds(100, 100, frameWidth, frameHeight);
@@ -169,7 +182,7 @@ public class Storyframe extends JFrame{
         contentpane.add(story2);
 
         story2Text = new JTextArea(
-                "When the second robot found that the first robot\nwas trying to complete the task on his own, the \nsecond robot followed him  and assisted him in \npreparing to invade the human armory. \n\n*The second "
+                "When the second robot N2Y2 found that the first robot\nwas trying to complete the task on his own, the \nsecond robot followed him  and assisted him in \npreparing to invade the human armory. \n\n*The second "
                         +
                         "robot can repair other robot 🔧*");
         story2Text.setBounds(100, 100, frameWidth, frameHeight);
@@ -208,7 +221,7 @@ public class Storyframe extends JFrame{
         contentpane.add(story3);
 
         story3Text = new JTextArea(
-                "From many obstacles along the way through. we has \nheaded to the first destination, The Human Armory.\nbut you didn't know that inside the armory there \nare many soldiers waiting for you.");
+                "From many obstacles along the way through. we has \nheaded to the first destination\n, The Human Armory.but you didn't \nknow that inside the armory there \nare many soldiers waiting for you.");
         story3Text.setBounds(100, 100, frameWidth, frameHeight);
         story3Text.setOpaque(false);
         story3Text.setForeground(Color.orange);
@@ -245,7 +258,7 @@ public class Storyframe extends JFrame{
         contentpane.add(story4);
 
         story4Text = new JTextArea(
-                "All battalion was killed. robot no.003 was join\nin the league. forward to final destination, \nRobot Factory. \n\n***Robot no.003 ability: can shooting the bomb like a bomber***");
+                "All battalion was killed. robot no.3 Ba-Be was join\nin the league. forward to final destination, \nRobot Factory. \n\n***Ba-Be ability: can shooting the bomb like a bomber***");
         story4Text.setBounds(100, 100, frameWidth, frameHeight);
         story4Text.setOpaque(false);
         story4Text.setForeground(Color.orange);

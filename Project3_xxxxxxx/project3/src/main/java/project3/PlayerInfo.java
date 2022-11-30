@@ -15,9 +15,13 @@ public class PlayerInfo implements Comparable<PlayerInfo>{
         this.name = name;
         this.Autosave = save;
         this.stage = stage;
-        for(int i = 0; i < 5; i++){
-            score[i] = score1;
-        }
+        
+            score[0] = score1;
+            score[1] = score2;
+            score[2] = score3;
+            score[3] = score4;
+            score[4] = score5;
+        
         this.scoreboarddisplay = display;
         this.watchstory = story;
 
@@ -45,7 +49,8 @@ public class PlayerInfo implements Comparable<PlayerInfo>{
         name = n;
     }
     public void setscore(int score,int stage){
-        this.score[stage - 1 ] = score;
+        if (this.score[stage - 1 ] < score)
+            this.score[stage - 1 ] = score;
     }
     public void setdisplay(boolean d){
         scoreboarddisplay = d;
@@ -57,7 +62,8 @@ public class PlayerInfo implements Comparable<PlayerInfo>{
         watchstory = s;
     }
     public void setstage(int s){
-        stage = s;
+        if (s > stage)
+            stage = s;
     }
     public int compareTo(PlayerInfo other){
         if(this.totalscore>other.totalscore){
