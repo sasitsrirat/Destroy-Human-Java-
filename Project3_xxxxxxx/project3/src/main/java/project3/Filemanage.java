@@ -8,8 +8,15 @@ import java.util.*;
 
 public class Filemanage {
     private PrintWriter output;
+    private String path;
+    private String filename;
 
-    public void filescan(ArrayList<PlayerInfo> playerArraylist,String path,String filename) {
+    public Filemanage(String path,String filename){
+        this.path = path;
+        this.filename = filename;
+    }
+
+    public void filescan(ArrayList<PlayerInfo> playerArraylist){//,String path,String filename) {
         boolean fileopensuccess = false;
 
         while (!fileopensuccess) {
@@ -50,7 +57,7 @@ public class Filemanage {
         }
     }
 
-    public void filewrite(ArrayList<PlayerInfo> playerArraylist,String path,String filename){
+    public void filewrite(ArrayList<PlayerInfo> playerArraylist){
         try{
             File file = new File(path+filename);
             FileWriter fw = new FileWriter(file,false);
@@ -67,7 +74,9 @@ public class Filemanage {
                 if(p.getshowstory()){
                     showstory = true;
                 }
+                if(p.getAutosave()){
                 output.printf("%s,%d,%d,%d,%d,%d,%d,%s,%s,%s \n",p.getname(),p.getstage(),p.getscore(1),p.getscore(2),p.getscore(3),p.getscore(4),p.getscore(5),displayscore,Autosave,showstory);
+                }
             }
         output.close();
         }catch(Exception e){

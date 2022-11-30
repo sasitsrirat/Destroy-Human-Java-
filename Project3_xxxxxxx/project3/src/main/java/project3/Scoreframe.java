@@ -1,32 +1,40 @@
 package project3;
 
 import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.io.*;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
+import java.lang.System.Logger.Level;
 
 public class Scoreframe extends JFrame {
-    private String pathInput = "Project3_xxxxxxx/project3/src/main/java/project3/info.txt";
+    private String pathInput = "project3/Project3_xxxxxxx/project3/src/main/java/project3/info.txt";
     protected JPanel ScorePanel;
     protected JLabel contentPanel;
     protected int frameWidth = 1366;
     protected int frameHeight = 768;
+    protected Filemanage scan ;//;\= new Filemanage();
+    protected MainMenu main;
 
     // JPanel credit = new JPanel();
     // constructor
-    public Scoreframe() throws FileNotFoundException 
+    public Scoreframe(MainMenu main) throws FileNotFoundException 
     {
-        String imagepath = "Project3_xxxxxxx/project3/src/pictures/";
+
+        this.main = main;
+        scan = main.getfilemanage();
+        String imagepath = "project3/Project3_xxxxxxx/project3/src/pictures/";
         setTitle("Score");
         setBounds(50, 50, frameWidth, frameHeight);
         setVisible(true);
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
         ScorePanel = new JPanel();
-        // JFrame frame = new JFrame();
         ScorePanel.setBounds(50, 100, 1366, 768);
         ScorePanel.setLayout(null); // set layout
         setContentPane(ScorePanel);
@@ -38,12 +46,63 @@ public class Scoreframe extends JFrame {
         contentPanel.setIcon(imageIcon);
         setContentPane(contentPanel);
 
-        JLabel Bar = new JLabel("No.                 Name                Level                   Point");
-        Bar.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        Bar.setForeground(new Color(255, 255, 255));
-        Bar.setBounds(450, 10, 600, 150);
-        contentPanel.add(Bar);
+        // ScrollPane for Table
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setBounds(frameHeight / 2, 150, 400, 400);
+        getContentPane().add(scrollPane);
+        scrollPane.setSize(600, 400);
 
+        // Table
+        JTable table = new JTable();
+        scrollPane.setViewportView(table);
+        table.setPreferredScrollableViewportSize(table.getPreferredSize());
+        table.setFillsViewportHeight(true);
+        table.setRowHeight(50);
+        table.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
+        // table.setPreferredSize(new Dimension(500, 500));
+
+        File file = new File(pathInput);
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String firstLine = br.readLine().trim();
+            String[] columnsName = firstLine.split(",");
+
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            model.addColumn("No");
+            model.addColumn("Name");
+            model.addColumn("Stage");
+            model.addColumn("Score");
+
+            // get lines from txt file
+            Object[] tableLines = br.lines().toArray();
+
+            // extratct data from lines
+            // set data to jtable model
+            for (int i = 0; i < tableLines.length; i++) {
+                String line = tableLines[i].toString().trim();
+                String[] buf = line.split(",");
+                //String name = buf[0].trim().toString();
+                //int stage = Integer.parseInt(buf[1].trim());
+                if (buf[7].trim().equalsIgnoreCase("true"))
+                {
+                    int score1 = Integer.parseInt(buf[2].trim());
+                    int score2 = Integer.parseInt(buf[3].trim());
+                    int score3 = Integer.parseInt(buf[4].trim());
+                    int score4 = Integer.parseInt(buf[5].trim());
+                    int score5 = Integer.parseInt(buf[6].trim());
+                    int sum = score1 + score2 + score3 + score4 + score5;
+                    model.addRow(buf);
+                    model.setValueAt(i + 1, i, 0);
+                    model.setValueAt(buf[0].trim().toString(), i, 1);
+                    model.setValueAt(Integer.parseInt(buf[1].trim()), i, 2);
+                    model.setValueAt(sum, i, 3);
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         JButton backButton = new JButton("Back");
         {
             backButton.setBounds(1000, 630, 100, 50);
@@ -59,49 +118,24 @@ public class Scoreframe extends JFrame {
                 }
             });
         }
+
         JPanel panel_2 = new JPanel();
         {
             panel_2.setBounds(230, 100, 900, 600); // Size of JPanel
             panel_2.setBackground(new Color(100, 100, 10, 150)); // RGBA 255,255,255,255 for check limit of size
-            panel_2.setLayout(new FlowLayout(3,3,3));
+            panel_2.setLayout(new FlowLayout(3, 3, 3));
             contentPanel.add(panel_2);
-
-            File file = new File(pathInput);
-            try (Scanner filescan = new Scanner(file))
-            {
-                while (filescan.hasNext()) {
-                    String Line = filescan.nextLine();
-                    String[] buf = Line.split(",");
-                    int number = Integer.parseInt(buf[0].trim().toString());
-                    String name = buf[1].trim();
-                    int stage = Integer.parseInt(buf[2].trim().toString());
-                    int score = Integer.parseInt(buf[3].trim().toString());
-                    Line = " " + number + " " + name+ " "+ "   " + stage +"   " + score;
-                    JLabel lblNewLabel_1 = new JLabel(Line);
-                    lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 30));
-                    lblNewLabel_1.setForeground(new Color(255, 255, 255));   
-                    //lblNewLabel_1.setBounds(400, 300, 100, 100);
-                    panel_2.add(lblNewLabel_1);
-                    validate();
-                    repaint();
-                    System.out.printf("%s \t%d \t%d \n",name,stage,score);
-                }
-            } catch (IOException e) {
-                System.out.print(e);
-            }
-
         }
 
         JPanel panel = new JPanel();
         {
             panel.setBounds(230, 10, 900, 766); // Size of JPanel
             panel.setBackground(new Color(0, 0, 0, 150)); // RGBA 255,255,255,255 for check limit of size
-            // panel.setLayout(new GridLayout(2, 2, 20, 10));
             panel.revalidate();
             panel.repaint();
             contentPanel.add(panel);
 
-            // best score in games
+            // header score
             JLabel detail = new JLabel("SCORE");
             detail.setForeground(new Color(255, 255, 255));
             detail.setFont(new Font("Copperplate Gothic BOLD", Font.CENTER_BASELINE, 40));
@@ -110,18 +144,10 @@ public class Scoreframe extends JFrame {
             revalidate();
             repaint();
         }
- 
-        //contentPanel.setVisible(true);
+
+        contentPanel.setVisible(true);
 
     }
 
-    public static void main(String[] args) {
-        try {
-            Scoreframe a = new Scoreframe();
-            a.setVisible(true);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
+   
 }
