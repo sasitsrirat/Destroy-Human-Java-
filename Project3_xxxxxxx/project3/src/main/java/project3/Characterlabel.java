@@ -12,7 +12,7 @@ import java.awt.*;
 
 public class Characterlabel extends JLabel {
 
-    protected MyImageIcon staticon, attackicon, deathicon, idleicon;
+    protected MyImageIcon staticon, attackicon, deathicon, idleicon, healicon;
     protected int curX, curY, width, height, position;
     protected String path;
     protected Stageframe parentFrame;
@@ -34,6 +34,10 @@ public class Characterlabel extends JLabel {
             Robot ro = (Robot)owner;
             idleicon = new MyImageIcon(path + ro.getidleimage()).resize(width, height);
         }
+        if (owner instanceof Robot2){
+            Robot2 r = (Robot2)owner;
+            healicon = new MyImageIcon(path + r.gethealimage()).resize(width, height);
+        }
         deathicon = new MyImageIcon(path + owner.getdeathimage()).resize(width, height);
         setIcon(staticon);
         setHorizontalAlignment(JLabel.CENTER);
@@ -46,8 +50,6 @@ public class Characterlabel extends JLabel {
     }
 
     public void robotheal_animation() {
-        Robot2 r = (Robot2)owner;
-        Icon healicon = new MyImageIcon(path + r.gethealimage()).resize(width, height);
         Thread th = new Thread() {
             public void run() {
                 parentFrame.setstagestate(4);
@@ -165,7 +167,7 @@ public class Characterlabel extends JLabel {
                 public void run() {
                     try {
                         Thread.currentThread();
-                        Thread.sleep(1500);
+                        Thread.sleep(1750);
                     } catch (InterruptedException ex) {
                         Thread.currentThread().interrupt();
                     }
@@ -202,7 +204,6 @@ public class Characterlabel extends JLabel {
     }
 
     public void setposition() {
-        // position = po;
         switch (position) {
             case 1:
                 setMoveConditions(50, 240);
@@ -214,13 +215,13 @@ public class Characterlabel extends JLabel {
                 setMoveConditions(450, 240);
                 break;
             case 4:
-                setMoveConditions(parentFrame.getWidth() - 250, 240);
+                setMoveConditions(parentFrame.getWidth() - 650, 240);
                 break;
             case 5:
                 setMoveConditions(parentFrame.getWidth() - 450, 240);
                 break;
             case 6:
-                setMoveConditions(parentFrame.getWidth() - 650, 240);
+                setMoveConditions(parentFrame.getWidth() - 250, 240);
                 break;
             default:
                 break;

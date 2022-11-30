@@ -27,21 +27,18 @@ public class Stagewave {
 
     // Human //////////////////////////
     public void humanstage1_1() {
-        hu1 = new Human_weak("kawin", frame);
-        hu2 = new Human_weak("kong", frame);
-        hu3 = new Human_fat("Eakky", frame);
+        hu1 = new Human_weak("Kong", frame);
+        hu2 = new Human_weak("Pop", frame);
         hu1.setposition(4);
         hu2.setposition(5);
-        hu3.setposition(6);
         hu.add(hu1);
         hu.add(hu2);
-        hu.add(hu3);
     }
 
     public void humanstage2_1() {
-        hu1 = new Human_fat("kawin", frame);
-        hu2 = new Human_fat("kong", frame);
-        hu3 = new Human_weak("Eakky", frame);
+        hu1 = new Human_weak("Kawong", frame);
+        hu2 = new Human_weak("Kawang", frame);
+        hu3 = new Human_weak("Kawung", frame);
         hu1.setposition(4);
         hu2.setposition(5);
         hu3.setposition(6);
@@ -51,21 +48,18 @@ public class Stagewave {
     }
 
     public void humanstage2_2() {
-        hu1 = new Human_fat("kawin", frame);
-        hu2 = new Human_fat("kong", frame);
-        hu3 = new Human_fat("Eakky", frame);
+        hu1 = new Human_fat("Mama", frame);
+        hu2 = new Human_fat("Vivi", frame);
         hu1.setposition(4);
         hu2.setposition(5);
-        hu3.setposition(6);
         hu.add(hu1);
         hu.add(hu2);
-        hu.add(hu3);
     }
 
     public void humanstage3_1() {
-        hu1 = new Human_fat("kawin", frame);
-        hu2 = new Human_fat("kong", frame);
-        hu3 = new Human_soldier("Eakky", frame);
+        hu1 = new Human_fat("Pornchai", frame);
+        hu2 = new Human_weak("Vasin", frame);
+        hu3 = new Human_weak("Eakky", frame);
         hu1.setposition(4);
         hu2.setposition(5);
         hu3.setposition(6);
@@ -75,9 +69,9 @@ public class Stagewave {
     }
 
     public void humanstage3_2() {
-        hu1 = new Human_fat("kawin", frame);
-        hu2 = new Human_fat("kong", frame);
-        hu3 = new Human_soldier("Eakky", frame);
+        hu1 = new Human_fat("Wills", frame);
+        hu2 = new Human_weak("Smith", frame);
+        hu3 = new Human_soldier("Oscar", frame);
         hu1.setposition(4);
         hu2.setposition(5);
         hu3.setposition(6);
@@ -87,9 +81,9 @@ public class Stagewave {
     }
 
     public void humanstage4_1() {
-        hu1 = new Human_fat("kawin", frame);
-        hu2 = new Human_fat("kong", frame);
-        hu3 = new Human_soldier("Eakky", frame);
+        hu1 = new Human_weak("Lufy", frame);
+        hu2 = new Human_weak("Naruto", frame);
+        hu3 = new Human_soldier("Goku", frame);
         hu1.setposition(4);
         hu2.setposition(5);
         hu3.setposition(6);
@@ -99,9 +93,9 @@ public class Stagewave {
     }
 
     public void humanstage4_2() {
-        hu1 = new Human_fat("kawin", frame);
-        hu2 = new Human_soldier("kong", frame);
-        hu3 = new Human_soldier("Eakky", frame);
+        hu1 = new Human_weak("Too", frame);
+        hu2 = new Human_fat("Pom", frame);
+        hu3 = new Human_soldier("Thamnus", frame);
         hu1.setposition(4);
         hu2.setposition(5);
         hu3.setposition(6);
@@ -111,9 +105,9 @@ public class Stagewave {
     }
 
     public void humanstage4_3() {
-        hu1 = new Human_fat("kawin", frame);
-        hu2 = new Human_soldier("kong", frame);
-        hu3 = new Human_soldier("Eakky", frame);
+        hu1 = new Human_fat("Eren", frame);
+        hu2 = new Human_soldier("Mikasa", frame);
+        hu3 = new Human_soldier("Armin", frame);
         hu1.setposition(4);
         hu2.setposition(5);
         hu3.setposition(6);
@@ -123,9 +117,9 @@ public class Stagewave {
     }
 
     public void humanstage5_1() {
-        hu1 = new Human_soldier("kawin", frame);
-        hu2 = new Human_soldier("kong", frame);
-        hu3 = new Human_super("Eakky", frame);
+        hu1 = new Human_soldier("Jack", frame);
+        hu2 = new Human_weak("Queen", frame);
+        hu3 = new Human_fat("King", frame);
         hu1.setposition(4);
         hu2.setposition(5);
         hu3.setposition(6);
@@ -135,9 +129,9 @@ public class Stagewave {
     }
 
     public void humanstage5_2() {
-        hu1 = new Human_soldier("kawin", frame);
-        hu2 = new Human_super("kong", frame);
-        hu3 = new Human_super("Eakky", frame);
+        hu1 = new Human_weak("minion1", frame);
+        hu2 = new Human_weak("minion2", frame);
+        hu3 = new Human_super("YOUNG BRO", frame);
         hu1.setposition(4);
         hu2.setposition(5);
         hu3.setposition(6);
@@ -147,9 +141,9 @@ public class Stagewave {
     }
 
     public void humanstage5_3() {
-        hu1 = new Human_super("kawin", frame);
-        hu2 = new Human_super("kong", frame);
-        hu3 = new Human_super("Eakky", frame);
+        hu1 = new Human_soldier("Torpedo", frame);
+        hu2 = new Human_soldier("Gorilla", frame);
+        hu3 = new Human_super("OLD BRO", frame);
         hu1.setposition(4);
         hu2.setposition(5);
         hu3.setposition(6);

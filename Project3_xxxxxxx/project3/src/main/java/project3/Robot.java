@@ -12,8 +12,8 @@ class Robot extends Character {
     public Robot() {
     }
 
-    public Robot(String n, int hp, int atk, int def, int spd, String imagefile, String attackimagefile, String deathimagefile, String id, Stageframe sf) {
-        super(n, hp, atk, def, spd, imagefile, attackimagefile, deathimagefile, sf);
+    public Robot(String n, int hp, int atk, int def, String imagefile, String attackimagefile, String deathimagefile, String id, Stageframe sf) {
+        super(n, hp, atk, def, imagefile, attackimagefile, deathimagefile, sf);
         idle = id;
     }
 
@@ -49,7 +49,7 @@ class Robot extends Character {
 class Robot1 extends Robot {
 
     public Robot1(Stageframe sf) {
-        super("Musix-6000", 20, 5, 1, 1, "robot1-normal-01.png", "robot1-attack-01.png", "robot1-alive-01.png", "robot1-shake-01.png", sf);
+        super("Musix-6000", 30, 6, 1, "robot1-normal-01.png", "robot1-attack-01.png", "robot1-alive-01.png", "robot1-shake-01.png", sf);
     }
 
     @Override
@@ -63,24 +63,24 @@ class Robot1 extends Robot {
 class Robot2 extends Robot {
 
     public Robot2(Stageframe sf) {
-        super("Ba-Be", 30, 3, 3, 1,"robot2-normal-01.png" , "robot2-attack-01.png", "robot2-alive-01.png", "robot2-shake-01.png", sf);
+        super("Ba-Be", 40, 5, 3,"robot2-normal-01.png" , "robot2-attack-01.png", "robot2-alive-01.png", "robot2-shake-01.png", sf);
     }
 
     @Override
     public void skill2(Character ally) {  //restore ally's hp
-        ally.takeheal(ramdomatk() * 2);  // random atk คืออะไร
+        ally.takeheal(ramdomatk() * 3);  // random atk คืออะไร
         ep = ep - 3;
     }
 
     public String gethealimage() {
-        return "robot2-heal-01";
+        return "robot2-heal-01.png";
     }
 }
 
 class Robot3 extends Robot {
 
     public Robot3(Stageframe sf) {
-        super("N2Y2", 25, 4000, 2, 1, "robot3-normal-01.png", "robot3-attack-01.png", "robot3-alive-01.png", "robot3-shake-01.png", sf) ;
+        super("N2Y2", 25, 7, 2, "robot3-normal-01.png", "robot3-attack-01.png", "robot3-alive-01.png", "robot3-shake-01.png", sf) ;
     }
     @Override
     public void skill3(ArrayList<Human> enemies) { //attack all enemy
