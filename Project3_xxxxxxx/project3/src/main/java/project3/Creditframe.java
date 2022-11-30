@@ -164,7 +164,7 @@ public class Creditframe extends JFrame
             //subPanel_4.setBackground(new Color(218, 157, 138,40));
             subPanel_5.setBounds(520, 470, 290, 300);
    
-            JLabel text_5 = new JLabel ("<html><font size='5' color=white>COMPUTER ENGINEERING (2565-THAI) </font> ");
+            JLabel text_5 = new JLabel ("<html><font size='5' color=white>COMPUTER ENGINEERING (2564-THAI) </font> ");
             
  
             subPanel_5.add(picLabel);

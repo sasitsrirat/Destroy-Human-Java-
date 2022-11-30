@@ -65,8 +65,7 @@ public class MainMenu extends JFrame implements WindowListener {
         soundpath = "Project3_xxxxxxx/project3/src/sounds/"; // src/sounds/
         path = "Project3_xxxxxxx/project3/src/main/java/project3/";// "src/main/java/project3/";
                                                                             
-
-        // set background music
+        //------------------------------------->  set background music
         musicSound.add(new Sound(soundpath + "BossTime.wav", "mainmenuBG"));
         musicSound.add(new Sound(soundpath + "stageBG.wav", "stageBG"));
         musicSound.add(new Sound(soundpath + "namlie.wav", "gereBG"));
@@ -92,7 +91,8 @@ public class MainMenu extends JFrame implements WindowListener {
         effectSound.add(new Sound(soundpath + "victoryEF.wav", "victoryEF"));
         effectSound.add(new Sound(soundpath + "defeatEF.wav", "defeatEF"));
         effectSound.add(new Sound(soundpath + "restEF.wav", "restEF"));
-        
+        //-------------------------------------> 
+        //-------------------------------------> config JFrame  
         setType(Type.POPUP);
         setTitle("Menu");
         setResizable(false);
@@ -102,6 +102,7 @@ public class MainMenu extends JFrame implements WindowListener {
         ImageIcon img = new ImageIcon(imagepath + "robot.png");
         setIconImage(img.getImage());
         addWindowListener(this);
+
         //-------------------------------------> set background gif
         ImageIcon imageIcon = new ImageIcon(imagepath + "roboyscofi1.gif");
         imageIcon.setImage(imageIcon.getImage().getScaledInstance(frameWidth, frameHeight, Image.SCALE_DEFAULT));
@@ -132,24 +133,25 @@ public class MainMenu extends JFrame implements WindowListener {
             }
         });
         
-        /*timer3 = new Timer(8000, new ActionListener() 
-        {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                ImageIcon imageIcon = new ImageIcon(imagepath + "roboyscofi1.gif");
-                imageIcon.setImage(imageIcon.getImage().getScaledInstance(frameWidth, frameHeight, Image.SCALE_DEFAULT));
-                contentPane.setIcon(imageIcon);
-                timer1.notify();
-                
-            }
-            
-        });*/
         timer1.start();
         timer2.start();
-        //timer3.start();
-    
-        MainMenu main = this;
+ 
+        //-------------------------------------> 
+        //-------------------------------------> set logo gif and text footer
+        JLabel logo = new JLabel();
+        JLabel est = new JLabel("Power by Java ver.18 @ 2022");
+        est.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 15));
+        est.setForeground(Color.white);
+        logo.setIcon(new ImageIcon(new ImageIcon(imagepath + "RDT-Logo.gif").getImage().getScaledInstance(160, 160,
+                Image.SCALE_DEFAULT)));
+        logo.setBounds(122, 15, 200, 200);
+        est.setBounds(98, 600, 300, 200);
+        contentPane.add(est);
+        contentPane.add(logo);
+        
+        
         //---------------------------------------> File management
+        MainMenu main = this;
         scan = new Filemanage(path, fileinfo);
         scan.filescan(playerArraylist);
 
@@ -169,6 +171,7 @@ public class MainMenu extends JFrame implements WindowListener {
                         }
                     }
                     JDialog d = new JDialog(main, "User");
+                    d.setResizable(false);
                     d.setSize(500, 300);
                     d.setBounds(250, 250, 500, 200);
                     d.addKeyListener(new KeyListener() {
@@ -301,6 +304,7 @@ public class MainMenu extends JFrame implements WindowListener {
                 public void actionPerformed(ActionEvent event) {
                     JDialog d = new JDialog();
                     {
+                        d.setResizable(false);
                         JButton b1 = new JButton("Yes");
                         JButton b2 = new JButton("No");
                         JLabel l1 = new JLabel("Are you sure to exit game ???? ");
@@ -356,17 +360,14 @@ public class MainMenu extends JFrame implements WindowListener {
         JPanel J = new JPanel();
         {
             J.setSize(400, 766); // Size of JPanel
-            J.setBackground(new Color(0, 0, 0, 200)); // RGBA 255,255,255,255
+            J.setBackground(new Color(0, 0, 0, 155)); // RGBA 255,255,255,255
+            //J.setOpaque(true);
             contentPane.add(J);
-            // Logo in main menu
-            JLabel logo = new JLabel();
-            logo.setOpaque(false);
-            logo.setIcon(new ImageIcon(new ImageIcon(imagepath + "RDT-Logo.gif").getImage().getScaledInstance(180, 180,
-                    Image.SCALE_DEFAULT)));
-            J.add(logo);
+            repaint();
+            validate();
         }
         contentPane.setFocusable(true);
-        validate();
+        
 
     }
 
@@ -523,7 +524,6 @@ class Mytextpanel extends JPanel {
         setBackground(new Color(64, 64, 196));
         setSize(300, 300);
         setLayout(null);
-
         this.addcomponent();
 
         validate();
@@ -614,6 +614,7 @@ class Mytextpanel extends JPanel {
         }
         this.add(tf);
         this.add(summitButton);
+ 
     }
 
     public PlayerInfo checkplayer(ArrayList<PlayerInfo> playerarr, String name) {
