@@ -56,7 +56,7 @@ public class Creditframe extends JFrame
         subPanel_1 = new JPanel();
         {
             JLabel picLabel = new JLabel();
-            ImageIcon imgThisImg = new ImageIcon(new ImageIcon(path + "user1.png").getImage().getScaledInstance(250, 300, Image.SCALE_DEFAULT));
+            ImageIcon imgThisImg = new ImageIcon(new ImageIcon(path + "music8bit.png").getImage().getScaledInstance(250, 250, Image.SCALE_DEFAULT));
             picLabel.setSize(300, 400);
             picLabel.setIcon(imgThisImg);
 
@@ -78,7 +78,7 @@ public class Creditframe extends JFrame
         subPanel_2 = new JPanel();
         {
             JLabel picLabel = new JLabel();
-            ImageIcon imgThisImg = new ImageIcon(new ImageIcon(path + "user2.png").getImage().getScaledInstance(250, 300, Image.SCALE_DEFAULT));
+            ImageIcon imgThisImg = new ImageIcon(new ImageIcon(path + "new8bit.png").getImage().getScaledInstance(250, 250, Image.SCALE_DEFAULT));
             picLabel.setSize(300, 400);
             picLabel.setIcon(imgThisImg);
 
@@ -102,7 +102,7 @@ public class Creditframe extends JFrame
         subPanel_3 = new JPanel();
         {
             JLabel picLabel = new JLabel();
-            ImageIcon imgThisImg = new ImageIcon(new ImageIcon(path + "user3.png").getImage().getScaledInstance(250, 300, Image.SCALE_DEFAULT));
+            ImageIcon imgThisImg = new ImageIcon(new ImageIcon(path + "babe8bit.png").getImage().getScaledInstance(250, 250, Image.SCALE_DEFAULT));
             picLabel.setSize(300, 400);
             picLabel.setIcon(imgThisImg);
 
@@ -124,7 +124,7 @@ public class Creditframe extends JFrame
         subPanel_4 = new JPanel();
         {
             JLabel picLabel = new JLabel();
-            ImageIcon imgThisImg = new ImageIcon(new ImageIcon(path + "user4.png").getImage().getScaledInstance(250, 300, Image.SCALE_DEFAULT));
+            ImageIcon imgThisImg = new ImageIcon(new ImageIcon(path + "kawin8bit.png").getImage().getScaledInstance(250, 250, Image.SCALE_DEFAULT));
             picLabel.setSize(300, 400);
             picLabel.setIcon(imgThisImg);
 
