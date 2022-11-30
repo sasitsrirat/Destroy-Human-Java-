@@ -60,10 +60,10 @@ public class MainMenu extends JFrame implements WindowListener {
     protected MainMenu main = this;
 
     public MainMenu() {
-        imagepath = "src/pictures/";//"project3/Project3_xxxxxxx/project3/src/pictures/"
-        soundpath = "src/sounds/";
-        path = "src/main/java/project3/";// "src/main/java/project3/"; //
-                                                                            // project3\Project3_xxxxxxx\project3\src\main\java\project3\info.txt
+        imagepath = "Project3_xxxxxxx/project3/src/pictures/";//"project3/Project3_xxxxxxx/project3/src/pictures/"
+        soundpath = "Project3_xxxxxxx/project3/src/sounds/"; // src/sounds/
+        path = "Project3_xxxxxxx/project3/src/main/java/project3/";// "src/main/java/project3/";
+                                                                            
 
         // set background music
         musicSound.add(new Sound(soundpath + "BossTime.wav", "mainmenuBG"));
@@ -631,6 +631,7 @@ class Mytextpanel2 extends JPanel {
         // button
         System.out.println(player.getstage());
         ArrayList<String> st = new ArrayList<String>();
+        
         switch (player.getstage()) 
         {
             case 1:
@@ -661,87 +662,41 @@ class Mytextpanel2 extends JPanel {
             default:
                 break;
         }
-        JComboBox SB = new JComboBox(new Vector<>(st));
+        JComboBox SB = new JComboBox(new Vector<String>(st));
         SB.setBounds(25, 120, 75, 20);
         SB.setVisible(true);
         this.add(SB);
-        stage = SB.getSelectedIndex() + 1;
-        /*
-         * if (player.getstage() >= 1) {
-         * // r1 = new JRadioButton("Stage 1");
-         * r1.setBounds(25, 120, 75, 20);
-         * r1.addActionListener(new ActionListener() {
-         * 
-         * @Override
-         * public void actionPerformed(ActionEvent e) {
-         * stage = 1;
-         * 
-         * }
-         * });
-         * bg.add(r1);
-         * this.add(r1);
-         * // default stage
-         * r1.setSelected(true);
-         * stage = 1;
-         * }
-         * if (player.getstage() >= 2) {
-         * JRadioButton r2 = new JRadioButton("Stage 2");
-         * r2.setBounds(100, 120, 75, 20);
-         * r2.addActionListener(new ActionListener() {
-         * 
-         * @Override
-         * public void actionPerformed(ActionEvent e) {
-         * stage = 2;
-         * 
-         * }
-         * });
-         * bg.add(r2);
-         * this.add(r2);
-         * }
-         * if (player.getstage() >= 3) {
-         * JRadioButton r3 = new JRadioButton("Stage 3");
-         * r3.setBounds(175, 120, 75, 20);
-         * r3.addActionListener(new ActionListener() {
-         * 
-         * @Override
-         * public void actionPerformed(ActionEvent e) {
-         * stage = 3;
-         * 
-         * }
-         * });
-         * bg.add(r3);
-         * this.add(r3);
-         * }
-         * if (player.getstage() >= 4) {
-         * JRadioButton r4 = new JRadioButton("Stage 4");
-         * r4.setBounds(250, 120, 75, 20);
-         * r4.addActionListener(new ActionListener() {
-         * 
-         * @Override
-         * public void actionPerformed(ActionEvent e) {
-         * stage = 4;
-         * 
-         * }
-         * });
-         * bg.add(r4);
-         * this.add(r4);
-         * }
-         * if (player.getstage() >= 5) {
-         * JRadioButton r5 = new JRadioButton("Stage 5");
-         * r5.setBounds(325, 120, 75, 20);
-         * r5.addActionListener(new ActionListener() {
-         * 
-         * @Override
-         * public void actionPerformed(ActionEvent e) {
-         * stage = 5;
-         * 
-         * }
-         * });
-         * bg.add(r5);
-         * this.add(r5);
-         * }
-         */
-        // summit button
+
+        ActionListener cbActionListener = new ActionListener() { //add actionlistner to listen for change
+            @Override
+            public void actionPerformed(ActionEvent e) 
+            {
+                int s = SB.getSelectedIndex(); //get the selected item
+
+                switch (s) {//check for a match
+                    case 0:
+                        stage = 1;
+                        break;
+                    case 1:
+                        stage = 2;
+                        break;
+                    case 2:
+                        stage = 3;
+                        break;
+                    case 3:
+                        stage = 4;
+                        break;
+                    case 4:
+                        stage = 5;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        };
+        SB.addActionListener(cbActionListener);
+ 
+        System.out.println(stage + " --- " +SB.getSelectedIndex());
         JButton summitButton = new JButton("submit");
         {
             summitButton.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 16));

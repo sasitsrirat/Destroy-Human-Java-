@@ -12,7 +12,7 @@ import java.io.FileNotFoundException;
 import java.lang.System.Logger.Level;
 
 public class Scoreframe extends JFrame {
-    private String pathInput = "project3/Project3_xxxxxxx/project3/src/main/java/project3/info.txt";
+    private String pathInput = "Project3_xxxxxxx/project3/src/main/java/project3/info.txt";
     protected JPanel ScorePanel;
     protected JLabel contentPanel;
     protected int frameWidth = 1366;
@@ -27,7 +27,7 @@ public class Scoreframe extends JFrame {
 
         this.main = main;
         scan = main.getfilemanage();
-        String imagepath = "project3/Project3_xxxxxxx/project3/src/pictures/";
+        String imagepath = "Project3_xxxxxxx/project3/src/pictures/";
         setTitle("Score");
         setBounds(50, 50, frameWidth, frameHeight);
         setVisible(true);

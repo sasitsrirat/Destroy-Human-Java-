@@ -135,14 +135,14 @@ public class Stageframe extends JFrame {
 
     public void settext() {
         int i = 0;
-        for ( i = 0; i < robotLabelArraylist.size(); i++) {
+        for (i = 0; i < robotLabelArraylist.size(); i++) {
             RO[i].setText(robotLabelArraylist.get(i).getOwner().getname() + "  HP  : "
                     + Integer.toString(robotLabelArraylist.get(i).getOwner().gethp()) + "/ "
                     + Integer.toString(robotLabelArraylist.get(i).getOwner().getmax_hp()));
             RO[i].setVisible(true);
         }
-        if (i < 3){
-            for (int j = i+1; j < 3; j++){
+        if (i < 3) {
+            for (int j = i + 1; j < 3; j++) {
                 RO[j].setVisible(false);
             }
         }
@@ -152,8 +152,8 @@ public class Stageframe extends JFrame {
                     + Integer.toString(humanLabelArraylist.get(i).getOwner().getmax_hp()));
             HU[i].setVisible(true);
         }
-        if (i < 3){
-            for (int j = i; j < 3; j++){
+        if (i < 3) {
+            for (int j = i; j < 3; j++) {
                 HU[j].setVisible(false);
             }
         }
@@ -326,8 +326,8 @@ public class Stageframe extends JFrame {
                                     JOptionPane.QUESTION_MESSAGE);
                             for (Sound i : musicSound) {
                                 if ("stageBG".equals(i.getName())) {
-                                        i.stop();
-                                    }
+                                    i.stop();
+                                }
                             }
                             if (result == JOptionPane.YES_OPTION) {
                                 if (player.getshowstory()) {
@@ -382,6 +382,12 @@ public class Stageframe extends JFrame {
                 Thread.currentThread();
                 Thread.sleep(5000);
                 action_rest();
+                try {
+                    Thread.currentThread();
+                    Thread.sleep(2250);
+                } catch (InterruptedException e) {
+
+                }
             } catch (InterruptedException e) {
             }
             stat.setactiveCharacter(activeLabel.getOwner());
