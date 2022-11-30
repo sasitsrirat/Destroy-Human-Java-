@@ -2,7 +2,7 @@ package project3;
 
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
-
+import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -12,26 +12,27 @@ import java.io.FileNotFoundException;
 import java.lang.System.Logger.Level;
 
 public class Scoreframe extends JFrame {
-    private String pathInput = "Project3_xxxxxxx/project3/src/main/java/project3/info.txt";
+    private String pathInput = "project3/Project3_xxxxxxx/project3/src/main/java/project3/info.txt";
     protected JPanel ScorePanel;
     protected JLabel contentPanel;
     protected int frameWidth = 1366;
     protected int frameHeight = 768;
-    protected Filemanage scan ;//;\= new Filemanage();
+    protected Filemanage scan;// ;\= new Filemanage();
     protected MainMenu main;
+    protected ArrayList<PlayerInfo> playerArraylist;
 
-    // JPanel credit = new JPanel();
     // constructor
-    public Scoreframe(MainMenu main) throws FileNotFoundException 
-    {
-
+    public Scoreframe(MainMenu main) throws FileNotFoundException {
         this.main = main;
         scan = main.getfilemanage();
-        String imagepath = "Project3_xxxxxxx/project3/src/pictures/";
+        playerArraylist = main.getplayerarraylist();
+        String imagepath = "project3/Project3_xxxxxxx/project3/src/pictures/";
         setTitle("Score");
         setBounds(50, 50, frameWidth, frameHeight);
         setVisible(true);
         setResizable(false);
+        ImageIcon img = new ImageIcon(imagepath + "trophy.png");
+        setIconImage(img.getImage());
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         ScorePanel = new JPanel();
@@ -59,7 +60,7 @@ public class Scoreframe extends JFrame {
         table.setFillsViewportHeight(true);
         table.setRowHeight(50);
         table.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
-        // table.setPreferredSize(new Dimension(500, 500));
+        table.setEnabled(false);
 
         File file = new File(pathInput);
 
@@ -79,27 +80,23 @@ public class Scoreframe extends JFrame {
 
             // extratct data from lines
             // set data to jtable model
-            for (int i = 0; i < tableLines.length; i++) {
-                String line = tableLines[i].toString().trim();
-                String[] buf = line.split(",");
-                //String name = buf[0].trim().toString();
-                //int stage = Integer.parseInt(buf[1].trim());
-                if (buf[7].trim().equalsIgnoreCase("true"))
-                {
-                    int score1 = Integer.parseInt(buf[2].trim());
-                    int score2 = Integer.parseInt(buf[3].trim());
-                    int score3 = Integer.parseInt(buf[4].trim());
-                    int score4 = Integer.parseInt(buf[5].trim());
-                    int score5 = Integer.parseInt(buf[6].trim());
+            int i = 0;
+            for (PlayerInfo p : playerArraylist) {
+                if (playerArraylist.get(i).getAutosave()) {
+                    int score1 = p.getscore(1);
+                    int score2 = p.getscore(2);
+                    int score3 = p.getscore(3);
+                    int score4 = p.getscore(4);
+                    int score5 = p.getscore(5);
                     int sum = score1 + score2 + score3 + score4 + score5;
-                    model.addRow(buf);
-                    model.setValueAt(i + 1, i, 0);
-                    model.setValueAt(buf[0].trim().toString(), i, 1);
-                    model.setValueAt(Integer.parseInt(buf[1].trim()), i, 2);
-                    model.setValueAt(sum, i, 3);
+                    model.addRow(new Object[i]);
+                    model.setValueAt(i + 1, i, 0); // Number
+                    model.setValueAt(p.getname(), i, 1); // Name
+                    model.setValueAt(p.getstage(), i, 2); // stage
+                    model.setValueAt(sum, i, 3); // sum of score
                 }
+                i++;
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -148,6 +145,4 @@ public class Scoreframe extends JFrame {
         contentPanel.setVisible(true);
 
     }
-
-   
 }

@@ -24,7 +24,6 @@ public class Stageframe extends JFrame {
     private Random rand = new Random();
     private Characterlabel activeLabel, targetLabel;
     private StatLabel stat;
-    private Storyframe storyframe;
     private JLabel contentpane;
     private JLabel activepoint = new JLabel();
     private JLabel warn = new JLabel();
@@ -45,7 +44,6 @@ public class Stageframe extends JFrame {
         main = m;
         player = main.getCurrentplayer();
         playerArraylsit = main.getplayerarraylist();
-        System.out.println(player.getname() + player.getscore(1));
         for (Sound i : musicSound) {
             if ("stageBG".equals(i.getName())) {
                 i.playLoop();
@@ -203,6 +201,7 @@ public class Stageframe extends JFrame {
             RO[i].setBackground(null);
             RO[i].setForeground(Color.white);
             RO[i].setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 13));
+            RO[i].setHorizontalAlignment(JLabel.CENTER);
             RO[i].setBounds(robotLabelArraylist.get(i).getcurX(), robotLabelArraylist.get(i).getcurY() + 200, 200, 30);
             RO[i].setText(robotLabelArraylist.get(i).getOwner().getname() + "  HP  : "
                     + Integer.toString(robotLabelArraylist.get(i).getOwner().gethp()) + "/ "
@@ -220,6 +219,7 @@ public class Stageframe extends JFrame {
             HU[i].setForeground(Color.white);
             HU[i].setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 13));
             HU[i].setBounds(humanLabelArraylist.get(i).getcurX(), humanLabelArraylist.get(i).getcurY() + 200, 180, 20);
+            HU[i].setHorizontalAlignment(JLabel.CENTER);
             HU[i].setText(humanLabelArraylist.get(i).getOwner().getname() + "  HP  : "
                     + Integer.toString(humanLabelArraylist.get(i).getOwner().gethp()) + "/ "
                     + Integer.toString(humanLabelArraylist.get(i).getOwner().getmax_hp()));
@@ -234,6 +234,23 @@ public class Stageframe extends JFrame {
 
     public void setallhuman() {
 
+    }
+
+    public void setpause(){
+        JButton pause = new JButton();
+        {
+            pause.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
+            pause.setBackground(new Color(222, 0, 62));
+            pause.setForeground(Color.white);
+            pause.setUI(new StyledButtonUI());
+            pause.setForeground(new Color(255, 255, 255));
+            pause.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent event) {
+                    
+                }
+            });
+        }
     }
 
     public void battle(int stage, int wave) { // stage battle
@@ -313,7 +330,7 @@ public class Stageframe extends JFrame {
                             main.repaint();
                         } else { // Win this stage
                             player.setstage(stage + 1);
-                            if (stage == 1 && player.getAutosave()) {
+                            if (stage == 1 && player.getAutosave() && player.getscore(1)==0) {
                                 playerArraylsit.add(player);
                             }
                             if (allturn < 10)
@@ -384,7 +401,7 @@ public class Stageframe extends JFrame {
             stat.ShowAction(activeLabel.getOwner());
             try {
                 Thread.currentThread();
-                Thread.sleep(5000);
+                Thread.sleep(60000);
                 action_rest();
                 try {
                     Thread.currentThread();
@@ -429,9 +446,10 @@ public class Stageframe extends JFrame {
 
     public void robot_attack() { // Arraylist robot,character
         if (targetLabel == null) {
-            warn.setText("   Choose the enemy");
+            warn.setText("Choose the Enemy");
             warn.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 50));
             warn.setBackground(new Color(222, 0, 62));
+            warn.setHorizontalAlignment(JLabel.CENTER);
             warn.setOpaque(true);
             warn.setForeground(Color.white);
             warn.setBounds(423, 50, 520, 70);
@@ -462,7 +480,7 @@ public class Stageframe extends JFrame {
             activeLabel.getOwner().getspeedthread().interrupt();
 
         } else if (targetLabel.getOwner() instanceof Robot) {
-            warn.setText(" Don't Choose the Ally");
+            warn.setText("Don't Choose the Ally");
             contentpane.repaint();
             validate();
         }
@@ -509,10 +527,11 @@ public class Stageframe extends JFrame {
 
     public void action_robot1_skill() {
         if (targetLabel == null) {
-            warn.setText("   Choose the Enemy");
+            warn.setText("Choose the Enemy");
             warn.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 50));
             warn.setBackground(new Color(222, 0, 62));
             warn.setOpaque(true);
+            warn.setHorizontalAlignment(JLabel.CENTER);
             warn.setForeground(Color.white);
             warn.setBounds(423, 50, 520, 70);
             contentpane.add(warn);
@@ -538,7 +557,7 @@ public class Stageframe extends JFrame {
             validate();
             activeLabel.getOwner().getspeedthread().interrupt();
         } else if (targetLabel.getOwner() instanceof Robot) {
-            warn.setText(" Don't Choose the Ally");
+            warn.setText("Don't Choose the Ally");
             contentpane.repaint();
             validate();
         }
@@ -546,18 +565,19 @@ public class Stageframe extends JFrame {
 
     public void action_robot2_skill() {
         if (targetLabel == null) {
-            warn.setText("   Choose the Ally");
+            warn.setText("Choose the Ally");
             warn.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 50));
             warn.setBackground(new Color(222, 0, 62));
             warn.setOpaque(true);
             warn.setForeground(Color.white);
+            warn.setHorizontalAlignment(JLabel.CENTER);
             warn.setBounds(423, 50, 520, 70);
             contentpane.add(warn);
             choose = 3;
             contentpane.repaint();
             validate();
         } else if (targetLabel.getOwner() instanceof Human) {
-            warn.setText(" Don't Choose the Enemy");
+            warn.setText("Don't Choose the Enemy");
             contentpane.repaint();
             validate();
         } else if (targetLabel.getOwner() instanceof Robot) {
@@ -616,10 +636,11 @@ public class Stageframe extends JFrame {
     }
 
     public void warnskill() {
-        warn.setText("      not enough EP ");
+        warn.setText("not enough EP ");
         warn.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 50));
         warn.setBackground(new Color(222, 0, 62));
         warn.setOpaque(true);
+        warn.setHorizontalAlignment(JLabel.CENTER);
         warn.setForeground(Color.white);
         warn.setBounds(423, 50, 520, 70);
         contentpane.add(warn);
