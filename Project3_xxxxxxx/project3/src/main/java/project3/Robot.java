@@ -80,7 +80,7 @@ class Robot2 extends Robot {
 class Robot3 extends Robot {
 
     public Robot3(Stageframe sf) {
-        super("N2Y2", 30, 500, 2, "robot3-normal-01.png", "robot3-attack-01.png", "robot3-alive-01.png", "robot3-shake-01.png", sf) ;
+        super("N2Y2", 30, 500, 100, "robot3-normal-01.png", "robot3-attack-01.png", "robot3-alive-01.png", "robot3-shake-01.png", sf) ;
     }
     @Override
     public void skill3(ArrayList<Human> enemies) { //attack all enemy

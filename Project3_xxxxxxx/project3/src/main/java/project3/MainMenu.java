@@ -695,8 +695,7 @@ class Mytextpanel2 extends JPanel {
             }
         };
         SB.addActionListener(cbActionListener);
- 
-        System.out.println(stage + " --- " +SB.getSelectedIndex());
+        
         JButton summitButton = new JButton("submit");
         {
             summitButton.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 16));
@@ -826,32 +825,14 @@ class Mytextpanel2 extends JPanel {
                 public void actionPerformed(ActionEvent event) {
                     JCheckBox cb = (JCheckBox) event.getSource();
                     if (cb.isSelected()) {
-                        // main.setscore(false);
                         player.setshowstory(false);
                     } else {
-                        // main.setscore(true);
                         player.setshowstory(true);
 
                     }
                 }
             });
         }
-
-        /*
-         * bg.add(r1);
-         * bg.add(r2);
-         * bg.add(r3);
-         * bg.add(r4);
-         * bg.add(r5);
-         * 
-         * // this.add(tf);
-         * // add
-         * this.add(r1);
-         * this.add(r2);
-         * this.add(r3);
-         * this.add(r4);
-         * this.add(r5);
-         */
         this.add(summitButton);
         cpanel.add(cutScenecheck);
         spanel.add(savecheck);
@@ -866,7 +847,6 @@ class Mytextpanel2 extends JPanel {
         this.add(cpanel);
         this.add(spanel);
         this.add(scpanel);
-
         validate();
         repaint();
     }

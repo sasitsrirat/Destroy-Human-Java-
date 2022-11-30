@@ -185,8 +185,10 @@ public class Characterlabel extends JLabel {
     public void showdeath() {
         death = true;
         setIcon(deathicon);
-        curY = curY + 25;
-        setBounds(curX, curY, width, height);
+        if (owner instanceof Human){
+            curY = curY + 25;
+            setBounds(curX, curY, width, height);
+        }
     }
 
     public void setMoveConditions(int x, int y) {

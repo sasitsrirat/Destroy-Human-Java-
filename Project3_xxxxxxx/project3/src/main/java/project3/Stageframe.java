@@ -251,12 +251,6 @@ public class Stageframe extends JFrame {
 
                     JOptionPane.showMessageDialog(null, " WAVE" + wave + " TURN " + (turn + 1), " STAGE" + stage,
                             JOptionPane.PLAIN_MESSAGE);
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e1) {
-                        e1.printStackTrace();
-                    }
-
                     threadArraylist = new ArrayList<Thread>();
                     for (Robot ro : robotArraylist) {
 
@@ -292,8 +286,18 @@ public class Stageframe extends JFrame {
                         battle(stage, wave + 1);
                     } else {
                         if (stage >= 5) { // Win all stage
+                            if (allturn < 10)
+                                player.setscore(100 + (100 - (allturn * 10)), stage);
+                            else
+                                player.setscore(100, stage);
+                            main.getfilemanage().filewrite(playerArraylsit);
+                            JOptionPane.showMessageDialog(null, "Victory\nScore : " + player.getscore(stage),
+                                    " STAGE" + stage,
+                                    JOptionPane.PLAIN_MESSAGE);
                             for (Sound i : musicSound) {
-                                i.stop();
+                                if ("stageBG".equals(i.getName())) {
+                                    i.stop();
+                                }
                             }
                             if (player.getshowstory()) {
                                 storyframe = new Storyframe(6, imagepath, musicSound, effectSound, main, frameWidth,
@@ -356,7 +360,9 @@ public class Stageframe extends JFrame {
                     }
                     System.out.println("YOU LOOSE STAGE" + stage);
                     for (Sound i : musicSound) {
-                        i.stop();
+                        if ("stageBG".equals(i.getName())) {
+                            i.stop();
+                        }
                     }
                     for (Sound i : musicSound) {
                         if ("mainmenuBG".equals(i.getName())) {
@@ -366,6 +372,7 @@ public class Stageframe extends JFrame {
                     main.setContentPane(main.getPane());
                 }
             }
+
         };
         bruh.start();
     }
