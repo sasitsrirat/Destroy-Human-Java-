@@ -273,13 +273,13 @@ public class Stagewave {
     }
 
     public void robotstage5() {
-        ro1 = new Robot1(frame);
+        //ro1 = new Robot1(frame);
         // ro2 = new Robot2(frame);
         ro3 = new Robot3(frame);
-        ro.add(ro1);
+        //ro.add(ro1);
         // ro.add(ro2);
         ro.add(ro3);
-        ro1.setposition(3);
+        //ro1.setposition(3);
         // ro2.setposition(2);
         ro3.setposition(1);
     }

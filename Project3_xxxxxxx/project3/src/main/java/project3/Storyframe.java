@@ -6,7 +6,7 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.*;
 
-public class Storyframe extends JFrame{
+public class Storyframe extends JFrame {
     private int frameHeight;
     private int frameWidth;
     private int stage;
@@ -24,7 +24,8 @@ public class Storyframe extends JFrame{
     private String imagepath;
     protected ArrayList<Sound> musicSound, effectSound;
 
-    public Storyframe(int n, String ipath, ArrayList<Sound> mSound, ArrayList<Sound> eSound, MainMenu m, int fw, int fh){
+    public Storyframe(int n, String ipath, ArrayList<Sound> mSound, ArrayList<Sound> eSound, MainMenu m, int fw,
+            int fh) {
         mainMenu = m;
         imagepath = ipath;
         musicSound = mSound;
@@ -38,7 +39,7 @@ public class Storyframe extends JFrame{
         contentpane.setIcon(background);
         contentpane.setOpaque(true);
         contentpane.setLayout(null);
-        setContentPane(contentpane);
+        //setContentPane(contentpane);
         setNextButtonPanel();
 
         switch (stage) {
@@ -89,8 +90,8 @@ public class Storyframe extends JFrame{
                     }
                 }
                 endstory();
+                break;
             default:
-                
         }
 
         validate();
@@ -116,16 +117,21 @@ public class Storyframe extends JFrame{
         return 0;
     }
 
-     public class nextframeHandler implements ActionListener {
+    public class nextframeHandler implements ActionListener {
         public void actionPerformed(ActionEvent event) {
 
             for (Sound i : musicSound) {
-                    i.stop();
+                i.stop();
             }
-            if(stage > 5){
+            if (stage > 5) {
+                for (Sound i : musicSound) {
+                    if ("mainmenuBG".equals(i.getName())) {
+                        i.playLoop();
+                    }
+                }
                 mainMenu.openscore();
                 mainMenu.setContentPane(mainMenu.getPane());
-            }else {
+            } else {
                 sframe = new Stageframe(imagepath, musicSound, effectSound, mainMenu, stage);
                 setTitle("Stage");
                 mainMenu.setContentPane(sframe.getContentpane());
@@ -305,7 +311,7 @@ public class Storyframe extends JFrame{
 
         Thread animation = new Thread(new Runnable() {
             @Override
-            public void run() { 
+            public void run() {
                 while (true) {
                     story5.setLocation(scurX, scurY);
                     scurY -= 5;
@@ -331,9 +337,7 @@ public class Storyframe extends JFrame{
         endstory.setBounds(100, 100, 1100, 700);
         contentpane.add(endstory);
 
-        endstoryText = new JTextArea(
-                 "Finally, robot can take the Robot Factory back. \nFactory produced a large number of robots to do" +
-                 "\nevery human occupation. After the robots wiped off\nall of humanity on Earth, the robot civilization \nbegan to spread throughout the universe.");
+        endstoryText = new JTextArea("Finally, robot can take the Robot Factory back. \nFactory produced a large number of robots to do\nevery human occupation. After the robots wiped off\nall of humanity on Earth, the robot civilization \nbegan to spread throughout the universe.");
         endstoryText.setBounds(100, 100, frameWidth, frameHeight);
         endstoryText.setOpaque(false);
         endstoryText.setForeground(Color.orange);
@@ -347,11 +351,11 @@ public class Storyframe extends JFrame{
                 while (true) {
                     endstory.setLocation(scurX, scurY);
                     scurY -= 5;
-                    if (scurY < 25) {
+                    if (scurY < 50) {
                         nextButtonPanel.setVisible(true);
                     }
                     try {
-                        Thread.sleep(300);
+                        Thread.sleep(100);
                     } catch (Exception e) {
 
                     }

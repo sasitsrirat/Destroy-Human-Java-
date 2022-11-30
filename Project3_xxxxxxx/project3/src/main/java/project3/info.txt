@@ -1,4 +1,4 @@
+kawinz,5,180,0,0,170,170,true,true,true 
 babe,3,150,160,130,0,0,true,true,true 
-kawinz,5,180,0,0,0,140,true,true,true 
 kawinz,5,180,0,0,0,0,true,true,false 
 kong,2,170,0,0,0,0,true,true,false 

@@ -292,17 +292,14 @@ public class Stageframe extends JFrame {
                                 player.setscore(100, stage);
                             main.getfilemanage().filewrite(playerArraylsit);
                             JOptionPane.showMessageDialog(null, "Victory\nScore : " + player.getscore(stage),
-                                    " STAGE" + stage,
-                                    JOptionPane.PLAIN_MESSAGE);
+                                    " STAGE" + stage, JOptionPane.PLAIN_MESSAGE);
                             for (Sound i : musicSound) {
                                 if ("stageBG".equals(i.getName())) {
                                     i.stop();
                                 }
                             }
                             if (player.getshowstory()) {
-                                storyframe = new Storyframe(6, imagepath, musicSound, effectSound, main, frameWidth,
-                                        frameHeight);
-                                main.setContentPane(storyframe.getContentpane());
+                                main.startstory(6);
                             } else {
                                 for (Sound i : musicSound) {
                                     if ("mainmenuBG".equals(i.getName())) {
@@ -312,7 +309,8 @@ public class Stageframe extends JFrame {
                                 main.openscore();
                                 main.setContentPane(main.getPane());
                             }
-
+                            main.validate();
+                            main.repaint();
                         } else { // Win this stage
                             player.setstage(stage + 1);
                             if (stage == 1 && player.getAutosave()) {
@@ -372,7 +370,6 @@ public class Stageframe extends JFrame {
                     main.setContentPane(main.getPane());
                 }
             }
-
         };
         bruh.start();
     }
@@ -498,7 +495,7 @@ public class Stageframe extends JFrame {
         if (activeLabel.getOwner() instanceof Human_super) {
             activeLabel.getOwner().takeheal(3);
             for (Sound i : effectSound) {
-                if ("robotskill2EF".equals(i.getName())) {
+                if ("humanhealEF".equals(i.getName())) {
                     activeLabel.takedmg_animation("humanheal.gif", i);
                 }
             }

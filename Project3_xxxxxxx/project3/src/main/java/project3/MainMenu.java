@@ -87,10 +87,11 @@ public class MainMenu extends JFrame implements WindowListener {
         effectSound.add(new Sound(soundpath + "bombef.wav", "robotskill3EF"));
         effectSound.add(new Sound(soundpath + "punch.wav", "humannormalattackEF"));
         effectSound.add(new Sound(soundpath + "gunEF.wav", "humangunEF"));
+        effectSound.add(new Sound(soundpath + "leech.wav", "humanhealEF"));
         effectSound.add(new Sound(soundpath + "victoryEF.wav", "victoryEF"));
         effectSound.add(new Sound(soundpath + "defeatEF.wav", "defeatEF"));
         effectSound.add(new Sound(soundpath + "restEF.wav", "restEF"));
-
+        
         setType(Type.POPUP);
         setTitle("Menu");
         setResizable(false);
@@ -695,7 +696,7 @@ class Mytextpanel2 extends JPanel {
             }
         };
         SB.addActionListener(cbActionListener);
-        
+
         JButton summitButton = new JButton("submit");
         {
             summitButton.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 16));
