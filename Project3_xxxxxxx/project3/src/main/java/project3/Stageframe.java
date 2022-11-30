@@ -134,16 +134,28 @@ public class Stageframe extends JFrame {
     }
 
     public void settext() {
-        for (int i = 0; i < robotLabelArraylist.size(); i++) {
+        int i = 0;
+        for ( i = 0; i < robotLabelArraylist.size(); i++) {
             RO[i].setText(robotLabelArraylist.get(i).getOwner().getname() + "  HP  : "
                     + Integer.toString(robotLabelArraylist.get(i).getOwner().gethp()) + "/ "
                     + Integer.toString(robotLabelArraylist.get(i).getOwner().getmax_hp()));
-
+            RO[i].setVisible(true);
         }
-        for (int i = 0; i < humanLabelArraylist.size(); i++) {
+        if (i < 3){
+            for (int j = i+1; j < 3; j++){
+                RO[j].setVisible(false);
+            }
+        }
+        for (i = 0; i < humanLabelArraylist.size(); i++) {
             HU[i].setText(humanLabelArraylist.get(i).getOwner().getname() + "  HP  : "
                     + Integer.toString(humanLabelArraylist.get(i).getOwner().gethp()) + "/ "
                     + Integer.toString(humanLabelArraylist.get(i).getOwner().getmax_hp()));
+            HU[i].setVisible(true);
+        }
+        if (i < 3){
+            for (int j = i; j < 3; j++){
+                HU[j].setVisible(false);
+            }
         }
         validate();
         contentpane.repaint();
@@ -227,6 +239,7 @@ public class Stageframe extends JFrame {
     public void battle(int stage, int wave) { // stage battle
         sethumanArraylist(wave);
         addallhuman();
+        settext();
         validate();
         contentpane.repaint();
 

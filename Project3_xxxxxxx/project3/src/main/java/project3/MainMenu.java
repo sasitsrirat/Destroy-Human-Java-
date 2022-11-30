@@ -60,10 +60,9 @@ public class MainMenu extends JFrame implements WindowListener {
     protected MainMenu main = this;
 
     public MainMenu() {
-        imagepath = "project3/Project3_xxxxxxx/project3/src/pictures/";// "src/pictures/"; //
-        // "project3/Project3_xxxxxxx/project3/src/pictures/"
-        soundpath = "project3/Project3_xxxxxxx/project3/src/sounds/";
-        path = "project3/Project3_xxxxxxx/project3/src/main/java/project3/";// "src/main/java/project3/"; //
+        imagepath = "src/pictures/";//"project3/Project3_xxxxxxx/project3/src/pictures/"
+        soundpath = "src/sounds/";
+        path = "src/main/java/project3/";// "src/main/java/project3/"; //
                                                                             // project3\Project3_xxxxxxx\project3\src\main\java\project3\info.txt
 
         // set background music
