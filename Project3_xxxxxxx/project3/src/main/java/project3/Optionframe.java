@@ -284,124 +284,15 @@ public class Optionframe extends JFrame implements ActionListener {
                 });
             }
         }
-
-        cutScenesPanel = new JPanel();
-        {
-            cutscenesText = new JLabel();
-            {
-                cutscenesText.setFont(new Font("Charter", Font.BOLD, 30));
-                cutscenesText.setForeground(Color.white);
-                cutscenesText.setText("NOT SHOW STORY");
-                cutscenesText.setBounds(80, 340, 700, 30);
-            }
-            cutScenesPanel.setBounds(0, 335, 900, 100);
-            cutScenesPanel.setOpaque(false);
-        }
-        
-        cpanel = new JPanel();
-            {
-                cpanel.setBounds(850, 335, 100, 25);
-                cpanel.setOpaque(false);
-                cutScenecheck = new JCheckBox(" no story ");
-                cutScenecheck.setForeground(Color.white);
-                cutScenecheck.setOpaque(false);
-                cutScenecheck.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent event) {
-                        JCheckBox cb = (JCheckBox) event.getSource();
-                        if (cb.isSelected()) {
-                            main.setcutscene(false);
-                        } else {
-                            main.setcutscene(true);
-                        }
-                    }
-                });
-            }
-
-        AutosavePanel = new JPanel();
-        {
-            AutotsaveText = new JLabel();
-            {
-                AutotsaveText.setFont(new Font("Charter", Font.BOLD, 30));
-                AutotsaveText.setForeground(Color.white);
-                AutotsaveText.setText("NO AUTO-SAVE");
-                AutotsaveText.setBounds(80, 390, 700, 30);
-            }
-            AutosavePanel.setBounds(0, 385, 700, 100);
-            AutosavePanel.setOpaque(false);
-        }
-        spanel = new JPanel();
-            {
-                spanel.setBounds(850, 385, 100, 25);
-                spanel.setOpaque(false);
-                savecheck = new JCheckBox(" no save ");
-                savecheck.setForeground(Color.white);
-                savecheck.setOpaque(false);
-                savecheck.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent event) {
-                        JCheckBox cb = (JCheckBox) event.getSource();
-                        if (cb.isSelected()) {
-                            main.setsave(false);
-                        } else {
-                            main.setsave(true);
-                        }
-                    }
-                });
-            }
-
-        ScorePanel = new JPanel();
-        {
-            ScoreText = new JLabel();
-            {
-                ScoreText.setFont(new Font("Charter", Font.BOLD, 30));
-                ScoreText.setForeground(Color.white);
-                ScoreText.setText("NOT SHOW SCORE");
-                ScoreText.setBounds(80, 440, 700, 30);
-            }
-            ScorePanel.setBounds(0, 435, 700, 100);
-            ScorePanel.setOpaque(false);
-        }
-        scpanel = new JPanel();
-            {
-                scpanel.setBounds(850, 435, 100, 25);
-                scpanel.setOpaque(false);
-                scorecheck = new JCheckBox(" no score ");
-                scorecheck.setForeground(Color.white);
-                scorecheck.setOpaque(false);
-                scorecheck.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent event) {
-                        JCheckBox cb = (JCheckBox) event.getSource();
-                        if (cb.isSelected()) {
-                            main.setscore(false);
-                        } else {
-                            main.setscore(true);
-                        }
-                    }
-                });
-            }
             
         mpanel.add(musiccheck);
         epanel.add(effectcheck);
-        cpanel.add(cutScenecheck);
-        spanel.add(savecheck);
-        scpanel.add(scorecheck);
         musicPanel.add(musicSlider);
         effectPanel.add(effectSlider);
         contentpane.add(musicText);
         contentpane.add(effectText);
-        contentpane.add(AutotsaveText);
-        contentpane.add(cutscenesText);
-        contentpane.add(ScorePanel);
-        contentpane.add(ScoreText);
-        contentpane.add(AutosavePanel);
-        contentpane.add(cutScenesPanel);
         contentpane.add(mpanel);
         contentpane.add(epanel);
-        contentpane.add(cpanel);
-        contentpane.add(spanel);
-        contentpane.add(scpanel);
         contentpane.add(musicPanel);
         contentpane.add(effectPanel);
 
