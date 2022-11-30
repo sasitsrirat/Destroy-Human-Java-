@@ -44,7 +44,8 @@ public class Optionframe extends JFrame implements ActionListener {
         setVisible(true);
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-
+        ImageIcon img = new ImageIcon(imagepath + "setting.png");
+        setIconImage(img.getImage());
         setContentPane(contentpane = new JLabel());
         MyImageIcon imageIcon = new MyImageIcon(path + "wp4363081.jpg");
         contentpane.setIcon(imageIcon.resize(frameWidth, frameHeight));

@@ -60,9 +60,9 @@ public class MainMenu extends JFrame implements WindowListener {
     protected MainMenu main = this;
 
     public MainMenu() {
-        imagepath = "Project3_xxxxxxx/project3/src/pictures/";//"project3/Project3_xxxxxxx/project3/src/pictures/"
-        soundpath = "Project3_xxxxxxx/project3/src/sounds/"; // src/sounds/
-        path = "Project3_xxxxxxx/project3/src/main/java/project3/";// "src/main/java/project3/";
+        imagepath = "project3/Project3_xxxxxxx/project3/src/pictures/";//"project3/Project3_xxxxxxx/project3/src/pictures/"
+        soundpath = "project3/Project3_xxxxxxx/project3/src/sounds/"; // src/sounds/
+        path = "project3/Project3_xxxxxxx/project3/src/main/java/project3/";// "src/main/java/project3/";
                                                                             
 
         // set background music
@@ -98,7 +98,8 @@ public class MainMenu extends JFrame implements WindowListener {
         setBounds(50, 50, frameWidth, frameHeight);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
-
+        ImageIcon img = new ImageIcon(imagepath + "robot.png");
+        setIconImage(img.getImage());
         addWindowListener(this);
         // set background gif
         ImageIcon imageIcon = new ImageIcon(imagepath + "roboyscofi.gif");
@@ -195,7 +196,7 @@ public class MainMenu extends JFrame implements WindowListener {
                         }
                     }
                     if (tframe == null)
-                        tframe = new Tutorialframe();
+                        tframe = new Tutorialframe(imagepath);
                     else
                         tframe.setVisible(true);
                 }
@@ -327,8 +328,9 @@ public class MainMenu extends JFrame implements WindowListener {
             contentPane.add(J);
             // Logo in main menu
             JLabel logo = new JLabel();
-            logo.setIcon(new ImageIcon(new ImageIcon(imagepath + "Testlogo.png").getImage().getScaledInstance(250, 150,
-                    Image.SCALE_SMOOTH)));
+            logo.setOpaque(false);
+            logo.setIcon(new ImageIcon(new ImageIcon(imagepath + "RDT-Logo.gif").getImage().getScaledInstance(180, 180,
+                    Image.SCALE_DEFAULT)));
             J.add(logo);
         }
         contentPane.setFocusable(true);
@@ -383,6 +385,7 @@ public class MainMenu extends JFrame implements WindowListener {
             if ("mainmenuBG".equals(i.getName()))
                 i.stop();
         }
+        setTitle("Story " + a);
         strframe = new Storyframe(a, imagepath, musicSound, effectSound, main, frameWidth, frameHeight);
         setContentPane(strframe.getContentpane());
     }
@@ -393,7 +396,7 @@ public class MainMenu extends JFrame implements WindowListener {
                 i.stop();
         }
         sframe = new Stageframe(imagepath, musicSound, effectSound, main, a);
-        setTitle("Stage");
+        setTitle("Stage " + a);
         setContentPane(sframe.getContentpane());
         validate();
     }
@@ -666,8 +669,9 @@ class Mytextpanel2 extends JPanel {
         JComboBox SB = new JComboBox(new Vector<String>(st));
         SB.setBounds(25, 120, 75, 20);
         SB.setVisible(true);
+        SB.setSelectedIndex(0);
         this.add(SB);
-
+        stage = 1; //config stage
         ActionListener cbActionListener = new ActionListener() { //add actionlistner to listen for change
             @Override
             public void actionPerformed(ActionEvent e) 
@@ -710,13 +714,12 @@ class Mytextpanel2 extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent event) {
                     temp.dispose();
-                    System.out.println(stage);
+                    System.out.println("Stage " + stage);
                     if (player.getshowstory()) {
                         main.startstory(stage);
                     } else {
                         main.startstage(stage);
                     }
-
                 }
             });
         }

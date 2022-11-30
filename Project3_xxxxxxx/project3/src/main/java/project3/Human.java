@@ -40,13 +40,13 @@ class Human_fat extends Human{
 class Human_soldier extends Human{
 
     public Human_soldier(String n, Stageframe sf){
-        super(n,35,4,3, "sd1.png", "sd1.png","tomb.png", sf);
+        super(n,30,3,3, "sd1.png", "sd1.png","tomb.png", sf);
     }
 }
 
 class Human_super extends Human{
 
     public Human_super(String n, Stageframe sf){
-        super(n,40,5,4, "superhuman.png", "superhuman.png","tomb.png", sf);
+        super(n,40,5,3, "superhuman.png", "superhuman.png","tomb.png", sf);
     }
 }

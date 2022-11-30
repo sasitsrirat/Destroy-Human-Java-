@@ -132,9 +132,7 @@ public class Storyframe extends JFrame {
                 mainMenu.openscore();
                 mainMenu.setContentPane(mainMenu.getPane());
             } else {
-                sframe = new Stageframe(imagepath, musicSound, effectSound, mainMenu, stage);
-                setTitle("Stage");
-                mainMenu.setContentPane(sframe.getContentpane());
+                mainMenu.startstage(stage);
             }
             validate();
             mainMenu.validate();
@@ -157,6 +155,7 @@ public class Storyframe extends JFrame {
         story1Text.setForeground(Color.orange);
         story1Text.setFont(storyFont);
         story1Text.setLineWrap(true);
+        story1Text.setEditable(false);
         story1.add(story1Text);
 
         Thread animation = new Thread(new Runnable() {
@@ -196,6 +195,7 @@ public class Storyframe extends JFrame {
         story2Text.setForeground(Color.orange);
         story2Text.setFont(storyFont);
         story2Text.setLineWrap(true);
+        story2Text.setEditable(false);
         story2.add(story2Text);
 
         Thread animation = new Thread(new Runnable() {
@@ -233,6 +233,7 @@ public class Storyframe extends JFrame {
         story3Text.setForeground(Color.orange);
         story3Text.setFont(storyFont);
         story3Text.setLineWrap(true);
+        story3Text.setEditable(false);
         story3.add(story3Text);
 
         Thread animation = new Thread(new Runnable() {
@@ -270,6 +271,7 @@ public class Storyframe extends JFrame {
         story4Text.setForeground(Color.orange);
         story4Text.setFont(storyFont);
         story4Text.setLineWrap(true);
+        story4Text.setEditable(false);
         story4.add(story4Text);
 
         Thread animation = new Thread(new Runnable() {
@@ -307,6 +309,7 @@ public class Storyframe extends JFrame {
         story5Text.setForeground(Color.orange);
         story5Text.setFont(storyFont);
         story5Text.setLineWrap(true);
+        story5Text.setEditable(false);
         story5.add(story5Text);
 
         Thread animation = new Thread(new Runnable() {

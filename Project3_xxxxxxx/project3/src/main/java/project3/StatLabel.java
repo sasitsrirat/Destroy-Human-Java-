@@ -189,20 +189,20 @@ class StatLabel extends JLabel {
         attackinfo.setBackground(null);
         attackinfo.setForeground(Color.pink);
         attackinfo.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 17));
-        attackinfo.setBounds(540, 50, 570, 50);
+        attackinfo.setBounds(560, 50, 570, 50);
         attackinfo.setText("gain 1 EP --- Attack to an enemy with (atk) damage");
         attackinfo.setVisible(true);
 
         skillinfo.setBackground(null);
         skillinfo.setForeground(Color.pink);
         skillinfo.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 17));
-        skillinfo.setBounds(540, 110, 570, 50);
+        skillinfo.setBounds(560, 110, 570, 50);
         skillinfo.setVisible(true);
 
         restinfo.setBackground(null);
         restinfo.setForeground(Color.pink);
         restinfo.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 17));
-        restinfo.setBounds(540, 170, 570, 50);
+        restinfo.setBounds(560, 170, 570, 50);
         restinfo.setText("gain 2 EP --- Skip this turn");
         restinfo.setVisible(true);
 
@@ -215,7 +215,7 @@ class StatLabel extends JLabel {
             attackButton.setSize(100, 200);
             attackButton.setUI(new StyledButtonUI());
             attackButton.setForeground(new Color(255, 255, 255));
-            attackButton.setBounds(380, 50, 150, 50);
+            attackButton.setBounds(380, 50, 170, 50);
             attackButton.setLayout(null);
             attackButton.setVisible(true);
             attackButton.addActionListener(new ActionListener() {
@@ -235,7 +235,7 @@ class StatLabel extends JLabel {
             skillButton.setSize(100, 200);
             skillButton.setUI(new StyledButtonUI());
             skillButton.setForeground(new Color(255, 255, 255));
-            skillButton.setBounds(380, 110, 150, 50);
+            skillButton.setBounds(380, 110, 170, 50);
             skillButton.setLayout(null);
             skillButton.setVisible(true);
             skillButton.addActionListener(new ActionListener() {
@@ -267,7 +267,7 @@ class StatLabel extends JLabel {
             restButton.setSize(100, 200);
             restButton.setUI(new StyledButtonUI());
             restButton.setForeground(new Color(255, 255, 255));
-            restButton.setBounds(380, 170, 150, 50);
+            restButton.setBounds(380, 170, 170, 50);
             restButton.setLayout(null);
             restButton.setVisible(true);
             restButton.addActionListener(new ActionListener() {
