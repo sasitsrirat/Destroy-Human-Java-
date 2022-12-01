@@ -3,14 +3,13 @@ package project3;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.plaf.BorderUIResource;
 import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Vector;
-import java.lang.*;
+ 
 
 //Class for design Button like CSS
 class StyledButtonUI extends BasicButtonUI {
@@ -56,7 +55,7 @@ public class MainMenu extends JFrame implements WindowListener {
     protected PlayerInfo currentplayer;
     protected Filemanage scan;
     protected String fileinfo = "info.txt";
-    private Timer timer3,timer1,timer2;
+    private Timer timer1,timer2;
 
     protected MainMenu main = this;
 
@@ -176,7 +175,7 @@ public class MainMenu extends JFrame implements WindowListener {
                     d.setBounds(250, 250, 500, 200);
                     d.addKeyListener(new KeyListener() {
                         public void keyTyped(KeyEvent e) {
-                            System.out.printf("t >>  %c  (%s) \n", e.getKeyChar(), e.getKeyText(e.getKeyCode()));
+                            System.out.printf("t >>  %c  (%s) \n", e.getKeyChar(), KeyEvent.getKeyText(e.getKeyCode()));
                         }
 
                         @Override
@@ -663,9 +662,7 @@ class Mytextpanel2 extends JPanel {
     }
 
     public void addcomponent() {
-
-        ButtonGroup bg = new ButtonGroup();
-        // button
+        
         System.out.println(player.getstage());
         ArrayList<String> st = new ArrayList<String>();
         
@@ -699,7 +696,7 @@ class Mytextpanel2 extends JPanel {
             default:
                 break;
         }
-        JComboBox SB = new JComboBox(new Vector<String>(st));
+        final JComboBox SB = new JComboBox(new Vector<String>(st));
         SB.setBounds(25, 120, 75, 20);
         SB.setVisible(true);
         SB.setSelectedIndex(0);
