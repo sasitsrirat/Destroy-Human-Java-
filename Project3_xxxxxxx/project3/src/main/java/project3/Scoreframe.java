@@ -7,12 +7,11 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.io.*;
-import java.util.Scanner;
 import java.io.FileNotFoundException;
-import java.lang.System.Logger.Level;
+ 
 
 public class Scoreframe extends JFrame {
-    private String pathInput = "project3/Project3_xxxxxxx/project3/src/main/java/project3/info.txt";
+   // private String pathInput = "project3/Project3_xxxxxxx/project3/src/main/java/project3/info.txt";
     protected JPanel ScorePanel;
     protected JLabel contentPanel;
     protected int frameWidth = 1366;
@@ -22,11 +21,10 @@ public class Scoreframe extends JFrame {
     protected ArrayList<PlayerInfo> playerArraylist;
 
     // constructor
-    public Scoreframe(MainMenu main) throws FileNotFoundException {
-        this.main = main;
+    public Scoreframe(MainMenu mainMenu,String imagepath,String path) throws FileNotFoundException {
+        this.main = mainMenu;
         scan = main.getfilemanage();
         playerArraylist = main.getplayerarraylist();
-        String imagepath = "project3/Project3_xxxxxxx/project3/src/pictures/";
         setTitle("Score");
         setBounds(50, 50, frameWidth, frameHeight);
         setVisible(true);
@@ -62,7 +60,7 @@ public class Scoreframe extends JFrame {
         table.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
         table.setEnabled(false);
 
-        File file = new File(pathInput);
+        File file = new File(path);
 
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
@@ -97,6 +95,7 @@ public class Scoreframe extends JFrame {
                 }
                 i++;
             }
+            br.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
