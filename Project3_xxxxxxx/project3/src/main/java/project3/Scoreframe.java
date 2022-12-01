@@ -59,28 +59,19 @@ public class Scoreframe extends JFrame {
         table.setRowHeight(50);
         table.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
         table.setEnabled(false);
-
-        File file = new File(path);
-
+        
         try {
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            String firstLine = br.readLine().trim();
-            String[] columnsName = firstLine.split(",");
-
             DefaultTableModel model = (DefaultTableModel) table.getModel();
             model.addColumn("No");
             model.addColumn("Name");
             model.addColumn("Stage");
             model.addColumn("Score");
 
-            // get lines from txt file
-            Object[] tableLines = br.lines().toArray();
-
-            // extratct data from lines
             // set data to jtable model
             int i = 0;
+            Collections.sort(playerArraylist);
             for (PlayerInfo p : playerArraylist) {
-                if (playerArraylist.get(i).getAutosave()) {
+                if (playerArraylist.get(i).getdisplay()) {
                     int score1 = p.getscore(1);
                     int score2 = p.getscore(2);
                     int score3 = p.getscore(3);
@@ -95,7 +86,6 @@ public class Scoreframe extends JFrame {
                 }
                 i++;
             }
-            br.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

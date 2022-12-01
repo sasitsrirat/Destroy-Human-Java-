@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 class Robot extends Character {
 
-    protected int ep = 2; //Energy Point
+    protected int ep = 3; //Energy Point
     protected int max_ep = 5;
     protected Characterlabel robotlabel;
     protected String idle;
@@ -49,7 +49,7 @@ class Robot extends Character {
 class Robot1 extends Robot {
 
     public Robot1(Stageframe sf) {
-        super("Musix-6000", 35, 7, 1, "robot1-normal-01.png", "robot1-attack-01.png", "robot1-alive-01.png", "robot1-shake-01.png", sf);
+        super("Musix-60", 35, 8, 1, "robot1-normal-01.png", "robot1-attack-01.png", "robot1-alive-01.png", "robot1-shake-01.png", sf);
     }
 
     @Override
@@ -63,7 +63,7 @@ class Robot1 extends Robot {
 class Robot2 extends Robot {
 
     public Robot2(Stageframe sf) {
-        super("Ba-Be", 40, 5, 3,"robot2-normal-01.png" , "robot2-attack-01.png", "robot2-alive-01.png", "robot2-shake-01.png", sf);
+        super("Ba-Be", 40, 6, 3,"robot2-normal-01.png" , "robot2-attack-01.png", "robot2-alive-01.png", "robot2-shake-01.png", sf);
     }
 
     @Override
@@ -80,7 +80,7 @@ class Robot2 extends Robot {
 class Robot3 extends Robot {
 
     public Robot3(Stageframe sf) {
-        super("N2Y2", 30, 8, 2, "robot3-normal-01.png", "robot3-attack-01.png", "robot3-alive-01.png", "robot3-shake-01.png", sf) ;
+        super("N2Y2", 30, 9, 2, "robot3-normal-01.png", "robot3-attack-01.png", "robot3-alive-01.png", "robot3-shake-01.png", sf) ;
     }
     @Override
     public void skill3(ArrayList<Human> enemies) { //attack all enemy

@@ -74,7 +74,8 @@ public class Creditframe extends JFrame
             subPanel_1.setBounds(0, 120, frameWidth/4, 500);
 
             JLabel text_1 = new JLabel("<html><font size = '6' color=white font = Skia> Ravipol Chayeraksa</font></html>");
-            JLabel text_1ID = new JLabel ("<html><font size='16' color=white> 6413XXX</font></html>");
+            JLabel text_1ID = new JLabel ("<html><font size='16' color=white> 6413223</font></html>");
+            text_1.setFont(new Font("Verdana", Font.PLAIN, 18));
 
             subPanel_1.add(picLabel);
             subPanel_1.add(text_1);
@@ -96,7 +97,8 @@ public class Creditframe extends JFrame
             subPanel_2.setBounds(333,120, frameWidth/4, 500);
              
             JLabel text_2 = new JLabel("<html><font size = '6' color=white> Watcharsak Prommanee</font></html>");//Watcharsak Prommanee
-            JLabel text_2ID = new JLabel ("<html><font size='16' color=white> 6413XXX</font> ");
+            JLabel text_2ID = new JLabel ("<html><font size='16' color=white> 6413110</font> ");
+            text_2.setFont(new Font("Verdana", Font.PLAIN, 18));
 
             subPanel_2.add(picLabel);
             subPanel_2.add(text_2);
@@ -114,17 +116,19 @@ public class Creditframe extends JFrame
             ImageIcon imgThisImg = new ImageIcon(new ImageIcon(path + "babe8bit.png").getImage().getScaledInstance(250, 250, Image.SCALE_DEFAULT));
             picLabel.setSize(300, 400);
             picLabel.setIcon(imgThisImg);
-
+            
             subPanel_3.setOpaque(false);
             //subPanel_3.setBackground(new Color(165, 157, 208,40));
             subPanel_3.setBounds(666, 120, frameWidth/4, 500);
  
-            JLabel text_3 = new JLabel("<html><font size = '6' color=white>    Sasit Sriratxx        </font></html>");//Sasit Srirat
-            JLabel text_3ID = new JLabel ("<html><font size='16' color=white>   6413XXX </font> ");
- 
+            JLabel text_3 = new JLabel("<html><font size = '6' color=white>    Sasit Srirat              </font></html>");//Sasit Srirat
+            JLabel text_3ID = new JLabel ("<html><font size='16' color=white>   6413112 </font> ");
+            text_3.setFont(new Font("Verdana", Font.PLAIN, 18));
+            text_3ID.setBounds(656, 410, 360, 50);
+            text_3ID.setHorizontalAlignment(JLabel.CENTER);
             subPanel_3.add(picLabel);
             subPanel_3.add(text_3);
-            subPanel_3.add(text_3ID);
+            contentPane.add(text_3ID);
             contentPane.add(subPanel_3);
 
             validate();
@@ -138,15 +142,17 @@ public class Creditframe extends JFrame
             picLabel.setIcon(imgThisImg);
 
             subPanel_4.setOpaque(false);
-            //subPanel_4.setBackground(new Color(218, 157, 138,40));
             subPanel_4.setBounds(1000, 120, 360, 500);
    
-            JLabel text_4 = new JLabel("<html><font size = '6' color=white> Kawin Kengkate      </font></html>");//Kawin Kengkate
-            JLabel text_4ID = new JLabel ("<html><font size='16' color=white> 6413XXX</font> ");
- 
+            JLabel text_4 = new JLabel("<html><font size = '6' color=white> Kawin Kengkate            </font></html>");//Kawin Kengkate
+            JLabel text_4ID = new JLabel ("<html><font size='16' color=white> 6413210</font> ");
+            text_4ID.setBounds(1000, 410, 360, 50);
+            text_4ID.setHorizontalAlignment(JLabel.CENTER);
+            text_4.setFont(new Font("Verdana", Font.PLAIN, 18));
+
             subPanel_4.add(picLabel);
             subPanel_4.add(text_4);
-            subPanel_4.add(text_4ID);
+            contentPane.add(text_4ID);
             contentPane.add(subPanel_4);
 
             validate();

@@ -25,7 +25,7 @@ class Human extends Character{ // Skill use rate 0/10
 class Human_weak extends Human{
 
     public Human_weak(String n, Stageframe sf){
-        super(n,20,3,1, "Mutanthuman.png", "Mutanthuman.png", "tomb.png", sf);
+        super(n,23,4,1, "Mutanthuman.png", "Mutanthuman.png", "tomb.png", sf);
         //a
     }
 }
@@ -33,20 +33,20 @@ class Human_weak extends Human{
 class Human_fat extends Human{
     
     public Human_fat(String n, Stageframe sf){
-        super(n,25,4,2, "repairman.png", "repairman.png", "tomb.png",sf);
+        super(n,27,5,2, "repairman.png", "repairman.png", "tomb.png",sf);
     }
 }
 
 class Human_soldier extends Human{
 
     public Human_soldier(String n, Stageframe sf){
-        super(n,30,3,3, "sd1.png", "sd1.png","tomb.png", sf);
+        super(n,32,4,3, "sd1.png", "sd1.png","tomb.png", sf);
     }
 }
 
 class Human_super extends Human{
 
     public Human_super(String n, Stageframe sf){
-        super(n,40,5,3, "superhuman.png", "superhuman.png","tomb.png", sf);
+        super(n,40,6,4, "superhuman.png", "superhuman.png","tomb.png", sf);
     }
 }

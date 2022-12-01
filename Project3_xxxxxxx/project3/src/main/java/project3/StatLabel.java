@@ -188,20 +188,20 @@ class StatLabel extends JLabel {
 
         attackinfo.setBackground(null);
         attackinfo.setForeground(Color.pink);
-        attackinfo.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 17));
+        attackinfo.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 14));
         attackinfo.setBounds(560, 50, 570, 50);
         attackinfo.setText("gain 1 EP --- Attack to an enemy with (atk) damage");
         attackinfo.setVisible(true);
 
         skillinfo.setBackground(null);
         skillinfo.setForeground(Color.pink);
-        skillinfo.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 17));
+        skillinfo.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 14));
         skillinfo.setBounds(560, 110, 570, 50);
         skillinfo.setVisible(true);
 
         restinfo.setBackground(null);
         restinfo.setForeground(Color.pink);
-        restinfo.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 17));
+        restinfo.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 14));
         restinfo.setBounds(560, 170, 570, 50);
         restinfo.setText("gain 2 EP --- Skip this turn");
         restinfo.setVisible(true);
@@ -296,7 +296,6 @@ class StatLabel extends JLabel {
     public synchronized void ShowAction(Character ch) {
         if (ch instanceof Robot1) {
             skillButton.setIcon(new MyImageIcon(imagepath + "skill_critical.png").resize(40, 40));
-            //skillinfo.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 14));
             skillinfo.setText("use  3 EP --- Attack an enemy with (atk * 2) damage and ignores enemy def");
             this.add(attackButton);
             this.add(attackinfo);
@@ -315,7 +314,6 @@ class StatLabel extends JLabel {
             this.add(restinfo);
         } else if (ch instanceof Robot3) {
             skillButton.setIcon(new MyImageIcon(imagepath + "skill_bomb.png").resize(40, 40));
-            //skillinfo.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 17));
             skillinfo.setText("use  3 EP --- Attack all enemies with (atk) damage");
             this.add(attackButton);
             this.add(attackinfo);

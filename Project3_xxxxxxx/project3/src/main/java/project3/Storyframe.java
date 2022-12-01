@@ -39,7 +39,6 @@ public class Storyframe extends JFrame {
         contentpane.setIcon(background);
         contentpane.setOpaque(true);
         contentpane.setLayout(null);
-        //setContentPane(contentpane);
         setNextButtonPanel();
 
         switch (stage) {
@@ -93,10 +92,8 @@ public class Storyframe extends JFrame {
                 break;
             default:
         }
-
         validate();
         repaint();
-
     }
 
     public int setNextButtonPanel() {
@@ -187,7 +184,7 @@ public class Storyframe extends JFrame {
         contentpane.add(story2);
 
         story2Text = new JTextArea(
-                "When the second robot N2Y2 found that the first robot\nwas trying to complete the task on his own, the \nsecond robot followed him  and assisted him in \npreparing to invade the human armory. \n\n*The second "
+                "When the second robot N2Y2 found that the \nfirst robot was trying to complete\nthe task on his own, the \nsecond robot followed him  and assisted him in \npreparing to invade the human armory. \n\n*The second "
                         +
                         "robot can repair other robot 🔧*");
         story2Text.setBounds(100, 100, frameWidth, frameHeight);

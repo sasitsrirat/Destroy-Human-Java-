@@ -1,3 +1,6 @@
 kawinz,5,190,180,180,170,170,true,true,true 
+jojo,5,150,100,100,100,100,true,true,true 
 babe,3,150,160,0,0,0,true,true,true 
+gufu,2,180,0,0,0,0,true,true,true 
 kong,2,170,0,0,0,0,true,true,false 
+lebron,2,150,0,0,0,0,true,true,true 

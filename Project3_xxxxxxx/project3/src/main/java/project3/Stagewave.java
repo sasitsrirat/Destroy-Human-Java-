@@ -57,8 +57,8 @@ public class Stagewave {
     }
 
     public void humanstage3_1() {
-        hu1 = new Human_fat("Pornchai", frame);
-        hu2 = new Human_weak("Vasin", frame);
+        hu1 = new Human_fat("Vornchai", frame);
+        hu2 = new Human_weak("Pasin", frame);
         hu3 = new Human_weak("Eakky", frame);
         hu1.setposition(4);
         hu2.setposition(5);
@@ -131,7 +131,7 @@ public class Stagewave {
     public void humanstage5_2() {
         hu1 = new Human_weak("minion1", frame);
         hu2 = new Human_weak("minion2", frame);
-        hu3 = new Human_super("YOUNG BRO", frame);
+        hu3 = new Human_super("YOUNG", frame);
         hu1.setposition(4);
         hu2.setposition(5);
         hu3.setposition(6);
@@ -143,7 +143,7 @@ public class Stagewave {
     public void humanstage5_3() {
         hu1 = new Human_soldier("Torpedo", frame);
         hu2 = new Human_soldier("Gorilla", frame);
-        hu3 = new Human_super("OLD BRO", frame);
+        hu3 = new Human_super("OLD", frame);
         hu1.setposition(4);
         hu2.setposition(5);
         hu3.setposition(6);
@@ -225,39 +225,27 @@ public class Stagewave {
     // Robot ////////////////////////////
     public void robotstage1() {
         ro1 = new Robot1(frame);
-        ro2 = new Robot2(frame);
-        ro3 = new Robot3(frame);
         ro.add(ro1);
-        ro.add(ro2);
-        ro.add(ro3);
         ro1.setposition(3);
-        ro2.setposition(2);
-        ro3.setposition(1);
     }
 
     public void robotstage2() {
         ro1 = new Robot1(frame);
-        // ro2 = new Robot2(frame);
-        ro3 = new Robot3(frame);
+        ro2 = new Robot2(frame);
         ro.add(ro1);
-        // ro.add(ro2);
-        ro.add(ro3);
+        ro.add(ro2);
         ro1.setposition(3);
-        // ro2.setposition(2);
-        ro3.setposition(1);
+        ro2.setposition(2);
 
     }
 
     public void robotstage3() {
-        // ro1 = new Robot1(frame);
-        // ro2 = new Robot2(frame);
-        ro3 = new Robot3(frame);
-        // ro.add(ro1);
-        // ro.add(ro2);
-        ro.add(ro3);
-        // ro1.setposition(3);
-        // ro2.setposition(2);
-        ro3.setposition(1);
+        ro1 = new Robot1(frame);
+        ro2 = new Robot2(frame);
+        ro.add(ro1);
+        ro.add(ro2);
+        ro1.setposition(3);
+        ro2.setposition(2);
     }
 
     public void robotstage4() {
@@ -273,14 +261,14 @@ public class Stagewave {
     }
 
     public void robotstage5() {
-        //ro1 = new Robot1(frame);
-        // ro2 = new Robot2(frame);
+        ro1 = new Robot1(frame);
+        ro2 = new Robot2(frame);
         ro3 = new Robot3(frame);
-        //ro.add(ro1);
-        // ro.add(ro2);
+        ro.add(ro1);
+        ro.add(ro2);
         ro.add(ro3);
-        //ro1.setposition(3);
-        // ro2.setposition(2);
+        ro1.setposition(3);
+        ro2.setposition(2);
         ro3.setposition(1);
     }
 

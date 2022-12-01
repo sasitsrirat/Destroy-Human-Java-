@@ -60,9 +60,9 @@ public class MainMenu extends JFrame implements WindowListener {
     protected MainMenu main = this;
 
     public MainMenu() {
-        imagepath = "Project3_xxxxxxx/project3/src/pictures/";//"project3/Project3_xxxxxxx/project3/src/pictures/"
-        soundpath = "Project3_xxxxxxx/project3/src/sounds/"; // src/sounds/
-        path = "Project3_xxxxxxx/project3/src/main/java/project3/";// "src/main/java/project3/";
+        imagepath = "src/pictures/";//"project3/Project3_xxxxxxx/project3/src/pictures/"
+        soundpath = "src/sounds/"; // src/sounds/
+        path = "src/main/java/project3/";// "src/main/java/project3/";
                                                                             
         //------------------------------------->  set background music
         musicSound.add(new Sound(soundpath + "BossTime.wav", "mainmenuBG"));
@@ -143,8 +143,8 @@ public class MainMenu extends JFrame implements WindowListener {
         est.setForeground(Color.white);
         logo.setIcon(new ImageIcon(new ImageIcon(imagepath + "RDT-Logo.gif").getImage().getScaledInstance(160, 160,
                 Image.SCALE_DEFAULT)));
-        logo.setBounds(122, 15, 200, 200);
-        est.setBounds(98, 600, 300, 200);
+        logo.setBounds(122, 15, 200, 200); // setBounds(122, 15, 200, 200);
+        est.setBounds(82, 600, 300, 200);
         contentPane.add(est);
         contentPane.add(logo);
         
@@ -403,13 +403,10 @@ public class MainMenu extends JFrame implements WindowListener {
     }
 
     public void openscore() {
-        if (scoreframe == null)
-            try {
-                scoreframe = new Scoreframe(main,imagepath,path);
+        try {
+                scoreframe = new Scoreframe(main,imagepath,path+fileinfo);
             } catch (FileNotFoundException e) {
             }
-        else
-            scoreframe.setVisible(true);
     }
 
     public void startstory(int a) {
@@ -459,13 +456,9 @@ public class MainMenu extends JFrame implements WindowListener {
 
     public static void main(String[] args) {
         try {
-            Introframe introframe = new Introframe();
-            introframe.setVisible(true);
-            // MainMenu frame = new MainMenu();
-            // frame.setVisible(true);
-            // Stageframe stageframe = new Stageframe("src/pictures", "src/sounds",1);
-        } catch (Exception e) {
-        }
+             MainMenu frame = new MainMenu();
+             frame.setVisible(true);
+        } catch (Exception e) {}
     }
 
     @Override
@@ -663,7 +656,6 @@ class Mytextpanel2 extends JPanel {
 
     public void addcomponent() {
         
-        System.out.println(player.getstage());
         ArrayList<String> st = new ArrayList<String>();
         
         switch (player.getstage()) 
@@ -744,7 +736,6 @@ class Mytextpanel2 extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent event) {
                     temp.dispose();
-                    System.out.println("Stage " + stage);
                     if (player.getshowstory()) {
                         main.startstory(stage);
                     } else {
@@ -859,9 +850,9 @@ class Mytextpanel2 extends JPanel {
                 public void actionPerformed(ActionEvent event) {
                     JCheckBox cb = (JCheckBox) event.getSource();
                     if (cb.isSelected()) {
-                        player.setshowstory(false);
+                        player.setdisplay(false);
                     } else {
-                        player.setshowstory(true);
+                        player.setdisplay(true);
 
                     }
                 }

@@ -2,11 +2,8 @@ package project3;
 
 import java.awt.*;
 import java.util.*;
-import java.util.concurrent.CyclicBarrier;
-import javax.imageio.ImageIO.*;
 import javax.swing.*;
 import javax.swing.JFrame;
-import javax.swing.event.MouseInputListener;
 import java.awt.event.*;
 
 public class Stageframe extends JFrame {
@@ -35,8 +32,10 @@ public class Stageframe extends JFrame {
     private MainMenu main;
     private PlayerInfo player;
     private ArrayList<PlayerInfo> playerArraylsit;
+    private Stageframe stageframe;
 
     public Stageframe(String ipath, ArrayList<Sound> mSound, ArrayList<Sound> eSound, MainMenu m, int stage) {
+        stageframe = this;
         stagenum = stage;
         imagepath = ipath;
         musicSound = mSound;
@@ -176,6 +175,7 @@ public class Stageframe extends JFrame {
     }
 
     public void addcomponent() {
+        // this.setpause();
         for (Sound i : effectSound) {
             if ("clickEF".equals(i.getName())) {
                 stat = new StatLabel(imagepath, "StatusBG.png", i, frameWidth, frameHeight - 480, this);
@@ -236,23 +236,6 @@ public class Stageframe extends JFrame {
 
     }
 
-    public void setpause(){
-        JButton pause = new JButton();
-        {
-            pause.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
-            pause.setBackground(new Color(222, 0, 62));
-            pause.setForeground(Color.white);
-            pause.setUI(new StyledButtonUI());
-            pause.setForeground(new Color(255, 255, 255));
-            pause.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent event) {
-                    
-                }
-            });
-        }
-    }
-
     public void battle(int stage, int wave) { // stage battle
         sethumanArraylist(wave);
         addallhuman();
@@ -261,8 +244,57 @@ public class Stageframe extends JFrame {
         contentpane.repaint();
 
         Thread bruh = new Thread() {
+            public void setpause() {
+                Thread b = this;
+                MyImageIcon icon = new MyImageIcon(imagepath + "back.png").resize(50, 50);
+                JButton pause = new JButton(icon);
+                {
+                    pause.setOpaque(false);
+                    pause.setBounds(frameWidth - 90, 40, 50, 50);
+                    pause.setVisible(true);
+                    pause.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent event) {
+                            for (Sound i : musicSound) {
+                                if ("stageBG".equals(i.getName())) {
+                                    i.stop();
+                                }
+                            }
+                            int result = JOptionPane.showConfirmDialog(main, "Get back to Mainmenu?", " PAUSE",
+                                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                            if (result == JOptionPane.YES_OPTION) {
+                                for (Sound i : musicSound) {
+                                    if ("mainmenuBG".equals(i.getName())) {
+                                        i.playLoop();
+                                    }
+                                }
+                                for (int j = 0; j < humanArraylist.size(); j++) {
+                                        humanArraylist.get(j).getspeedthread().stop();
+                                }
+                                for (int j = 0; j < robotArraylist.size(); j++) {
+                                        robotArraylist.get(j).getspeedthread().stop();
+                                }
+                                stageframe.dispose();
+                                main.setContentPane(main.getPane());
+                                b.stop();
+                            } else {
+                                for (Sound i : musicSound) {
+                                    if ("stageBG".equals(i.getName())) {
+                                        i.playLoop();
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+                contentpane.add(pause);
+                contentpane.validate();
+                contentpane.repaint();
+                
+            }
 
             public void run() {
+                setpause();
                 int turn;
                 for (turn = 0; humanArraylist.size() > 0 && robotArraylist.size() > 0; turn++) {
 
@@ -303,8 +335,8 @@ public class Stageframe extends JFrame {
                         battle(stage, wave + 1);
                     } else {
                         if (stage >= 5) { // Win all stage
-                            if (allturn < 10)
-                                player.setscore(100 + (100 - (allturn * 10)), stage);
+                            if (allturn < 25)
+                                player.setscore(100 + (100 - (allturn * 4)), stage);
                             else
                                 player.setscore(100, stage);
                             main.getfilemanage().filewrite(playerArraylsit);
@@ -330,7 +362,7 @@ public class Stageframe extends JFrame {
                             main.repaint();
                         } else { // Win this stage
                             player.setstage(stage + 1);
-                            if (stage == 1 && player.getAutosave() && player.getscore(1)==0) {
+                            if (stage == 1 && player.getscore(1) == 0) {
                                 playerArraylsit.add(player);
                             }
                             if (allturn < 10)
@@ -367,13 +399,8 @@ public class Stageframe extends JFrame {
                         }
                     }
                 } else {
-                    showdefeat();
-                    try {
-                        Thread.sleep(3000);
-                    } catch (InterruptedException e1) {
-                        e1.printStackTrace();
-                    }
-                    System.out.println("YOU LOOSE STAGE" + stage);
+                    JOptionPane.showMessageDialog(null, "Defeat\nGet back to Mainmenu", " STAGE" + stage,
+                            JOptionPane.PLAIN_MESSAGE);
                     for (Sound i : musicSound) {
                         if ("stageBG".equals(i.getName())) {
                             i.stop();
@@ -646,75 +673,5 @@ public class Stageframe extends JFrame {
         contentpane.add(warn);
         contentpane.repaint();
         validate();
-    }
-
-    public void showvictory() {
-        for (Sound i : effectSound) {
-            if ("victoryEF".equals(i.getName())) {
-                i.playOnce();
-            }
-        }
-        JLabel effectLabel = new JLabel();
-        ImageIcon imageIcon = new ImageIcon(imagepath + "victory.gif");
-        imageIcon.setImage(imageIcon.getImage().getScaledInstance(600, 600, Image.SCALE_DEFAULT));
-
-        effectLabel.setIcon(imageIcon);
-        effectLabel.setBounds(383, 83, 600, 600);
-        effectLabel.setVisible(true);
-        effectLabel.setHorizontalAlignment(JLabel.CENTER);
-        effectLabel.setLayout(null);
-        contentpane.add(effectLabel);
-        validate();
-        contentpane.repaint();
-        Thread bruh = new Thread() {
-            public void run() {
-                try {
-                    Thread.currentThread();
-                    Thread.sleep(3000);
-                } catch (InterruptedException ex) {
-                    Thread.currentThread().interrupt();
-                }
-                effectLabel.setVisible(false);
-                contentpane.remove(effectLabel);
-                revalidate();
-                contentpane.repaint();
-            }
-        };
-        bruh.start();
-    }
-
-    public void showdefeat() {
-        for (Sound i : effectSound) {
-            if ("defeatEF".equals(i.getName())) {
-                i.playOnce();
-            }
-        }
-        JLabel effectLabel = new JLabel();
-        ImageIcon imageIcon = new ImageIcon(imagepath + "defeat.gif");
-        imageIcon.setImage(imageIcon.getImage().getScaledInstance(400, 400, Image.SCALE_DEFAULT));
-
-        effectLabel.setIcon(imageIcon);
-        effectLabel.setBounds(383, 83, 400, 400);
-        effectLabel.setVisible(true);
-        effectLabel.setHorizontalAlignment(JLabel.CENTER);
-        effectLabel.setLayout(null);
-        contentpane.add(effectLabel);
-        validate();
-        contentpane.repaint();
-        Thread bruh = new Thread() {
-            public void run() {
-                try {
-                    Thread.currentThread();
-                    Thread.sleep(3000);
-                } catch (InterruptedException ex) {
-                    Thread.currentThread().interrupt();
-                }
-                effectLabel.setVisible(false);
-                contentpane.remove(effectLabel);
-                revalidate();
-                contentpane.repaint();
-            }
-        };
-        bruh.start();
     }
 }
