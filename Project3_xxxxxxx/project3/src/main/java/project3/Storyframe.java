@@ -15,7 +15,7 @@ public class Storyframe extends JFrame {
     private JLabel contentpane;
     private JPanel nextButtonPanel;
     private JButton nextButton;
-    private JTextArea story1Text, story2Text, story3Text, story4Text, story5Text, endstoryText;
+    private JTextArea story2Text, story3Text, story4Text, story5Text, endstoryText;
     protected Stageframe sframe;
     protected Storyframe strframe;
     protected MainMenu mainMenu;
@@ -140,28 +140,20 @@ public class Storyframe extends JFrame {
 
     public void story1() {
         story1 = new JLabel();
-        story1.setBounds(100, 100, 1100, 700);
+        story1.setBounds(133, 100, 1100, 700);
+        story1.setOpaque(false);
+        MyImageIcon im1 = new MyImageIcon(imagepath + "story1.png");
+        story1.setIcon(im1.resize(1100, 700));
         contentpane.add(story1);
-
-        story1Text = new JTextArea(
-                "When the future world is destroyed by human.\nThe robot MUSIX-6000 and friends\n must travel back in time to \nstop the humans before they destroy everything.\n"
-                        +
-                        "\nIn 2099 , After successfully turning back time,\nthe first robot began surveying the area and\nkilling humans in order to prevent the planet\nfrom collapsing.");
-        story1Text.setBounds(100, 100, frameWidth, frameHeight);
-        story1Text.setOpaque(false);
-        story1Text.setForeground(Color.orange);
-        story1Text.setFont(storyFont);
-        story1Text.setLineWrap(true);
-        story1Text.setEditable(false);
-        story1.add(story1Text);
-
+        validate();
+        contentpane.repaint();
         Thread animation = new Thread(new Runnable() {
             @Override
             public void run() {
                 while (true) {
                     story1.setLocation(scurX, scurY);
-                    scurY -= 5;
-                    if (scurY < 25) {
+                    scurY -= 4;
+                    if (scurY < 16) {
                         nextButtonPanel.setVisible(true);
                     }
                     try {
@@ -173,7 +165,6 @@ public class Storyframe extends JFrame {
             }
         });
         animation.start();
-
         validate();
         repaint();
     }

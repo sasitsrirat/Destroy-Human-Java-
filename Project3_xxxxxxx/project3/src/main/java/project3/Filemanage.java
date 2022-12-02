@@ -16,7 +16,7 @@ public class Filemanage {
         this.filename = filename;
     }
 
-    public void filescan(ArrayList<PlayerInfo> playerArraylist){//,String path,String filename) {
+    public void filescan(ArrayList<PlayerInfo> playerArraylist){
         boolean fileopensuccess = false;
 
         while (!fileopensuccess) {

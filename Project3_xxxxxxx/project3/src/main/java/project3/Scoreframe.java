@@ -6,17 +6,15 @@ import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import java.io.*;
 import java.io.FileNotFoundException;
  
 
 public class Scoreframe extends JFrame {
-   // private String pathInput = "project3/Project3_xxxxxxx/project3/src/main/java/project3/info.txt";
     protected JPanel ScorePanel;
     protected JLabel contentPanel;
     protected int frameWidth = 1366;
     protected int frameHeight = 768;
-    protected Filemanage scan;// ;\= new Filemanage();
+    protected Filemanage scan;
     protected MainMenu main;
     protected ArrayList<PlayerInfo> playerArraylist;
 
@@ -130,8 +128,6 @@ public class Scoreframe extends JFrame {
             revalidate();
             repaint();
         }
-
         contentPanel.setVisible(true);
-
     }
 }

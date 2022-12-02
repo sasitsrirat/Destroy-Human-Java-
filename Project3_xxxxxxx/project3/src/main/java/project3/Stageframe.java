@@ -53,9 +53,6 @@ public class Stageframe extends JFrame {
         allwave = sw.getWave();
         MyImageIcon background = new MyImageIcon(imagepath + sw.getpath());
         contentpane.setIcon(background.resize(frameWidth, frameHeight));
-
-        activepoint.setIcon(background);
-
         contentpane.setOpaque(false);
         contentpane.setLayout(null);
         this.addcomponent();

@@ -2,14 +2,12 @@ package project3;
 
 import javax.swing.JFrame;
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 
 public class Tutorialframe extends JFrame {
     JLabel contentpane;
     String imagepath;
 
-    
     public Tutorialframe(String path) {
         imagepath = path;
         setTitle("Tutorial");
@@ -26,7 +24,6 @@ public class Tutorialframe extends JFrame {
 
         validate();
         repaint();
-        
     }
     
 }
