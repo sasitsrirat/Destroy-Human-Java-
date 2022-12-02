@@ -68,7 +68,7 @@ class Robot2 extends Robot {
 
     @Override
     public void skill2(Character ally) {  //restore ally's hp
-        ally.takeheal(ramdomatk() * 3);  // random atk คืออะไร
+        ally.takeheal(ramdomatk() * 3);
         ep = ep - 3;
     }
 

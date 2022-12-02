@@ -2,24 +2,21 @@ package project3;
 
 import java.util.ArrayList;
 
-public class Character extends Thread implements Comparable<Character> {
+public class Character{
 
     String name = "";
     protected int max_hp = 0; // Max Health Point
     protected int hp = 0; // Health Point
     protected int atk = 0; // Attack Point
     protected int def = 0; // Defense Point
-    protected int spd = 0; // Speed Point
     protected int position; // will be set in another
     protected int maxspeed = 3000;
     protected String imagefile, attackimagefile, deathimagefile;
     protected Characterlabel CLabel;
     private Speed speedthread;
     private Stageframe frame;
-    private boolean dead = false;
     private boolean threaddead;
 
-    // protected Speed speedthread;
     public Character() {
     }
 
@@ -33,7 +30,7 @@ public class Character extends Thread implements Comparable<Character> {
         attackimagefile = ai;
         deathimagefile = di;
         frame = sf;
-        speedthread = new Speed(spd, frame, this);
+        speedthread = new Speed(frame, this);
         threaddead = false;
     }
     public void setthreaddead(boolean n){
@@ -43,14 +40,14 @@ public class Character extends Thread implements Comparable<Character> {
         return threaddead;
     }
     public void setnewspeedthread(){
-        speedthread = new Speed(spd,frame,this);
+        speedthread = new Speed(frame,this);
     }
     public Speed getspeedthread(){
         return speedthread;
     }
     public void setspeedthread() {
         if (!speedthread.isAlive()) {
-            speedthread = new Speed(spd, frame, this);
+            speedthread = new Speed(frame, this);
         }
     }
 
@@ -66,7 +63,6 @@ public class Character extends Thread implements Comparable<Character> {
         return CLabel;
     }
 
-    // Ramdom attack
     protected int ramdomatk() {
         int max = atk + 1;
         int min = atk - 1;
@@ -77,28 +73,24 @@ public class Character extends Thread implements Comparable<Character> {
         return newatk;
     }
 
-    // Take damage
-    protected int takedamg(int dam) {
+    protected void takedamg(int dam) {
         hp = hp - dam;
 
         if (hp <= 0) {
             hp = 0;
         }
-        return dam; // Return for report on screen
     }
 
-    // Take heal
-    protected int takeheal(int heal) { // รับฟื้นฟูhp
+    protected int takeheal(int heal) {
         if (heal + hp > max_hp) {
             heal = max_hp - hp;
             hp = max_hp;
         } else {
             hp = hp + heal;
         }
-        return heal; // Return for report on screen
+        return heal;
     }
 
-    // Check Death
     protected int checkdeath() {
         if (hp <= 0) {
             return 1;
@@ -134,29 +126,12 @@ public class Character extends Thread implements Comparable<Character> {
         return atk;
     }
 
-    public int getspd() {
-        return spd;
-    }
-
     public void setposition(int po) {
         position = po;
     }
 
     public int getposition() {
         return position;
-    }
-
-    public void run() {
-
-    }
-
-    @Override
-    public int compareTo(Character other) {
-        if (this.spd > other.spd) {
-            return -1;
-        } else {
-            return 1;
-        }
     }
 
     public String getimage() {

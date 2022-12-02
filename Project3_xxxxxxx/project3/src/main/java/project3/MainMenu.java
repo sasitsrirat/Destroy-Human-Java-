@@ -9,9 +9,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Vector;
- 
 
-//Class for design Button like CSS
 class StyledButtonUI extends BasicButtonUI {
     @Override
     public void installUI(JComponent c) {
@@ -40,31 +38,29 @@ class StyledButtonUI extends BasicButtonUI {
 }
 
 public class MainMenu extends JFrame implements WindowListener {
-    private final int frameWidth = 1366, frameHeight = 768; // Don't Change it.
+    private final int frameWidth = 1366, frameHeight = 768;
     protected Stageframe sframe;
-    private JLabel contentPane; // JLabel contentPane = new JLabel;
+    private JLabel contentPane;
     protected Optionframe oframe;
     protected Tutorialframe tframe;
     protected Creditframe cframe;
     protected ArrayList<Sound> musicSound = new ArrayList<Sound>(), effectSound = new ArrayList<Sound>();
     protected Scoreframe scoreframe;
     protected Storyframe strframe;
-    protected boolean cutscene = true, save = true, showscore = true;
     public String imagepath, soundpath, path;
     protected ArrayList<PlayerInfo> playerArraylist = new ArrayList<PlayerInfo>();
     protected PlayerInfo currentplayer;
     protected Filemanage scan;
     protected String fileinfo = "info.txt";
     private Timer timer1,timer2;
-
     protected MainMenu main = this;
 
     public MainMenu() {
-        imagepath = "src/pictures/";//"project3/Project3_xxxxxxx/project3/src/pictures/"
-        soundpath = "src/sounds/"; // src/sounds/
+        imagepath = "src/pictures/";//"src/pictures/"
+        soundpath = "src/sounds/"; // "src/sounds/"
         path = "src/main/java/project3/";// "src/main/java/project3/";
                                                                             
-        //------------------------------------->  set background music
+        //------------------------------------->  set sounds to the ArrayList
         musicSound.add(new Sound(soundpath + "BossTime.wav", "mainmenuBG"));
         musicSound.add(new Sound(soundpath + "stageBG.wav", "stageBG"));
         musicSound.add(new Sound(soundpath + "namlie.wav", "gereBG"));
@@ -90,7 +86,7 @@ public class MainMenu extends JFrame implements WindowListener {
         effectSound.add(new Sound(soundpath + "victoryEF.wav", "victoryEF"));
         effectSound.add(new Sound(soundpath + "defeatEF.wav", "defeatEF"));
         effectSound.add(new Sound(soundpath + "restEF.wav", "restEF"));
-        //-------------------------------------> 
+        
         //-------------------------------------> config JFrame  
         setType(Type.POPUP);
         setTitle("Menu");
@@ -101,7 +97,15 @@ public class MainMenu extends JFrame implements WindowListener {
         ImageIcon img = new ImageIcon(imagepath + "robot.png");
         setIconImage(img.getImage());
         addWindowListener(this);
-
+        
+        //---------------------------------------> File management
+        scan = new Filemanage(path, fileinfo);
+        scan.filescan(playerArraylist);
+        
+        addcomponent();
+    }
+    
+    public void addcomponent(){
         //-------------------------------------> set background gif
         ImageIcon imageIcon = new ImageIcon(imagepath + "roboyscofi1.gif");
         imageIcon.setImage(imageIcon.getImage().getScaledInstance(frameWidth, frameHeight, Image.SCALE_DEFAULT));
@@ -135,7 +139,6 @@ public class MainMenu extends JFrame implements WindowListener {
         timer1.start();
         timer2.start();
  
-        //-------------------------------------> 
         //-------------------------------------> set logo gif and text footer
         JLabel logo = new JLabel();
         JLabel est = new JLabel("Power by Java ver.18 @ 2022");
@@ -147,13 +150,8 @@ public class MainMenu extends JFrame implements WindowListener {
         est.setBounds(82, 600, 300, 200);
         contentPane.add(est);
         contentPane.add(logo);
-        
-        
-        //---------------------------------------> File management
-        MainMenu main = this;
-        scan = new Filemanage(path, fileinfo);
-        scan.filescan(playerArraylist);
 
+        //-------------------------------------> set Button
         JButton playButton = new JButton("PLAY");
         {
             playButton.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
@@ -203,10 +201,8 @@ public class MainMenu extends JFrame implements WindowListener {
             optionButton.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
             optionButton.setBackground(new Color(222, 0, 62));
             optionButton.setForeground(Color.white);
-            // customize the button with your own look
             optionButton.setUI(new StyledButtonUI());
             optionButton.setForeground(new Color(255, 255, 255));
-            // optionButton.setBounds(608, 175, 150, 50);
             optionButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
@@ -227,7 +223,6 @@ public class MainMenu extends JFrame implements WindowListener {
             tutorialButton.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
             tutorialButton.setBackground(new Color(222, 0, 62));
             tutorialButton.setForeground(Color.white);
-            // customize the button with your own look
             tutorialButton.setUI(new StyledButtonUI());
             tutorialButton.setForeground(new Color(255, 255, 255));
             tutorialButton.addActionListener(new ActionListener() {
@@ -250,7 +245,6 @@ public class MainMenu extends JFrame implements WindowListener {
             scoreButton.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
             scoreButton.setBackground(new Color(222, 0, 62));
             scoreButton.setForeground(Color.white);
-            // customize the button with your own look
             scoreButton.setUI(new StyledButtonUI());
             scoreButton.setForeground(new Color(255, 255, 255));
             scoreButton.addActionListener(new ActionListener() {
@@ -270,10 +264,8 @@ public class MainMenu extends JFrame implements WindowListener {
             creditButton.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 20));
             creditButton.setBackground(new Color(222, 0, 62));
             creditButton.setForeground(Color.white);
-            // customize the button with your own look
             creditButton.setUI(new StyledButtonUI());
             creditButton.setForeground(new Color(255, 255, 255));
-            // creditButton.setBounds(608, 325, 150, 50);
             creditButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
@@ -307,26 +299,17 @@ public class MainMenu extends JFrame implements WindowListener {
                         JButton b1 = new JButton("Yes");
                         JButton b2 = new JButton("No");
                         JLabel l1 = new JLabel("Are you sure to exit game ???? ");
-                        // JLabel l2 = new JLabel("Because this game is a fun game. It is also a game
-                        // that allows\nyou to develop skills such as logic, \nproblem solving and have
-                        // fun.\n If you quit this game, you'll probably regret it all day.");
                         d.setTitle("Exit");
                         d.setBounds(583, 459, 240, 100);
                         d.setLayout(new FlowLayout());
                         d.add(l1);
-                        // d.add(l2);
                         d.add(b1);
                         d.add(b2);
-
-                        // d.add(b2);
-
-                        // save to file when quit
                         for (PlayerInfo p : playerArraylist) {
                             p.settotalscore();
                         }
                         Collections.sort(playerArraylist);
                         scan.filewrite(playerArraylist);
-
                         b1.addActionListener(e -> System.exit(0));
                         b2.addActionListener(e -> d.dispose());
                         d.getContentPane();
@@ -340,6 +323,8 @@ public class MainMenu extends JFrame implements WindowListener {
                 }
             });
         }
+
+        //-------------------------------------> add all to contentPane
         JPanel J2 = new JPanel();
         {
             J2.setBounds(0, 200, 400, 766); // Size of JPanel
@@ -355,19 +340,15 @@ public class MainMenu extends JFrame implements WindowListener {
             J2.revalidate();
             J2.repaint();
         }
-
         JPanel J = new JPanel();
         {
             J.setSize(400, 766); // Size of JPanel
             J.setBackground(new Color(0, 0, 0, 155)); // RGBA 255,255,255,255
-            //J.setOpaque(true);
             contentPane.add(J);
             repaint();
             validate();
         }
         contentPane.setFocusable(true);
-        
-
     }
 
     public void setCurrentplayer(PlayerInfo p) {
@@ -388,18 +369,6 @@ public class MainMenu extends JFrame implements WindowListener {
 
     public JLabel getPane() {
         return contentPane;
-    }
-
-    public void setcutscene(boolean a) {
-        cutscene = a;
-    }
-
-    public void setsave(boolean a) {
-        save = a;
-    }
-
-    public void setscore(boolean a) {
-        showscore = a;
     }
 
     public void openscore() {
@@ -441,11 +410,6 @@ public class MainMenu extends JFrame implements WindowListener {
             p.settotalscore();
         }
         Collections.sort(playerArraylist);
-        /*
-         * for(PlayerInfo p : playerArraylist){
-         * System.out.println(p);
-         * }
-         */
         scan.filewrite(playerArraylist);
     }
 
@@ -537,20 +501,16 @@ class Mytextpanel extends JPanel {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     String nametext = tf.getText();
                     // set current player
-                    main.setCurrentplayer(checkplayer(playerarraylist, nametext)); // = checkplayer(playerarraylist,
-                                                                                   // nametext);
+                    main.setCurrentplayer(checkplayer(playerarraylist, nametext)); 
                     temp.dispose();
-
                     JDialog d2;
                     d2 = new JDialog(main, "Choose stage");
-
                     d2.setSize(500, 300);
                     d2.setBounds(250, 250, 500, 200);
                     Mytextpanel2 t2 = new Mytextpanel2(d2, main.getCurrentplayer(), main);
                     d2.add(t2);
                     d2.setVisible(true);
                 }
-
             }
 
             public void keyReleased(KeyEvent e) {
@@ -562,8 +522,6 @@ class Mytextpanel extends JPanel {
             summitButton.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 16));
             summitButton.setBackground(new Color(222, 0, 62));
             summitButton.setForeground(Color.white);
-            // customize the button with your own look
-
             summitButton.setForeground(new Color(255, 255, 255));
             summitButton.setBounds(350, 25, 100, 50);
             summitButton.addActionListener(new ActionListener() {
@@ -571,8 +529,7 @@ class Mytextpanel extends JPanel {
                 public void actionPerformed(ActionEvent event) {
                     String nametext = tf.getText();
                     // set current player
-                    main.setCurrentplayer(checkplayer(playerarraylist, nametext)); // = checkplayer(playerarraylist,
-                                                                                   // nametext);
+                    main.setCurrentplayer(checkplayer(playerarraylist, nametext));
                     temp.dispose();
 
                     JDialog d2;
@@ -588,25 +545,21 @@ class Mytextpanel extends JPanel {
                         }
 
                         public void keyPressed(KeyEvent e) {
-
                             if (e.getKeyCode() == KeyEvent.VK_DELETE) {
                                 temp.dispose();
                             }
-
                         }
 
                         public void keyReleased(KeyEvent e) {
                         }
 
                     });
-
                     // submit name and process to check that player have ever play
                 }
             });
         }
         this.add(tf);
         this.add(summitButton);
- 
     }
 
     public PlayerInfo checkplayer(ArrayList<PlayerInfo> playerarr, String name) {
@@ -617,7 +570,6 @@ class Mytextpanel extends JPanel {
         }
         PlayerInfo temp = new PlayerInfo(name, 1, 0, 0, 0, 0, 0, true, true, true);
         return temp;
-
     }
 }
 
@@ -642,22 +594,15 @@ class Mytextpanel2 extends JPanel {
 
         setVisible(true);
         setBackground(new Color(64, 64, 196));
-        // setBounds(50,50,200,500);
         setSize(300, 300);
-        // setHorizontalAlignment(CENTER);
-        // setVerticalAlignment(CENTER);
         setLayout(null);
-
         this.addcomponent();
-
         validate();
         repaint();
     }
 
     public void addcomponent() {
-        
         ArrayList<String> st = new ArrayList<String>();
-        
         switch (player.getstage()) 
         {
             case 1:
@@ -699,7 +644,6 @@ class Mytextpanel2 extends JPanel {
             public void actionPerformed(ActionEvent e) 
             {
                 int s = SB.getSelectedIndex(); //get the selected item
-
                 switch (s) {//check for a match
                     case 0:
                         stage = 1;
@@ -728,8 +672,6 @@ class Mytextpanel2 extends JPanel {
             summitButton.setFont(new Font("Copperplate Gothic BOLD", Font.PLAIN, 16));
             summitButton.setBackground(new Color(222, 0, 62));
             summitButton.setForeground(Color.white);
-            // customize the button with your own look
-
             summitButton.setForeground(new Color(255, 255, 255));
             summitButton.setBounds(350, 25, 100, 50);
             summitButton.addActionListener(new ActionListener() {
@@ -810,10 +752,8 @@ class Mytextpanel2 extends JPanel {
                 public void actionPerformed(ActionEvent event) {
                     JCheckBox cb = (JCheckBox) event.getSource();
                     if (cb.isSelected()) {
-                        // main.setsave(false);
                         player.setAutosave(false);
                     } else {
-                        // main.setsave(true);
                         player.setAutosave(true);
                     }
                 }
@@ -853,7 +793,6 @@ class Mytextpanel2 extends JPanel {
                         player.setdisplay(false);
                     } else {
                         player.setdisplay(true);
-
                     }
                 }
             });

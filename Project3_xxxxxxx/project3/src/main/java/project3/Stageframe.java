@@ -365,8 +365,8 @@ public class Stageframe extends JFrame {
                             if (stage == 1 && player.getscore(1) == 0) {
                                 playerArraylsit.add(player);
                             }
-                            if (allturn < 10)
-                                player.setscore(100 + (100 - (allturn * 10)), stage);
+                            if (allturn < 25)
+                                player.setscore(100 + (100 - (allturn * 4)), stage);
                             else
                                 player.setscore(100, stage);
                             main.getfilemanage().filewrite(playerArraylsit);

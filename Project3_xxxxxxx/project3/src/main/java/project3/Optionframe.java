@@ -7,7 +7,7 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-public class Optionframe extends JFrame implements ActionListener {
+public class Optionframe extends JFrame{
 
     protected MainMenu main;
     protected JPanel epanel, mpanel, cpanel, spanel, scpanel;
@@ -51,7 +51,6 @@ public class Optionframe extends JFrame implements ActionListener {
         contentpane.setIcon(imageIcon.resize(frameWidth, frameHeight));
         contentpane.setOpaque(true);
         contentpane.setLayout(null);
-
         AddComponents();
     }
 
@@ -88,7 +87,6 @@ public class Optionframe extends JFrame implements ActionListener {
             musicPanel.setBounds(0, 90, 900, 100);
             musicPanel.setLayout(null);
             musicPanel.setOpaque(false);
-            // musicPanel.setBackground(new Color(0,0,0,150));
             musiclabel = new JLabel();
             musiclabel.setIcon(music_min);
             musiclabel.setHorizontalAlignment(JLabel.CENTER);
@@ -188,8 +186,7 @@ public class Optionframe extends JFrame implements ActionListener {
             }
             effectPanel.setBounds(0, 230, 900, 100);
             effectPanel.setLayout(null);
-            effectPanel.setOpaque(false); // ทำให้ไม่เห็นพื้นหลังสีขาว
-            // effectPanel.setBackground(new Color(0,0,0,150));
+            effectPanel.setOpaque(false);
             MyImageIcon kawin_max = new MyImageIcon(path + "Kawin_max.png").resize(75, 75);
             MyImageIcon kawin_min = new MyImageIcon(path + "Kawin_min.png").resize(75, 75);
             MyImageIcon kawin_mute = new MyImageIcon(path + "Kawin_mute.png").resize(75, 75);
@@ -284,7 +281,6 @@ public class Optionframe extends JFrame implements ActionListener {
                 });
             }
         }
-            
         mpanel.add(musiccheck);
         epanel.add(effectcheck);
         musicPanel.add(musicSlider);
@@ -295,7 +291,6 @@ public class Optionframe extends JFrame implements ActionListener {
         contentpane.add(epanel);
         contentpane.add(musicPanel);
         contentpane.add(effectPanel);
-
         validate();
     }
 
@@ -315,27 +310,5 @@ public class Optionframe extends JFrame implements ActionListener {
         for (Sound s : SA) {
             s.muteVolume();
         }
-    }
-
-    class MyImageIcon extends ImageIcon {
-        public MyImageIcon(String fname) {
-            super(fname);
-        }
-
-        public MyImageIcon(Image image) {
-            super(image);
-        }
-
-        public MyImageIcon resize(int width, int height) {
-            Image oldimg = this.getImage();
-            Image newimg = oldimg.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
-            return new MyImageIcon(newimg);
-        }
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
-
     }
 }
