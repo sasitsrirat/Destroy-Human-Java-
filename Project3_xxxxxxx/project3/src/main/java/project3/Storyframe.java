@@ -1,3 +1,7 @@
+/*6413110 Mr.Watcharsak Prommanee
+6413112 Mr.Sasit Srirat
+6413210 Mr.Kawin Kengkate
+6413223 Mr.Ravipol Chayeraksa*/
 package project3;
 
 import javax.swing.JFrame;
@@ -15,11 +19,11 @@ public class Storyframe extends JFrame {
     private JLabel contentpane;
     private JPanel nextButtonPanel;
     private JButton nextButton;
-    private JTextArea story2Text, story3Text, story4Text, story5Text, endstoryText;
+    private JTextArea story1Text, story2Text, story3Text, story4Text, story5Text, endstoryText;
     protected Stageframe sframe;
     protected Storyframe strframe;
     protected MainMenu mainMenu;
-    private int scurX = 50;
+    private int scurX = 133;
     private int scurY = 700;
     private String imagepath;
     protected ArrayList<Sound> musicSound, effectSound;
@@ -140,20 +144,26 @@ public class Storyframe extends JFrame {
 
     public void story1() {
         story1 = new JLabel();
-        story1.setBounds(133, 100, 1100, 700);
-        story1.setOpaque(false);
-        MyImageIcon im1 = new MyImageIcon(imagepath + "story1.png");
-        story1.setIcon(im1.resize(1100, 700));
+        story1.setBounds(scurX, scurY, 1100, 700);
         contentpane.add(story1);
-        validate();
-        contentpane.repaint();
+        story1Text = new JTextArea(
+                "When the future world is destroyed by human.\nThe robot MUSIX-6000 and friends\nmust travel back in time to \nstop the humans before they destroy everything.\n"
+                        +
+                        "\nIn 2099 , After successfully turning back time,\nthe first robot began surveying the area and\nkilling humans in order to prevent the planet\nfrom collapsing.");
+        story1Text.setBounds(100, 100, frameWidth, frameHeight);
+        story1Text.setOpaque(false);
+        story1Text.setForeground(Color.orange);
+        story1Text.setFont(storyFont);
+        story1Text.setLineWrap(true);
+        story1Text.setEditable(false);
+        story1.add(story1Text);
         Thread animation = new Thread(new Runnable() {
             @Override
             public void run() {
                 while (true) {
                     story1.setLocation(scurX, scurY);
-                    scurY -= 4;
-                    if (scurY < 16) {
+                    scurY -= 5;
+                    if (scurY < 20) {
                         nextButtonPanel.setVisible(true);
                     }
                     try {
@@ -165,6 +175,7 @@ public class Storyframe extends JFrame {
             }
         });
         animation.start();
+        
         validate();
         repaint();
     }
@@ -177,7 +188,7 @@ public class Storyframe extends JFrame {
         story2Text = new JTextArea(
                 "When the second robot N2Y2 found that the \nfirst robot was trying to complete\nthe task on his own, the \nsecond robot followed him  and assisted him in \npreparing to invade the human armory. \n\n*The second "
                         +
-                        "robot can repair other robot 🔧*");
+                        "robot can repair other robot");
         story2Text.setBounds(100, 100, frameWidth, frameHeight);
         story2Text.setOpaque(false);
         story2Text.setForeground(Color.orange);
@@ -215,7 +226,7 @@ public class Storyframe extends JFrame {
         contentpane.add(story3);
 
         story3Text = new JTextArea(
-                "From many obstacles along the way through. we has \nheaded to the first destination\n, The Human Armory.but you didn't \nknow that inside the armory there \nare many soldiers waiting for you.");
+                "From many obstacles along the way through.\nwe has headed to the first destination,\nThe Human Armory.but you didn't \nknow that inside the armory there \nare many soldiers waiting for you.");
         story3Text.setBounds(100, 100, frameWidth, frameHeight);
         story3Text.setOpaque(false);
         story3Text.setForeground(Color.orange);

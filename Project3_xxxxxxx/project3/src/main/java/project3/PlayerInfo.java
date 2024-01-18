@@ -1,9 +1,12 @@
+/*6413110 Mr.Watcharsak Prommanee
+6413112 Mr.Sasit Srirat
+6413210 Mr.Kawin Kengkate
+6413223 Mr.Ravipol Chayeraksa*/
 package project3;
 
 public class PlayerInfo implements Comparable<PlayerInfo> {
     private String name;
     private int[] score = { 0, 0, 0, 0, 0 };
-    // private int score1=0,score2=0,score3=0,score4=0,score5=0;
     private int totalscore;
     private int stage = 1;
     private boolean scoreboarddisplay = true; // default true

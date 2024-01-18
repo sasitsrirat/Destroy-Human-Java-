@@ -1,3 +1,7 @@
+/*6413110 Mr.Watcharsak Prommanee
+6413112 Mr.Sasit Srirat
+6413210 Mr.Kawin Kengkate
+6413223 Mr.Ravipol Chayeraksa*/
 package project3;
 
 import java.awt.*;
@@ -172,7 +176,6 @@ public class Stageframe extends JFrame {
     }
 
     public void addcomponent() {
-        // this.setpause();
         for (Sound i : effectSound) {
             if ("clickEF".equals(i.getName())) {
                 stat = new StatLabel(imagepath, "StatusBG.png", i, frameWidth, frameHeight - 480, this);
@@ -323,8 +326,10 @@ public class Stageframe extends JFrame {
                         hu.setnewspeedthread();
                     }
                 }
+                
                 allturn += turn;
                 if (humanArraylist.isEmpty()) {
+                    
                     for (Characterlabel h : humanLabelArraylist) {
                         h.setVisible(false);
                     }
@@ -332,8 +337,10 @@ public class Stageframe extends JFrame {
                         battle(stage, wave + 1);
                     } else {
                         if (stage >= 5) { // Win all stage
-                            if (allturn < 25)
+                            if (allturn < 25){
                                 player.setscore(100 + (100 - (allturn * 4)), stage);
+                               
+                            }
                             else
                                 player.setscore(100, stage);
                             main.getfilemanage().filewrite(playerArraylsit);
@@ -358,7 +365,7 @@ public class Stageframe extends JFrame {
                             main.validate();
                             main.repaint();
                         } else { // Win this stage
-                            player.setstage(stage + 1);
+                            player.setstage(stage + 1);  
                             if (stage == 1 && player.getscore(1) == 0) {
                                 playerArraylsit.add(player);
                             }
@@ -366,7 +373,7 @@ public class Stageframe extends JFrame {
                                 player.setscore(100 + (100 - (allturn * 4)), stage);
                             else
                                 player.setscore(100, stage);
-                            main.getfilemanage().filewrite(playerArraylsit);
+                            main.getfilemanage().filewrite(playerArraylsit); //save 
                             int result = JOptionPane.showConfirmDialog(main,
                                     "Victory\nScore : " + player.getscore(stage) + "\nGo to next stage ?",
                                     " STAGE" + stage,

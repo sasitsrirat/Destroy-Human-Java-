@@ -1,3 +1,7 @@
+/*6413110 Mr.Watcharsak Prommanee
+6413112 Mr.Sasit Srirat
+6413210 Mr.Kawin Kengkate
+6413223 Mr.Ravipol Chayeraksa*/
 package project3;
 
 import javax.swing.JFrame;
@@ -11,7 +15,7 @@ public class Tutorialframe extends JFrame {
     public Tutorialframe(String path) {
         imagepath = path;
         setTitle("Tutorial");
-	    setBounds(200, 200, 1188, 840);
+	    setBounds(200, 0, 1188, 840);
 	    setVisible(true);
 	    setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );
         ImageIcon img = new ImageIcon(imagepath + "book.png");

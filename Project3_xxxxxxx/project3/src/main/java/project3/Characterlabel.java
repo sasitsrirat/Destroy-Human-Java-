@@ -8,6 +8,10 @@ import javax.swing.JLabel;
 import javax.swing.event.MouseInputListener;
 import java.awt.*;
 
+/*6413110 Mr.Watcharsak Prommanee
+6413112 Mr.Sasit Srirat
+6413210 Mr.Kawin Kengkate
+6413223 Mr.Ravipol Chayeraksa*/
 public class Characterlabel extends JLabel {
 
     protected MyImageIcon staticon, attackicon, deathicon, idleicon, healicon;
